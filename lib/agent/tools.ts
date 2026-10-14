@@ -172,7 +172,7 @@ export async function runTool(ctx: ToolContext, name: string, input: unknown): P
             ocr_code_checks: c.ocr?.codeChecks ?? [],
             edi: c.edi ? { fields: c.edi.fields.map((f) => ({ label: f.label, value: mask(f.value) })), empty_segments: c.edi.emptySegments } : null,
             photos: c.databricks.photos.map((p) => p.name),
-            reread_rule: `reread_field is allowed only for an OCR field with confidence below ${ctx.settings.ocrRereadThreshold} or a blank value.`,
+            reread_rule: c.ocr ? `reread_field is allowed only for an OCR field with confidence below ${ctx.settings.ocrRereadThreshold} or a blank value.` : "No OCR fields on this claim: reread_field has nothing to re-read and will refuse.",
           },
           null,
           1,

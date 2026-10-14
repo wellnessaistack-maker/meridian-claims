@@ -142,19 +142,15 @@ export async function runAgent(claim: LoadedClaim, opts: RunOptions = {}): Promi
         results.push({ type: "tool_result", tool_use_id: t.id, content: out.content, is_error: out.isError || undefined });
       }
       messages.push({ role: "user", content: results });
-      if (ctx.budgetExhausted) {
-        messages.push({ role: "user", content: "The step budget is exhausted. Do not call any more tools; summarise what you found." });
-        const last = await client.step(messages);
-        usages.push({ model: last.model, usage: last.usage });
-        messages.push({ role: "assistant", content: last.content.filter((b) => b.type !== "tool_use") });
-        break;
-      }
+      // Budget gone: straight to the assemble call, which forbids tools. No extra
+      // turn whose tool calls would have to be edited out of the history.
+      if (ctx.budgetExhausted) break;
     }
     // Last check before anything leaves for the assemble call: no real name in what the model saw.
     const leaked = containsName(ctx.snapshot.join("\n"), claim.names);
     if (leaked) throw new AgentFailure("invalid_output", `A policyholder name reached the model input (${leaked.length} characters). Stopped.`);
 
-    messages.push({ role: "user", content: ASSEMBLE_INSTRUCTION });
+    messages.push({ role: "user", content: ctx.budgetExhausted ? `The step budget is exhausted; no more tools. ${ASSEMBLE_INSTRUCTION}` : ASSEMBLE_INSTRUCTION });
     let fin = await client.finish(messages);
     usages.push({ model: fin.model, usage: fin.usage });
     if (!fin.output && fin.problem && !/declined/.test(fin.problem)) {
