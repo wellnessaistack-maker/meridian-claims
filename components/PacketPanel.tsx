@@ -11,7 +11,8 @@ import { useState } from "react";
 import { DENIAL_INDICATOR_LABELS, ROUTE_LABELS, ROUTE_MEANING } from "@/lib/claim/schema.ts";
 import type { Decision } from "@/lib/rules/engine.ts";
 import type { ClaimRow } from "@/lib/ui/workspace-data.ts";
-import { RoutePill, SourceTag, pct, when } from "./ui";
+import { RoutePill, SourceTag, pct, usd, when } from "./ui";
+import { ROUTE_ORDER } from "@/lib/claim/schema.ts";
 import type { Shown } from "./Viewer";
 
 export interface PacketPanelProps {
@@ -118,6 +119,32 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onOp
                 <Rationale text={p.rationale} />
               </div>
             </div>
+
+            {row.amount && <AmountCard a={row.amount} />}
+
+            <Fold title="How this route was decided" hint="Five steps; the first four are in the audit record">
+              <ol className="steps">
+                <li>
+                  <b>Read the three systems.</b> ClaimsPro intake and status history, the Snowflake policy and extract row, and the Databricks documents: {row.documents.map((d) => d.name).join(", ") || "none"}. Names were masked before anything left.
+                </li>
+                <li>
+                  <b>The agent ({p.model.served ?? p.model.requested}) gathered.</b> {p.trace.length} tool call{p.trace.length === 1 ? "" : "s"}: {p.trace.map((t) => t.tool.replace(/_/g, " ")).join(" → ")}. It can only read; it has no tool that decides, writes or pays.
+                </li>
+                <li>
+                  <b>The agent described.</b> It filled a fixed packet format (fields, timeline, contradictions, indicators, what is missing) and recommended <b>{p.agentRoute ? ROUTE_LABELS[p.agentRoute].toLowerCase() : "nothing"}</b>, with the rationale above. It cannot recommend a denial; that word is not in its route list.
+                </li>
+                <li>
+                  <b>The rules ran, in code.</b>{" "}
+                  {fired.length
+                    ? `${fired.length} fired: ${fired.map((r) => `${r.id} (floor ${ROUTE_LABELS[r.floor].toLowerCase()})`).join(", ")}. The route is the most conservative of the agent's recommendation and every floor: ${ROUTE_LABELS[decision.route].toLowerCase()}.`
+                    : "None fired, so the agent's recommendation stands."}{" "}
+                  Rules only ever move a claim toward more review; the order is {Object.keys(ROUTE_ORDER).map((r) => ROUTE_LABELS[r as keyof typeof ROUTE_LABELS].toLowerCase()).join(" → ")}.
+                </li>
+                <li>
+                  <b>A person decides.</b> The adjuster confirms the route or changes it with a reason, below. The decision itself is made in ClaimsPro; this prototype has no approve or deny operation. Every change becomes a test case.
+                </li>
+              </ol>
+            </Fold>
 
             {p.missing.length > 0 && <MissingCard row={row} decision={decision} unmask={unmask} open={decision.route === "request_information"} />}
 
@@ -308,6 +335,43 @@ function Rationale({ text }: { text: string }) {
           {all ? "Show less" : `Read the full rationale (${sentences.length} sentences)`}
         </button>
       )}
+    </div>
+  );
+}
+
+/** Claimed against what the documents support, each number with its source. A code check, not a valuation. */
+function AmountCard({ a }: { a: NonNullable<ClaimRow["amount"]> }) {
+  const counted = a.lines.filter((l) => l.counted);
+  const other = a.lines.filter((l) => !l.counted && l.kind !== "claimed");
+  const tone = a.gap === null || a.supported === 0 ? "" : Math.abs(a.gap) < 1 ? "chip-ok" : "chip-warn";
+  return (
+    <div className="card">
+      <div className="card-head">
+        <h3>The amount</h3>
+        <span className="sub">A code check of what is on file, not a valuation. No rate card, no model estimate.</span>
+      </div>
+      <div className="card-body">
+        <div className="amount-row">
+          <div className="amount-cell"><span className="l">Claimed</span><span className="v">{a.claimed === null ? "—" : usd(a.claimed)}</span><span className="d">ClaimsPro intake</span></div>
+          <div className="amount-cell"><span className="l">Supported by documents</span><span className="v">{usd(a.supported)}</span><span className="d">{counted.length} total{counted.length === 1 ? "" : "s"} on file</span></div>
+          <div className="amount-cell"><span className="l">Gap</span><span className={`v ${a.gap !== null && a.gap > 1 ? "weak" : ""}`}>{a.gap === null ? "—" : usd(a.gap)}</span><span className={`chip ${tone}`}>{a.note}</span></div>
+        </div>
+        {a.lines.length > 0 && (
+          <ul className="drivers">
+            {counted.map((l, i) => (
+              <li key={`c${i}`}>
+                <span>{l.label} <SourceTag source={l.source} document={l.document} /> <span className="hint">{l.basis}</span></span>
+                <b>{usd(l.amount)}</b>
+              </li>
+            ))}
+            {other.length > 0 && (
+              <li className="hint" style={{ display: "block" }}>
+                Also on file, not added (parts of a total above or a different kind of figure): {other.map((l) => `${l.label} ${usd(l.amount)}`).join("; ")}.
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

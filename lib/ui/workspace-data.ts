@@ -16,6 +16,7 @@ import { findExtractRow } from "../extract/csv.ts";
 import { decide, type Decision } from "../rules/engine.ts";
 import { DEFAULT_SETTINGS, PROTOCOL_VERSION, SETTING_DEFS, type Settings } from "../rules/protocol.ts";
 import type { WorklistEntry } from "../worklist/seed.ts";
+import { amountCheck, type AmountCheck } from "./amount.ts";
 
 export interface ClaimRow {
   claimId: string;
@@ -40,6 +41,8 @@ export interface ClaimRow {
   pages: { document: string; page: number; image: string }[];
   documents: { name: string; kind: string; engineConfidence: number | null; pages: number }[];
   lossDescription: string | null;
+  /** Claimed against what the documents support. Null without a packet. */
+  amount: AmountCheck | null;
 }
 
 export interface WorkspaceData {
@@ -74,7 +77,7 @@ function fromWorklistEntry(e: WorklistEntry, settings: Settings): ClaimRow {
     adjusterId: null,
   };
   const decision = decide({ claimId: e.claimId, claimType: e.claimType, state: e.state, country: "US", amountUsd: e.amountUsd, regulatoryReviewRequired: e.regulatoryReviewRequired, policyStatus: "unknown", packet: null }, settings, { structuredOnly: true });
-  return { claimId: e.claimId, provenance: e.provenance, header, queueAgeHours: e.queueAgeHours, todayFlagged: e.todayFlagged, todayQueue: e.todayFlagged ? "Human review" : "Standard", documentCount: e.documentCount, packet: null, decision, audit: [], names: [], photos: [], pages: [], documents: [], lossDescription: null };
+  return { claimId: e.claimId, provenance: e.provenance, header, queueAgeHours: e.queueAgeHours, todayFlagged: e.todayFlagged, todayQueue: e.todayFlagged ? "Human review" : "Standard", documentCount: e.documentCount, packet: null, decision, audit: [], names: [], photos: [], pages: [], documents: [], lossDescription: null, amount: null };
 }
 
 export function loadWorkspaceData(root = process.cwd(), settings: Settings = DEFAULT_SETTINGS): WorkspaceData {
@@ -103,6 +106,7 @@ export function loadWorkspaceData(root = process.cwd(), settings: Settings = DEF
       pages: claim.databricks.pdfs.flatMap((d) => d.pages.map((pg) => ({ document: d.name, page: pg.page, image: pg.image }))),
       documents: claim.databricks.documents.map((d) => ({ name: d.name, kind: d.kind, engineConfidence: d.engineConfidence, pages: d.pages.length })),
       lossDescription: claim.claimsPro.lossDescription,
+      amount: packet ? amountCheck(packet.packet, claim.databricks.documents.map((d) => ({ name: d.name, text: d.text }))) : null,
     });
   }
   const seedFile = path.join(root, "data", "worklist.json");

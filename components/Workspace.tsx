@@ -4,7 +4,7 @@
 // drawer as an overlay. State lives here: the open claim, the drawer, packets
 // re-run in this session, audit records confirmed in this session.
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { AuditRecord } from "@/lib/audit/record.ts";
 import type { PacketRecord } from "@/lib/agent/cache.ts";
@@ -13,7 +13,7 @@ import { AuditDrawer, type DrawerMode } from "./AuditDrawer";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { PacketPanel } from "./PacketPanel";
 import { Viewer, type Shown } from "./Viewer";
-import { Worklist } from "./Worklist";
+import { Worklist, type DemoState } from "./Worklist";
 
 const NO_KEY = "No API key. Showing cached packets; re-run is disabled.";
 
@@ -25,7 +25,46 @@ export function Workspace({ data }: { data: WorkspaceData }) {
   const [focus, setFocus] = useState<Shown | null>(null);
   const [role, setRole] = useState("adjuster");
 
-  const rows = useMemo(() => data.rows.map((r) => (overrides[r.claimId] ? { ...r, ...overrides[r.claimId] } : r)), [data.rows, overrides]);
+  const allRows = useMemo(() => data.rows.map((r) => (overrides[r.claimId] ? { ...r, ...overrides[r.claimId] } : r)), [data.rows, overrides]);
+
+  // Demo: the inbox starts empty and the morning's claims arrive one at a time, oldest first, each "assessed" from its cached packet.
+  // Only claims with a packet take part: each one is "assessed" from its cached packet as it arrives.
+  const arrivalOrder = useMemo(() => allRows.filter((r) => r.packet).sort((a, b) => b.queueAgeHours - a.queueAgeHours).map((r) => r.claimId), [allRows]);
+  const [demo, setDemo] = useState<DemoState>({ active: false, playing: false, arrived: [], assessing: null, total: arrivalOrder.length });
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const advance = () => {
+    setDemo((d) => {
+      const next = arrivalOrder.find((id) => !d.arrived.includes(id) && id !== d.assessing);
+      if (!next || d.assessing) return d;
+      return { ...d, assessing: next };
+    });
+  };
+  useEffect(() => {
+    if (!demo.active || !demo.assessing) return;
+    const id = demo.assessing;
+    const t = setTimeout(() => {
+      setDemo((d) => ({ ...d, assessing: null, arrived: [...d.arrived, id] }));
+      setSelected(id);
+    }, 1100);
+    return () => clearTimeout(t);
+  }, [demo.active, demo.assessing]);
+  useEffect(() => {
+    if (!demo.active || !demo.playing || demo.assessing) return;
+    if (demo.arrived.length >= demo.total) {
+      setDemo((d) => ({ ...d, playing: false }));
+      return;
+    }
+    timer.current = setTimeout(advance, 700);
+    return () => { if (timer.current) clearTimeout(timer.current); };
+  }, [demo.active, demo.playing, demo.assessing, demo.arrived.length]); // eslint-disable-line react-hooks/exhaustive-deps
+  const onDemo = (action: "start" | "play" | "pause" | "step" | "reset") => {
+    if (action === "start") { setDemo({ active: true, playing: true, arrived: [], assessing: null, total: arrivalOrder.length }); setSelected(null); setDrawer(null); }
+    else if (action === "play") setDemo((d) => ({ ...d, playing: true }));
+    else if (action === "pause") setDemo((d) => ({ ...d, playing: false }));
+    else if (action === "step") advance();
+    else { setDemo({ active: false, playing: false, arrived: [], assessing: null, total: arrivalOrder.length }); setSelected(allRows.find((r) => r.packet)?.claimId ?? null); }
+  };
+  const rows = useMemo(() => (demo.active ? allRows.filter((r) => demo.arrived.includes(r.claimId) || r.claimId === demo.assessing) : allRows), [allRows, demo.active, demo.arrived, demo.assessing]);
   const row = rows.find((r) => r.claimId === selected) ?? null;
   const images: Shown[] = useMemo(() => {
     if (!row) return [];
@@ -108,13 +147,13 @@ export function Workspace({ data }: { data: WorkspaceData }) {
       <ErrorBoundary fallback={(error, reset) => <ManualTriage error={error} reset={reset} rows={rows} />}>
         <div className="workspace">
           <section className="col worklist">
-            <Worklist rows={rows} selected={selected} onSelect={select} onRunUnprocessed={onRunUnprocessed} running={running} apiKey={data.apiKey} />
+            <Worklist rows={rows} selected={selected} onSelect={select} onRunUnprocessed={onRunUnprocessed} running={running} apiKey={data.apiKey} demo={demo} onDemo={onDemo} />
           </section>
           <section className="col assess">
             {row ? (
               <PacketPanel key={row.claimId} row={row} decision={row.decision} apiKey={data.apiKey} model={data.model} rerun={rerun} onRerun={onRerun} onOpenAudit={(m) => setDrawer(m)} onFocus={setFocus} />
             ) : (
-              <div className="viewer-empty">No claims.</div>
+              <div className="viewer-empty"><div><b>{demo.active ? "The morning is starting." : "No claims."}</b><div>{demo.active ? "Claims arrive on the left as they come in; each is assessed and sorted on arrival." : ""}</div></div></div>
             )}
           </section>
           <section className="col viewer">{row && <Viewer key={row.claimId} row={row} images={images} focus={focus} />}</section>

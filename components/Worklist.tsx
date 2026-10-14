@@ -17,7 +17,8 @@ export const SLA_HOURS = 24;
 type Tab = "inbox" | "waiting" | "done";
 /** Inbox groups in work order. "verify" is the verify-documents route: adjuster work, not waiting on anyone. */
 type Group = Segment | "verify";
-const INBOX_ORDER: Group[] = ["regulatory", "senior", "verify", "ready"];
+// Easiest first, as the earlier prototype ordered its inbox: clear the quick ones, then the ones that need more.
+const INBOX_ORDER: Group[] = ["ready", "verify", "senior", "regulatory"];
 const GROUP_LABELS: Record<Group, string> = { ...SEGMENT_LABELS, verify: "Verify documents" };
 const groupOf = (r: ClaimRow): Group => (r.decision.segment === "waiting" ? (r.decision.route === "verify_documents" ? "verify" : "waiting") : r.decision.segment);
 
@@ -35,7 +36,17 @@ export function reasonLine(r: ClaimRow): string {
   return r.documentCount === 0 ? "Extract row: structured rules only, no documents." : "Not run yet: structured rules only.";
 }
 
-export function Worklist({ rows, selected, onSelect, onRunUnprocessed, running, apiKey }: { rows: ClaimRow[]; selected: string | null; onSelect: (id: string) => void; onRunUnprocessed: (ids: string[]) => void; running: string | null; apiKey: boolean }) {
+export interface DemoState {
+  active: boolean;
+  playing: boolean;
+  /** Claims that have arrived so far, in arrival order. */
+  arrived: string[];
+  /** The claim being assessed right now, shown with a spinner. */
+  assessing: string | null;
+  total: number;
+}
+
+export function Worklist({ rows, selected, onSelect, onRunUnprocessed, running, apiKey, demo, onDemo }: { rows: ClaimRow[]; selected: string | null; onSelect: (id: string) => void; onRunUnprocessed: (ids: string[]) => void; running: string | null; apiKey: boolean; demo: DemoState; onDemo: (action: "start" | "play" | "pause" | "step" | "reset") => void }) {
   const [tab, setTab] = useState<Tab>("inbox");
   const inbox = rows.filter((r) => tabOf(r) === "inbox");
   const waiting = rows.filter((r) => tabOf(r) === "waiting").sort((a, b) => b.queueAgeHours - a.queueAgeHours);
@@ -72,7 +83,8 @@ export function Worklist({ rows, selected, onSelect, onRunUnprocessed, running, 
           {r.header.claimType} · {r.header.state} · {usd(r.header.amountUsd)} · {PROVENANCE_SHORT[r.provenance.kind]}
         </div>
         <div className="wl-item-reason">
-          {running === r.claimId && <span className="spinner" style={{ marginRight: 6, verticalAlign: -2 }} />}
+          {(running === r.claimId || demo.assessing === r.claimId) && <span className="spinner" style={{ marginRight: 6, verticalAlign: -2 }} />}
+          {demo.assessing === r.claimId && "Assessing: reading the three systems and the documents… "}
           {reviewed && reviewed.reviewerRoute && reviewed.reviewerRoute !== reviewed.output.route ? (
             <>
               <span className="chip chip-warn" style={{ marginRight: 6 }}>Route changed</span>
@@ -108,7 +120,23 @@ export function Worklist({ rows, selected, onSelect, onRunUnprocessed, running, 
             </button>
           ))}
         </div>
-        {unprocessed.length > 0 && (
+        <div className="wl-actions">
+          {!demo.active ? (
+            <button className="btn btn-primary" onClick={() => onDemo("start")} title="Empty the inbox and let the morning's claims arrive one at a time, from the cached packets">
+              ▶ Play the morning
+            </button>
+          ) : (
+            <>
+              <button className="btn btn-primary" onClick={() => onDemo(demo.playing ? "pause" : "play")} disabled={demo.arrived.length >= demo.total && !demo.assessing}>
+                {demo.playing ? "Pause" : demo.arrived.length ? "Resume" : "Play"}
+              </button>
+              <button className="btn" onClick={() => onDemo("step")} disabled={demo.playing || demo.assessing !== null || demo.arrived.length >= demo.total}>Next claim</button>
+              <button className="btn btn-ghost" onClick={() => onDemo("reset")} title="Show the whole queue again">Show all</button>
+            </>
+          )}
+        </div>
+        {demo.active && <div className="wl-hint">{demo.arrived.length} of {demo.total} arrived. Each claim is assessed from its cached packet; with a key, the same button runs the live agent.</div>}
+        {unprocessed.length > 0 && !demo.active && (
           <div className="wl-actions">
             <button className="btn" disabled={!apiKey || running !== null} onClick={() => onRunUnprocessed(unprocessed.map((r) => r.claimId))} title={!apiKey ? "No API key. Runs are disabled." : "Run the agent on every claim with documents that has no packet yet, one at a time"}>
               {running ? "Running…" : `Run the ${unprocessed.length} not yet run`}

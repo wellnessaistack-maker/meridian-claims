@@ -264,3 +264,17 @@ pre.json { font-family: var(--mono); font-size: 11.5px; background: #0f172a; col
 .fold-card:not([open]) > summary { border-bottom: 0; }
 .fold-card > summary h3 .n { margin-left: 6px; font-weight: 500; color: var(--text-3); font-size: 12px; }
 .fold-card > summary .sub { max-width: 60%; white-space: normal; }
+
+/* Amount card and the decision steps */
+.amount-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+.amount-cell { display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; background: var(--panel-2); }
+.amount-cell .l { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); }
+.amount-cell .v { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.amount-cell .d { font-size: 11.5px; color: var(--text-3); }
+.amount-cell .chip { align-self: flex-start; white-space: normal; }
+.drivers { list-style: none; margin: 0; padding: 0; font-size: 12.5px; }
+.drivers li { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-top: 1px dashed var(--line); }
+.drivers li:first-child { border-top: 0; }
+.steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; }
+.steps li { padding-left: 4px; }
+@media (max-width: 720px) { .amount-row { grid-template-columns: 1fr; } }
