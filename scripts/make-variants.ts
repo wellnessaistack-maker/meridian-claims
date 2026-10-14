@@ -10,7 +10,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import sharp from "sharp";
 
-import { loadExtract, rowToCsvLine, EXTRACT_HEADER, type ExtractRow } from "../lib/extract/csv.ts";
+import { loadExtract, parseExtractCsv, rowToCsvLine, EXTRACT_HEADER, type ExtractRow } from "../lib/extract/csv.ts";
 
 const SRC = path.join("meridian", "sample_claims");
 const OUT = "sample_claims_variants";
@@ -18,6 +18,8 @@ const OUT = "sample_claims_variants";
 interface Variant {
   id: string;
   parent: string;
+  /** Where the parent lives; the three provided claims by default. */
+  src?: string;
   change: string;
   /** Edits to the extract row for this variant. */
   row: (r: ExtractRow) => ExtractRow;
@@ -40,6 +42,32 @@ const edit = (file: string, fn: (s: string) => string) => {
 };
 
 const VARIANTS: Variant[] = [
+  {
+    id: "IS-CLM-2025900001-F",
+    parent: "IS-CLM-2025900001",
+    src: "sample_claims_mock",
+    change: "repair estimate missing",
+    row: (r) => ({ ...r, documentCount: 3 }),
+    apply: (dir) => {
+      rmSync(path.join(dir, "repair_estimate.md"));
+      edit(path.join(dir, "intake.md"), (s) => s.replace("- Repair estimate (Boulder Valley Euro Works, est. BV-7718) — `repair_estimate.md`\n", "").replace("All required E-Portal fields were populated at submission.", "The estimate field was left empty at submission; the portal accepted the filing without it."));
+      edit(path.join(dir, "status_history.md"), (s) => s.replace("| Documents on file | 4 |", "| Documents on file | 3 |").replace("## Documents on file (4)", "## Documents on file (3)").replace("2. Repair estimate — Boulder Valley Euro Works (BV-7718)\n3. Damage photograph — rear three-quarter, vehicle in standing water\n4. Weather notice", "2. Damage photograph — rear three-quarter, vehicle in standing water\n3. Weather notice").replace("E-Portal FNOL; package complete", "E-Portal FNOL; estimate not attached"));
+      edit(path.join(dir, "adjuster_notes.md"), (s) => s.replace("One photo, car sitting in water to the sills. Est BV-7718\n$4,480 reads like a flood clean-up, no bodywork.", "One photo, car sitting in water to the sills. No estimate\nin the package; $4,480 claimed with nothing behind it yet.").replace("Nothing to chase.", "Need the shop's estimate before this moves."));
+    },
+  },
+  {
+    id: "IS-CLM-2025900001-G",
+    parent: "IS-CLM-2025900001",
+    src: "sample_claims_mock",
+    change: "damage photo missing",
+    row: (r) => ({ ...r, documentCount: 3 }),
+    apply: (dir) => {
+      rmSync(path.join(dir, "photos"), { recursive: true });
+      edit(path.join(dir, "intake.md"), (s) => s.replace("- Damage photograph (1) — see `photos/`\n", "").replace("All required E-Portal fields were populated at submission.", "No photograph was attached at submission; the portal accepted the filing without one."));
+      edit(path.join(dir, "status_history.md"), (s) => s.replace("| Documents on file | 4 |", "| Documents on file | 3 |").replace("## Documents on file (4)", "## Documents on file (3)").replace("3. Damage photograph — rear three-quarter, vehicle in standing water\n4. Weather notice", "3. Weather notice").replace("E-Portal FNOL; package complete", "E-Portal FNOL; no photograph attached"));
+      edit(path.join(dir, "adjuster_notes.md"), (s) => s.replace("One photo, car sitting in water to the sills. Est BV-7718", "No photo in the package. Est BV-7718").replace("Nothing to chase.", "Need a photo of the car before this moves."));
+    },
+  },
   {
     id: "IS-CLM-2025000300-A",
     parent: "IS-CLM-2025000300",
@@ -162,14 +190,16 @@ mkdirSync(OUT, { recursive: true });
 for (const v of VARIANTS) {
   const dir = path.join(OUT, v.id);
   rmSync(dir, { recursive: true, force: true });
-  cpSync(path.join(SRC, v.parent), dir, { recursive: true });
+  const src = v.src ?? SRC;
+  cpSync(path.join(src, v.parent), dir, { recursive: true });
   // The variant has its own claim ID everywhere the parent's appears, so nothing joins back to the parent by accident.
   for (const f of textFiles(dir)) {
     const s = readFileSync(f, "utf8");
     if (s.includes(v.parent)) writeFileSync(f, s.split(v.parent).join(v.id));
   }
   await v.apply(dir);
-  const parentRow = rows.find((r) => r.claimId === v.parent);
+  const parentCsv = path.join(src, v.parent, "extract.csv");
+  const parentRow = existsSync(parentCsv) ? parseExtractCsv(readFileSync(parentCsv, "utf8"))[0] : rows.find((r) => r.claimId === v.parent);
   if (!parentRow) throw new Error(`No extract row for ${v.parent}`);
   const row = v.row({ ...parentRow, claimId: v.id });
   writeFileSync(path.join(dir, "extract.csv"), `${EXTRACT_HEADER}\n${rowToCsvLine(row)}\n`);

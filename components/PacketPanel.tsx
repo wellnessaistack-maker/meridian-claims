@@ -40,6 +40,7 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
   const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
   const [confirmError, setConfirmError] = useState<string | null>(null);
+  const [requestBody, setRequestBody] = useState(() => (p && p.missing.length ? draftRequest(row, unmask) : ""));
   const showAudit = () => {
     setAuditOpen(true);
     setTimeout(() => document.getElementById("audit-record")?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
@@ -47,6 +48,15 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
   const submit = async (change?: { route: FinalRoute; reason: string }) => {
     setBusy(true);
     setConfirmError(null);
+    const finalRoute = change?.route ?? decision.route;
+    // Confirming "request information" sends the drafted request first; the claim then waits on the claimant.
+    if (finalRoute === "request_information" && p) {
+      const sent = await sendRequest(row, requestBody || draftRequest(row, unmask));
+      if (!sent.ok) {
+        setBusy(false);
+        return setConfirmError(sent.error);
+      }
+    }
     const err = await onConfirm(change);
     setBusy(false);
     if (err) setConfirmError(err);
@@ -168,7 +178,7 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
               </ol>
             </Fold>
 
-            {p.missing.length > 0 && <MissingCard row={row} decision={decision} unmask={unmask} open={decision.route === "request_information"} />}
+            {p.missing.length > 0 && <MissingCard row={row} decision={decision} unmask={unmask} open={decision.route === "request_information"} body={requestBody} setBody={setRequestBody} />}
 
             <Fold title="Why each rule fired" count={fired.length} hint="The rules run after the agent and only make the route more conservative">
               {fired.length === 0 ? (
@@ -305,12 +315,16 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
       <div className="actionbar">
         {reviewed ? (
           <div className="done-banner">
-            Confirmed by {reviewed.reviewer} at {when(reviewed.reviewedAt ?? "")}: {ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}
-            {reviewed.reviewerReason ? ` — “${reviewed.reviewerReason}”` : ""}. The decision itself is made in ClaimsPro.
+            {(reviewed.reviewerRoute ?? reviewed.output.route) === "request_information"
+              ? <>Request sent by {reviewed.reviewer} at {when(reviewed.reviewedAt ?? "")}. Waiting on the claimant; the claim comes back to the inbox when the information arrives.</>
+              : <>Confirmed by {reviewed.reviewer} at {when(reviewed.reviewedAt ?? "")}: {ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}{reviewed.reviewerReason ? ` — “${reviewed.reviewerReason}”` : ""}. The decision itself is made in ClaimsPro.</>}
           </div>
         ) : (
           <div className="note" style={{ marginTop: 0 }}>
-            One click confirms the route as <b>{reviewer}</b> and moves to the next claim. A change needs a reason and becomes a test case. Nothing here approves or denies a claim.
+            {decision.route === "request_information"
+              ? <>One click sends the drafted request through ClaimsPro as <b>{reviewer}</b> and moves the claim to Waiting until the claimant answers.</>
+              : <>One click confirms the route as <b>{reviewer}</b> and moves to the next claim.</>}{" "}
+            A change needs a reason and becomes a test case. Nothing here approves or denies a claim.
           </div>
         )}
         {changing && last && !reviewed && (
@@ -343,7 +357,7 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
           ) : (
             <>
               <button className="btn btn-primary" disabled={!last || !!reviewed || busy} onClick={() => submit()} title={!last ? "No packet to confirm" : reviewed ? "Already confirmed" : `Records ${reviewer} as the reviewer and opens the next claim`}>
-                {busy ? "Recording…" : reviewed ? `Confirmed: ${ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}` : `Confirm route: ${ROUTE_LABELS[decision.route]}`}
+                {busy ? "Recording…" : reviewed ? `Confirmed: ${ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}` : decision.route === "request_information" ? "Send the request and wait" : `Confirm route: ${ROUTE_LABELS[decision.route]}`}
               </button>
               <button className="btn" disabled={!last || !!reviewed || busy} onClick={() => setChanging(true)}>Change route…</button>
             </>
@@ -452,19 +466,31 @@ function fieldNote(fields: Fields) {
 }
 
 /** What is missing, and the drafted request. Sending goes through the ClaimsPro write stub; nothing decides the claim. */
-function MissingCard({ row, decision, unmask, open }: { row: ClaimRow; decision: Decision; unmask: (s: string) => string; open: boolean }) {
+/** The request to the claimant for what is missing. Drafted by code from the checklist, not by the model; the adjuster edits it. */
+export function draftRequest(row: ClaimRow, unmask: (s: string) => string): string {
   const p = row.packet!.packet;
   const external = p.missing.filter((m) => m.from !== "internal");
-  const [body, setBody] = useState(
-    `Dear ${unmask(p.header.claimantToken ?? p.header.policyholderToken)},\n\nTo continue with claim ${row.claimId} we need:\n${external.map((m) => `- ${m.label}: ${m.why}`).join("\n")}\n\nYou can reply to this message or upload the documents through the portal.\n\nMeridian Claims`,
-  );
+  return `Dear ${unmask(p.header.claimantToken ?? p.header.policyholderToken)},\n\nTo continue with claim ${row.claimId} we need:\n${external.map((m) => `- ${m.label}: ${m.why}`).join("\n")}\n\nYou can reply to this message or upload the documents through the portal.\n\nMeridian Claims`;
+}
+
+/** The ClaimsPro correspondence write, through the stub. Returns the log line or an error. */
+export async function sendRequest(row: ClaimRow, body: string): Promise<{ ok: true; text: string } | { ok: false; error: string }> {
+  const p = row.packet!.packet;
+  const res = await fetch("/api/writes", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ operation: "send_correspondence", claimId: row.claimId, payload: { to: p.header.claimantToken ? "claimant" : "policyholder", channel: "portal", subject: `Information needed for claim ${row.claimId}`, body } }) });
+  const j = (await res.json().catch(() => null)) as { ok: boolean; entry?: { id: string; soap: string }; error?: string } | null;
+  if (!j?.ok || !j.entry) return { ok: false, error: j?.error ?? `Could not send (HTTP ${res.status}).` };
+  return { ok: true, text: `Logged as ClaimsPro ${j.entry.soap} (${j.entry.id}). A stub: nothing left the building.` };
+}
+
+function MissingCard({ row, decision, unmask, open, body, setBody }: { row: ClaimRow; decision: Decision; unmask: (s: string) => string; open: boolean; body: string; setBody: (s: string) => void }) {
+  const p = row.packet!.packet;
+  const external = p.missing.filter((m) => m.from !== "internal");
   const [sent, setSent] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const send = async () => {
     setBusy(true);
-    const res = await fetch("/api/writes", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ operation: "send_correspondence", claimId: row.claimId, payload: { to: p.header.claimantToken ? "claimant" : "policyholder", channel: "portal", subject: `Information needed for claim ${row.claimId}`, body } }) });
-    const j = (await res.json()) as { ok: boolean; entry?: { id: string; soap: string }; error?: string };
-    setSent(j.ok ? `Logged as ClaimsPro ${j.entry!.soap} (${j.entry!.id}). A stub: nothing left the building.` : j.error ?? "Failed");
+    const r = await sendRequest(row, body);
+    setSent(r.ok ? r.text : r.error);
     setBusy(false);
   };
   return (

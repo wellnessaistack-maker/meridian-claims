@@ -1,0 +1,7 @@
+{
+  "kind": "variant",
+  "label": "Variant of IS-CLM-2025900001 (damage photo missing)",
+  "parentId": "IS-CLM-2025900001",
+  "change": "damage photo missing",
+  "generatedBy": "scripts/make-variants.ts"
+}

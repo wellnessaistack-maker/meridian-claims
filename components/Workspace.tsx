@@ -89,7 +89,13 @@ export function Workspace({ data }: { data: WorkspaceData }) {
     setOverrides((o) => ({ ...o, [current.claimId]: { ...o[current.claimId], audit: [...current.audit, rec] } }));
     const next = inboxOrder(rows).find((r) => r.claimId !== current.claimId && r.packet);
     const label = ROUTE_LABELS[rec.reviewerRoute ?? rec.output.route];
-    setToast({ text: `${current.claimId.replace("IS-CLM-2025", "…")} ${change ? "changed to" : "confirmed as"} ${label.toLowerCase()}. Record ${rec.id} appended.`, claimId: current.claimId });
+    const finalRoute = rec.reviewerRoute ?? rec.output.route;
+    setToast({
+      text: finalRoute === "request_information"
+        ? `${current.claimId.replace("IS-CLM-2025", "…")}: request sent via ClaimsPro; now waiting on the claimant. Record ${rec.id} appended.`
+        : `${current.claimId.replace("IS-CLM-2025", "…")} ${change ? "changed to" : "confirmed as"} ${label.toLowerCase()}. Record ${rec.id} appended.`,
+      claimId: current.claimId,
+    });
     if (next) select(next.claimId);
     return null;
   };
