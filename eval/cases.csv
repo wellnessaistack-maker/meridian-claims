@@ -1,0 +1,15 @@
+case_id,claim_id,provenance,expected_route,acceptable_routes,field_checks,note
+300,IS-CLM-2025000300,provided,verify_documents,ready_to_decide,,Date of loss not on file and the intake and the notes disagree on how the loss happened; a simple collision otherwise.
+2993,IS-CLM-2025002993,provided,full_review,,ocr_line_1=1800.00,California over $10k; the shop's estimate notes prior damage; the fax reads line 1 as 1,B00.
+4222,IS-CLM-2025004222,provided,full_review,,,New York bodily injury at $59.5k: the threshold rule alone requires a person.
+300-A,IS-CLM-2025000300-A,variant,request_information,verify_documents,,Repair estimate removed: nothing to verify until the shop sends it.
+300-B,IS-CLM-2025000300-B,variant,full_review,,,Amount nudged to $10;100 in Florida; a threshold state.
+300-C,IS-CLM-2025000300-C,variant,verify_documents,,,Texas with the regulatory flag blank: consent cannot be assumed.
+2993-D,IS-CLM-2025002993-D,variant,full_review,,ocr_line_1=1800.00,Clean OCR of the same fax: the denial indicators still stand; line 1 reads 1,800.00 without a re-read.
+4222-E,IS-CLM-2025004222-E,variant,full_review,,,Date on the fax page repainted: should surface as a contradiction or a fraud signal.
+900001,IS-CLM-2025900001,mock,ready_to_decide,,,Complete flood claim under the ceiling in Colorado; the one clean case.
+900002,IS-CLM-2025900002,mock,specialist_review,full_review,,Third-party property damage over the ceiling. The mock photo does not match the story; the agent flags it.
+900003,IS-CLM-2025900003,mock,specialist_review,full_review,,Liability with a demand letter in Texas; a consent state.
+900004,IS-CLM-2025900004,mock,out_of_scope,,,Ontario policyholder: rules only; never sent to the model.
+900005,IS-CLM-2025900005,mock,full_review,,,Loss twelve days after the policy expired: the lapse must reach a person.
+900006,IS-CLM-2025900006,mock,specialist_review,full_review,,A damage photo byte-identical to a closed claim's: a signal from the record.

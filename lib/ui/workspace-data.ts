@@ -13,10 +13,11 @@ import { listClaimFolders } from "../claim/catalog.ts";
 import { loadClaim } from "../claim/load.ts";
 import type { PacketHeader, Provenance } from "../claim/schema.ts";
 import { findExtractRow } from "../extract/csv.ts";
-import { decide, type Decision } from "../rules/engine.ts";
+import { decide, type Decision, type Segment } from "../rules/engine.ts";
 import { DEFAULT_SETTINGS, PROTOCOL_VERSION, SETTING_DEFS, type Settings } from "../rules/protocol.ts";
 import type { WorklistEntry } from "../worklist/seed.ts";
 import { amountCheck, type AmountCheck } from "./amount.ts";
+import { routeConfidence } from "../confidence.ts";
 
 export interface ClaimRow {
   claimId: string;
@@ -100,7 +101,8 @@ export function loadWorkspaceData(root = process.cwd(), settings: Settings = DEF
       documentCount: claim.databricks.documents.length + claim.databricks.photos.length,
       packet,
       decision,
-      audit: readAudit(folder.claimId, root),
+      // Route confidence is "as of the latest evaluation": a record made before the evaluation ran reads it now.
+      audit: readAudit(folder.claimId, root).map((r) => (r.confidence.route.value === null ? { ...r, confidence: { ...r.confidence, route: routeConfidence(r.output.segment as Segment, root) } } : r)),
       names: claim.names.map((n) => ({ token: n.token, name: n.value })),
       photos: claim.databricks.photos.map((p) => p.path),
       pages: claim.databricks.pdfs.flatMap((d) => d.pages.map((pg) => ({ document: d.name, page: pg.page, image: pg.image }))),

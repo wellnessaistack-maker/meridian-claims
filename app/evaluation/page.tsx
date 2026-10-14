@@ -77,11 +77,11 @@ export default function EvaluationPage() {
       <section className="mt-8">
         <h2 className="text-base font-semibold">2. Packets, on the labelled cases</h2>
         {!packetEval ? (
-          <p className="mt-1 text-slate-700">Not yet run. <code>npm run eval</code> with a key writes eval/results/latest.json; route confidence on the audit record reads from it until then it says “not yet measured”.</p>
+          <p className="mt-1 text-slate-700">Not yet run. <code>npm run eval</code> scores the cached packets against <code>eval/cases.csv</code> and writes eval/results/latest.json; route confidence on the audit record reads from it and until then says “not yet measured”.</p>
         ) : (
           <>
             <p className="mt-1 text-xs text-slate-500">
-              Run {packetEval.runAt} · {packetEval.model} · prompt {packetEval.promptVersion} · protocol {packetEval.protocolVersion} · {packetEval.cases.length} cases · ${packetEval.summary.cost.total.toFixed(2)}
+              Scored {packetEval.runAt} from the cached packets · {packetEval.model} · prompt {packetEval.promptVersion} · protocol {packetEval.protocolVersion} · {packetEval.cases.length} cases · ${packetEval.summary.cost.total.toFixed(2)} of model spend recorded on the packets
             </p>
             <ul className="mt-2 text-sm">
               <li>Escalation recall: {packetEval.summary.escalation.caught} of {packetEval.summary.escalation.of} claims that must reach a person did{packetEval.summary.escalation.missedIds.length ? ` (missed: ${packetEval.summary.escalation.missedIds.join(", ")})` : ""}.</li>
