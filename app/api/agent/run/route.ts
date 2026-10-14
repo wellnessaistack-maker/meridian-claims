@@ -40,5 +40,6 @@ export async function GET(request: Request) {
   const claim = loadClaim(folder);
   const r = await runAgent(claim, { model });
   const audit = r.ok ? recordFor(r.packet, r.decision, r.snapshot) : null;
-  return Response.json({ ok: r.ok, failure: r.failure, model, packet: r.packet, decision: r.decision, usage: r.usage, snapshot: r.snapshot, audit });
+  // The audit record carries the input snapshot, so it is not repeated at the top level.
+  return Response.json({ ok: r.ok, failure: r.failure, model, packet: r.packet, decision: r.decision, usage: r.usage, audit });
 }
