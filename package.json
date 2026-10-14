@@ -1,0 +1,32 @@
+{
+  "name": "meridian-claims",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"lib/**/*.test.ts\"",
+    "eval": "node scripts/run-eval.ts",
+    "seed": "node scripts/seed-worklist.ts",
+    "render-pages": "node scripts/render-pages.ts",
+    "make-variants": "node scripts/make-variants.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "next": "16.3.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  }
+}

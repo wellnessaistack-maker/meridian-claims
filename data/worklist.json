@@ -1,0 +1,1082 @@
+{
+  "generatedBy": "scripts/seed-worklist.ts",
+  "protocolVersion": "0.1",
+  "source": "meridian/reference/claims_processing.csv (stratified by channel, complexity and flag status)",
+  "entries": [
+    {
+      "claimId": "IS-CLM-2025000158",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Property Damage",
+      "state": "NJ",
+      "channel": "E-Portal",
+      "filedDate": "2025-11-18",
+      "amountUsd": 13160.61,
+      "complexity": "Complex",
+      "queueAgeHours": 13.5,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": true,
+      "documentCount": 8,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "full_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "R1",
+          "title": "Over $10,000 in a human-review state",
+          "reason": "$13,161 in NJ: a human must review any decision over $10,000 in this state."
+        },
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$13,161 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000021",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Liability",
+      "state": "MI",
+      "channel": "E-Portal",
+      "filedDate": "2025-09-11",
+      "amountUsd": 8407.94,
+      "complexity": "Complex",
+      "queueAgeHours": 48.9,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 6,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$8,408 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000037",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Property Damage",
+      "state": "MO",
+      "channel": "E-Portal",
+      "filedDate": "2025-12-27",
+      "amountUsd": 5410.21,
+      "complexity": "Moderate",
+      "queueAgeHours": 96.3,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": true,
+      "documentCount": 4,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$5,410 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "R2",
+          "title": "Consent state without consent on file",
+          "reason": "MO is a consent state and the record says a human is required; the claim cannot take the fast lane."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000013",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Liability",
+      "state": "TX",
+      "channel": "E-Portal",
+      "filedDate": "2025-12-11",
+      "amountUsd": 6391.84,
+      "complexity": "Moderate",
+      "queueAgeHours": 5,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 4,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$6,392 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000002",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Collision",
+      "state": "TX",
+      "channel": "E-Portal",
+      "filedDate": "2025-09-17",
+      "amountUsd": 1319.35,
+      "complexity": "Simple",
+      "queueAgeHours": 39.7,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 5,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000010",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Property Damage",
+      "state": "VA",
+      "channel": "E-Portal",
+      "filedDate": "2025-06-09",
+      "amountUsd": 1629.05,
+      "complexity": "Simple",
+      "queueAgeHours": 68.4,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 3,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000272",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Liability",
+      "state": "MO",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-09-18",
+      "amountUsd": 17627.87,
+      "complexity": "Complex",
+      "queueAgeHours": 62.5,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 10,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$17,628 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000023",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Comprehensive",
+      "state": "FL",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-08-24",
+      "amountUsd": 10183.49,
+      "complexity": "Complex",
+      "queueAgeHours": 26.7,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": true,
+      "documentCount": 7,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "full_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "R1",
+          "title": "Over $10,000 in a human-review state",
+          "reason": "$10,183 in FL: a human must review any decision over $10,000 in this state."
+        },
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$10,183 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000018",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Liability",
+      "state": "CA",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-10-04",
+      "amountUsd": 5985.33,
+      "complexity": "Moderate",
+      "queueAgeHours": 71.2,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 6,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$5,985 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000001",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Comprehensive",
+      "state": "NY",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-11-11",
+      "amountUsd": 3804.96,
+      "complexity": "Moderate",
+      "queueAgeHours": 67.7,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 11,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000003",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Comprehensive",
+      "state": "WI",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-09-23",
+      "amountUsd": 8397.53,
+      "complexity": "Simple",
+      "queueAgeHours": 7.9,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": true,
+      "documentCount": 3,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$8,398 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "R2",
+          "title": "Consent state without consent on file",
+          "reason": "WI is a consent state and the record says a human is required; the claim cannot take the fast lane."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000045",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "NY",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-11-27",
+      "amountUsd": 3444.5,
+      "complexity": "Simple",
+      "queueAgeHours": 8.8,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 4,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000508",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "TN",
+      "channel": "Phone",
+      "filedDate": "2025-11-27",
+      "amountUsd": 7695.22,
+      "complexity": "Complex",
+      "queueAgeHours": 65.9,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": true,
+      "documentCount": 16,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$7,695 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "R2",
+          "title": "Consent state without consent on file",
+          "reason": "TN is a consent state and the record says a human is required; the claim cannot take the fast lane."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000026",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "GA",
+      "channel": "Phone",
+      "filedDate": "2025-06-28",
+      "amountUsd": 85000,
+      "complexity": "Complex",
+      "queueAgeHours": 33,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": true,
+      "documentCount": 9,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "full_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "R1",
+          "title": "Over $10,000 in a human-review state",
+          "reason": "$85,000 in GA: a human must review any decision over $10,000 in this state."
+        },
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$85,000 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000034",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "NJ",
+      "channel": "Phone",
+      "filedDate": "2025-07-04",
+      "amountUsd": 9035.61,
+      "complexity": "Moderate",
+      "queueAgeHours": 5,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 10,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$9,036 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000020",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Property Damage",
+      "state": "MO",
+      "channel": "Phone",
+      "filedDate": "2025-09-30",
+      "amountUsd": 3769.83,
+      "complexity": "Moderate",
+      "queueAgeHours": 5.4,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 6,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000005",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Comprehensive",
+      "state": "MD",
+      "channel": "Phone",
+      "filedDate": "2025-12-04",
+      "amountUsd": 2283.83,
+      "complexity": "Simple",
+      "queueAgeHours": 107.1,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 3,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000004",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Collision",
+      "state": "VA",
+      "channel": "Phone",
+      "filedDate": "2025-07-26",
+      "amountUsd": 3192.19,
+      "complexity": "Simple",
+      "queueAgeHours": 3,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 3,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000538",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Collision",
+      "state": "OH",
+      "channel": "E-Portal",
+      "filedDate": "2025-06-22",
+      "amountUsd": 6593.39,
+      "complexity": "Complex",
+      "queueAgeHours": 8,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 8,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$6,593 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000042",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "TX",
+      "channel": "E-Portal",
+      "filedDate": "2025-09-02",
+      "amountUsd": 26547.44,
+      "complexity": "Complex",
+      "queueAgeHours": 8,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": true,
+      "documentCount": 13,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$26,547 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "R2",
+          "title": "Consent state without consent on file",
+          "reason": "TX is a consent state and the record says a human is required; the claim cannot take the fast lane."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000060",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Comprehensive",
+      "state": "MD",
+      "channel": "E-Portal",
+      "filedDate": "2025-12-11",
+      "amountUsd": 4782.95,
+      "complexity": "Moderate",
+      "queueAgeHours": 85.6,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 10,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000025",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Comprehensive",
+      "state": "TN",
+      "channel": "E-Portal",
+      "filedDate": "2025-09-17",
+      "amountUsd": 11236.26,
+      "complexity": "Moderate",
+      "queueAgeHours": 134.5,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": true,
+      "documentCount": 8,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$11,236 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "R2",
+          "title": "Consent state without consent on file",
+          "reason": "TN is a consent state and the record says a human is required; the claim cannot take the fast lane."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000007",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Property Damage",
+      "state": "NY",
+      "channel": "E-Portal",
+      "filedDate": "2025-07-30",
+      "amountUsd": 3804.25,
+      "complexity": "Simple",
+      "queueAgeHours": 3,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 3,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000033",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "WI",
+      "channel": "E-Portal",
+      "filedDate": "2025-09-16",
+      "amountUsd": 11778.12,
+      "complexity": "Simple",
+      "queueAgeHours": 37,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 2,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$11,778 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025001411",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "NC",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-10-05",
+      "amountUsd": 5214.22,
+      "complexity": "Complex",
+      "queueAgeHours": 82.3,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": true,
+      "documentCount": 17,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$5,214 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "R2",
+          "title": "Consent state without consent on file",
+          "reason": "NC is a consent state and the record says a human is required; the claim cannot take the fast lane."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000024",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "WI",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-10-25",
+      "amountUsd": 14491.24,
+      "complexity": "Complex",
+      "queueAgeHours": 146.9,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": true,
+      "documentCount": 15,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "regulatory",
+      "regulatory": true,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$14,491 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "R2",
+          "title": "Consent state without consent on file",
+          "reason": "WI is a consent state and the record says a human is required; the claim cannot take the fast lane."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000061",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "MA",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-12-08",
+      "amountUsd": 9877.58,
+      "complexity": "Moderate",
+      "queueAgeHours": 24.8,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 11,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$9,878 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000008",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Bodily Injury",
+      "state": "NC",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-11-19",
+      "amountUsd": 12295.41,
+      "complexity": "Moderate",
+      "queueAgeHours": 81.1,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 6,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "specialist_review",
+      "segment": "senior",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "C1",
+          "title": "Over the simple-claim ceiling",
+          "reason": "$12,295 is above the $5,000 simple-claim ceiling."
+        },
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000006",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Collision",
+      "state": "MI",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-11-06",
+      "amountUsd": 1509.2,
+      "complexity": "Simple",
+      "queueAgeHours": 6.4,
+      "todayFlagged": false,
+      "regulatoryReviewRequired": false,
+      "documentCount": 3,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    },
+    {
+      "claimId": "IS-CLM-2025000102",
+      "provenance": {
+        "kind": "extract",
+        "label": "From the extract (no documents)",
+        "parentId": null,
+        "change": null
+      },
+      "claimType": "Collision",
+      "state": "VA",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-06-23",
+      "amountUsd": 1262.24,
+      "complexity": "Simple",
+      "queueAgeHours": 50,
+      "todayFlagged": true,
+      "regulatoryReviewRequired": false,
+      "documentCount": 1,
+      "packet": "none",
+      "notAssembledReason": "No documents in the extract; only the structured row. The structured rules ran; the packet rules could not.",
+      "route": "verify_documents",
+      "segment": "waiting",
+      "regulatory": false,
+      "reasons": [
+        {
+          "id": "E1",
+          "title": "Packet not assembled",
+          "reason": "Packet not assembled: no packet for this claim. Worked as today."
+        }
+      ]
+    }
+  ]
+}
