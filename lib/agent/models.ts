@@ -7,14 +7,15 @@ export interface ModelInfo {
   label: string;
   inputPerMTok: number;
   outputPerMTok: number;
+  cacheReadPerMTok: number;
 }
 
 export const MODELS: ModelInfo[] = [
-  { id: "claude-sonnet-5-5", label: "Claude Sonnet 5.5", inputPerMTok: 2, outputPerMTok: 10 },
-  { id: "claude-opus-5-5", label: "Claude Opus 5.5", inputPerMTok: 4, outputPerMTok: 20 },
+  { id: "claude-opus-5-5", label: "Claude Opus 5.5", inputPerMTok: 4, outputPerMTok: 20, cacheReadPerMTok: 0.2 },
+  { id: "claude-sonnet-5-5", label: "Claude Sonnet 5.5", inputPerMTok: 2, outputPerMTok: 10, cacheReadPerMTok: 0.2 },
 ];
 
-export const DEFAULT_MODEL = "claude-sonnet-5-5";
+export const DEFAULT_MODEL = "claude-opus-5-5";
 
 export function modelFromEnv(): string {
   const m = process.env.ANTHROPIC_MODEL?.trim();
@@ -22,7 +23,21 @@ export function modelFromEnv(): string {
 }
 
 export function modelInfo(id: string): ModelInfo {
-  return MODELS.find((m) => id.startsWith(m.id)) ?? { id, label: id, inputPerMTok: MODELS[0].inputPerMTok, outputPerMTok: MODELS[0].outputPerMTok };
+  return MODELS.find((m) => id.startsWith(m.id)) ?? { ...MODELS[0], id, label: id };
+}
+
+export interface Usage {
+  input_tokens: number;
+  output_tokens: number;
+  cache_read_input_tokens?: number | null;
+  cache_creation_input_tokens?: number | null;
+}
+
+export function costUsd(modelId: string, usage: Usage): number {
+  const m = modelInfo(modelId);
+  const input = usage.input_tokens + 1.25 * (usage.cache_creation_input_tokens ?? 0);
+  const cached = usage.cache_read_input_tokens ?? 0;
+  return (input * m.inputPerMTok + cached * m.cacheReadPerMTok + usage.output_tokens * m.outputPerMTok) / 1_000_000;
 }
 
 export const apiKeyConfigured = () => Boolean(process.env.ANTHROPIC_API_KEY?.trim());
