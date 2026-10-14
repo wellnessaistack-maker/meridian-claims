@@ -42,8 +42,8 @@ export function Workspace({ data }: { data: WorkspaceData }) {
     setOverrides((o) => ({ ...o, [row.claimId]: { ...o[row.claimId], audit: [...row.audit, rec] } }));
     setDrawer("view");
   };
-  const onRerun = async () => {
-    if (!row) return;
+  const [running, setRunning] = useState<string | null>(null);
+  const runOne = async (target: ClaimRow) => {
     let token = window.localStorage.getItem("agentRunToken");
     if (!token) {
       token = window.prompt("Re-runs spend API money, so the endpoint needs the run token (AGENT_RUN_TOKEN on the deployment).");
@@ -51,8 +51,9 @@ export function Workspace({ data }: { data: WorkspaceData }) {
       window.localStorage.setItem("agentRunToken", token);
     }
     setRerun({ running: true, error: null });
+    setRunning(target.claimId);
     try {
-      const res = await fetch(`/api/agent/run?claim=${encodeURIComponent(row.claimId)}`, { headers: { "x-agent-run-token": token } });
+      const res = await fetch(`/api/agent/run?claim=${encodeURIComponent(target.claimId)}`, { headers: { "x-agent-run-token": token } });
       const j = (await res.json()) as { ok: boolean; error?: string; failure?: string | null; packet?: PacketRecord["packet"]; decision?: PacketRecord["decision"]; usage?: PacketRecord["usage"]; audit?: AuditRecord | null };
       if (!res.ok) {
         if (res.status === 403) window.localStorage.removeItem("agentRunToken");
@@ -60,10 +61,19 @@ export function Workspace({ data }: { data: WorkspaceData }) {
       }
       if (!j.ok || !j.packet || !j.decision || !j.usage) throw new Error(j.failure ?? "The run did not produce a packet. The cached packet is kept.");
       const packet: PacketRecord = { packet: j.packet, decision: j.decision, usage: j.usage, savedAt: new Date().toISOString() };
-      setOverrides((o) => ({ ...o, [row.claimId]: { ...o[row.claimId], packet, decision: j.decision, audit: j.audit ? [...row.audit, j.audit] : row.audit } }));
+      setOverrides((o) => ({ ...o, [target.claimId]: { ...o[target.claimId], packet, decision: j.decision, audit: j.audit ? [...target.audit, j.audit] : target.audit } }));
       setRerun({ running: false, error: null });
     } catch (err) {
       setRerun({ running: false, error: err instanceof Error ? err.message : String(err) });
+    } finally {
+      setRunning(null);
+    }
+  };
+  const onRerun = () => row && runOne(row);
+  const onRunUnprocessed = async (ids: string[]) => {
+    for (const id of ids) {
+      const target = rows.find((r) => r.claimId === id);
+      if (target) await runOne(target);
     }
   };
 
@@ -98,7 +108,7 @@ export function Workspace({ data }: { data: WorkspaceData }) {
       <ErrorBoundary fallback={(error, reset) => <ManualTriage error={error} reset={reset} rows={rows} />}>
         <div className="workspace">
           <section className="col worklist">
-            <Worklist rows={rows} selected={selected} onSelect={select} />
+            <Worklist rows={rows} selected={selected} onSelect={select} onRunUnprocessed={onRunUnprocessed} running={running} apiKey={data.apiKey} />
           </section>
           <section className="col assess">
             {row ? (

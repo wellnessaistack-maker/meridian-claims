@@ -225,3 +225,20 @@ pre.json { font-family: var(--mono); font-size: 11.5px; background: #0f172a; col
 @media (max-width: 1100px) { .workspace { grid-template-columns: 260px 1fr; } .workspace .viewer { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); } .app { height: auto; } }
 @media (max-width: 720px) { .workspace { grid-template-columns: 1fr; } .col + .col { border-left: 0; border-top: 1px solid var(--line); } .topbar { flex-wrap: wrap; height: auto; padding: 8px 12px; } .claim-meta, .checklist, .stats3, .quotes { grid-template-columns: 1fr; } }
 @media print { .topbar, .worklist, .viewer, .actionbar, .keybar { display: none !important; } .overlay { position: static; background: none; } .drawer { width: 100%; box-shadow: none; } }
+
+/* Worklist tabs, actions and the completed-tab summary (from the earlier prototype) */
+.wl-tabs { display: flex; gap: 2px; margin-top: 10px; border-bottom: 1px solid var(--line); }
+.wl-tabs button { flex: 1; white-space: nowrap; border: 0; background: none; padding: 6px 2px; font-size: 11.5px; color: var(--text-3); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+.wl-tabs button.active { color: var(--text); font-weight: 600; border-bottom-color: var(--accent); }
+.wl-tabs .n { color: var(--text-3); font-weight: 400; border-radius: 999px; padding: 0 4px; }
+.wl-actions { display: flex; gap: 6px; margin-top: 12px; }
+.wl-actions .btn { flex: 1; }
+.wl-hint { padding: 8px 14px; font-size: 11.5px; color: var(--text-3); }
+.wl-agree { margin: 8px 14px 4px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2); font-size: 12.5px; display: flex; flex-direction: column; gap: 6px; }
+.wl-agree-top { display: flex; justify-content: space-between; gap: 8px; }
+.wl-agree-bar { display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: var(--line); }
+.wl-agree-bar .k { background: var(--ok); }
+.wl-agree-bar .c { background: var(--warn); }
+.hint { font-size: 12px; color: var(--text-3); }
+.spinner { width: 12px; height: 12px; border: 2px solid var(--line-strong); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
