@@ -1,0 +1,7 @@
+{
+  "kind": "variant",
+  "label": "Variant of IS-CLM-2025000300 (loss state Texas, regulatory flag blank)",
+  "parentId": "IS-CLM-2025000300",
+  "change": "loss state Texas, regulatory flag blank",
+  "generatedBy": "scripts/make-variants.ts"
+}

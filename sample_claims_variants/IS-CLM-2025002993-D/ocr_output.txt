@@ -1,0 +1,49 @@
+--- ClaimsPro OCR extract | source: inbound fax | claim IS-CLM-2025002993-D | conf 0.96 ---
+
+--- fax cover / claimant block ---
+* * * FACSIMILE TRANSMITTAL * * * INLAND AUTO BODY -- FONTANA CA
+TO Meridian Claims Intake FROM R Salcedo Inland Auto Body FAX (877) 555-0100
+RE New claim -- Policy CA-CA-88123-18 DATE 09/08/2025 PAGES 7 incl cover
+Estimate + supplement for the above claim Damage photos to follow under separate cover
+CLAIMANT GLORIA MENDEZ  DOL 09/08/2025  CLAIMANT CONTACT ____________ [scan edge]
+POLICYHOLDER PACIFIC FREIGHT PARTNERS INC POLICY CA-CA-88123-18
+
+--- estimate p.1 vehicle / claim ---
+INLAND AUTO BODY 1155 S Cucamonga Ave Fontana CA 92337 (909) 555-0173 BAR AB-204471
+VEHICLE REPAIR ESTIMATE Estimate # IAB-9930 Written 2025-09-05 Claim # pending assignment
+Adjuster -- Estimator R Salcedo Type Original Insured Pacific Freight Partners Inc
+Policy CA-CA-88123-18 Claimant Gloria Mendez bodily injury claim
+Vehicle 2018 Freightliner M2 106 Medium Duty Unit PFP-114 Odometer 128,540 Loss rear impact
+
+--- estimate p.2 damage assessment ---
+DAMAGE ASSESSMENT Point of impact rear 6 o'clock offset right Inspection in-shop unit on ground
+Rear bumper cover deformed and torn at RH mount reinforcement bar to be R&I and inspected
+RH cargo door skin creased hinge alignment off door to be replaced RH tail lamp lens cracked
+housing separated replace assembly NOTE rear quarter shows corrosion and prior paint edges
+not consistent with a fresh impact flagged for adjuster review photographs on file
+rear bumper rear quarter cargo door
+
+--- estimate p.3 line items ---
+LN DESCRIPTION OPER HRS AMOUNT 1 Bumper cover rear R&R 1,800.00 2 Cargo door rear RH R&R 640.00
+3 Tail lamp assembly RH R&R 288.50 Paint & materials -- 120.00 4 R&I rear bumper reinf BODY 1.5
+93.00 5 R&R cargo door rear RH BODY 2.5 155.00 6 Align fit rear body BODY 2.0 124.00
+7 Refinish rear panel door REFN 3.0 186.00 Parts & materials 2,848.50 Labor 558.00
+
+--- estimate p.4 parts detail ---
+PARTS DETAIL LN DESCRIPTION PART NO QTY PRICE 1 Bumper cover rear A66-11288-000 1
+2 Cargo door rear RH A18-66341-002 1 640.00 3 Tail lamp assembly RH A66-06327-001 1 288.50
+OEM parts via Freightliner Daimler dealer feed part numbers per unit VIN build
+
+--- estimate p.5 labor + materials ---
+LABOR OPERATIONS LN DESCRIPTION OPER HRS RATE AMOUNT 4 R&I rear bumper reinf BODY 1.5 62.00 93.00
+5 R&R cargo door rear RH BODY 2.5 62.00 155.00 6 Align fit rear body BODY 2.0 62.00 124.00
+7 Refinish rear panel door REFN 3.0 62.00 186.00 Body 6.0 hr Refinish 3.0 hr Labor total 558.00
+PAINT & MATERIALS Color base coat 48.00 Clearcoat 30.00 Primer sealer 22.00
+Hazardous waste disposal 12.00 Masking fine line 8.00 Paint & materials total 120.00
+
+--- estimate p.6 recap ---
+ESTIMATE RECAP Parts 2,728.50 Paint & materials 120.00 Labor 558.00 Sales tax 8.75% 249.24
+VEHICLE TOTAL 3,655.74 Vehicle damage only Bodily injury medical handled separately
+Estimator R Salcedo Shop Inland Auto Body BAR AB-204471 Date 2025-09-05
+
+--- end OCR extract ---

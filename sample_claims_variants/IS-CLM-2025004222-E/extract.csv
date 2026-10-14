@@ -1,0 +1,2 @@
+claim_id,filed_date,claim_type,state,intake_channel,cost_per_claim_usd,claim_amount_usd,complexity,automation_eligibility_score,flagged_for_human_review,requires_human_by_regulation,queue_wait_hours,handling_hours,total_cycle_time_hours,disposition,denial_reason,adjuster_id,document_count,customer_satisfaction_1to5,review_actually_needed
+IS-CLM-2025004222-E,2025-09-25,Bodily Injury,NY,Phone,1312.79,59533.85,Complex,32,Yes,Yes,117.2,90.8,208,Paid in Full,,ADJ-106,15,3,

@@ -1,0 +1,6 @@
+{
+  "kind": "mock",
+  "label": "Mock claim (made up for the demo)",
+  "parentId": null,
+  "change": "Canadian policyholder: residency constraints keep the claim out of the prototype's scope"
+}

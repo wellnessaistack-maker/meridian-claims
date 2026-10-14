@@ -83,7 +83,7 @@ export const CHECKLIST: ChecklistItemDef[] = [
     why: "The amount claimed has to be supported by a shop estimate or an invoice.",
     from: "provider",
     appliesTo: (x) => (VEHICLE.includes(x.claimType) && !x.theft) || x.vehicleDamageClaimed,
-    detect: (c) => file(c, /estimate/i) ?? (c.ocr ? { document: c.ocr.document, source: "databricks", note: "Faxed estimate, OCR text" } : null) ?? inIndex(c, /estimate|invoice|appraisal/i),
+    detect: (c) => file(c, /estimate/i) ?? (c.ocr ? { document: c.ocr.document, source: "databricks", note: "Faxed estimate, OCR text" } : null) ?? inIndex(c, /estimate|invoice|appraisal|quote/i),
   },
   {
     id: "claimant_contact",

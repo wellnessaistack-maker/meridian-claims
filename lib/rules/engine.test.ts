@@ -109,10 +109,14 @@ test("D1: any denial indicator in the packet goes to full review, and the reason
   }
 });
 
-test("D1: a policy that the record shows lapsed at the date of loss counts as an indicator even if the agent missed it", () => {
+test("D0: a policy that the record shows lapsed at the date of loss goes to full review even if the agent missed it, with or without a packet", () => {
   const d = run(claim({ policyStatus: "lapsed" }));
   assert.equal(d.route, "full_review");
-  assert.match(d.reasons[0].evidence!, /not in force/);
+  assert.ok(fired(d).includes("D0"));
+  assert.match(d.reasons.find((r) => r.id === "D0")!.evidence!, /not in force/);
+  const structured = decide(claim({ policyStatus: "lapsed", packet: null }), DEFAULT_SETTINGS, { structuredOnly: true });
+  assert.equal(structured.route, "full_review");
+  assert.ok(fired(structured).includes("D0"));
 });
 
 // --- Evidence -----------------------------------------------------------------------------
@@ -235,7 +239,7 @@ test("every rule has a unique ID, a tier, a scope, plain-language text, named so
     assert.ok(["structured", "packet"].includes(r.scope));
     if (r.tier === "configurable") assert.ok(r.settings && r.settings.length > 0, `${r.id} should name its setting`);
   }
-  assert.deepEqual(ids, ["G1", "R1", "R2", "R3", "D1", "E1", "E2", "C1", "C2", "C3"]);
+  assert.deepEqual(ids, ["G1", "R1", "R2", "R3", "D0", "D1", "E1", "E2", "C1", "C2", "C3"]);
   for (const def of SETTING_DEFS) assert.ok(RULES.some((r) => r.settings?.includes(def.key)), `setting ${def.key} is used by a rule`);
 });
 

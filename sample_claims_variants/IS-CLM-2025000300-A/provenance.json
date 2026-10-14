@@ -1,0 +1,7 @@
+{
+  "kind": "variant",
+  "label": "Variant of IS-CLM-2025000300 (repair estimate missing)",
+  "parentId": "IS-CLM-2025000300",
+  "change": "repair estimate missing",
+  "generatedBy": "scripts/make-variants.ts"
+}

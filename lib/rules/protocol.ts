@@ -235,6 +235,17 @@ export const RULES: Rule[] = [
 
   // --- Denial indicators (packet) -----------------------------------------------
   {
+    id: "D0",
+    group: "regulatory",
+    tier: "locked",
+    scope: "structured",
+    floor: "full_review",
+    title: "Policy not in force at the date of loss",
+    when: "The policy record's effective and expiry dates do not cover the date of loss. This is a denial indicator the structured data carries on its own, so it applies before any packet exists. A person decides what it means; the AI never recommends a denial.",
+    uses: ["policy.status"],
+    check: ({ input }) => (input.policyStatus === "lapsed" ? { reason: "The policy record shows the policy was not in force at the date of loss. A person adjudicates in full; the AI never recommends a denial.", evidence: "Policy record: not in force at the date of loss." } : null),
+  },
+  {
     id: "D1",
     group: "regulatory",
     tier: "locked",
@@ -242,10 +253,9 @@ export const RULES: Rule[] = [
     floor: "full_review",
     title: "Denial indicator in the packet",
     when: "The packet found pre-existing damage, a policy lapse at the date of loss, a possible missed filing deadline, or a fraud signal (for example a photo that matches a prior claim). Any of these goes to full review. The AI flags the indicator; only a person can act on it.",
-    uses: ["packet.denial_indicators", "policy.status"],
+    uses: ["packet.denial_indicators"],
     check: ({ input }) => {
       const found = [...(input.packet?.denialIndicators ?? [])];
-      if (input.policyStatus === "lapsed" && !found.some((d) => d.kind === "policy_lapse")) found.push({ kind: "policy_lapse", evidence: "Policy record: not in force at the date of loss." });
       if (!found.length) return null;
       return { reason: `${found.length === 1 ? "A denial indicator" : `${found.length} denial indicators`} in the packet: ${found.map((d) => d.kind.replace(/_/g, " ")).join(", ")}. A person adjudicates in full; the AI never recommends a denial.`, evidence: found.map((d) => d.evidence).join(" | ") };
     },

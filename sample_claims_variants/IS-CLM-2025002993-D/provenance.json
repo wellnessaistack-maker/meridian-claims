@@ -1,0 +1,7 @@
+{
+  "kind": "variant",
+  "label": "Variant of IS-CLM-2025002993 (clean OCR of the same fax)",
+  "parentId": "IS-CLM-2025002993",
+  "change": "clean OCR of the same fax",
+  "generatedBy": "scripts/make-variants.ts"
+}

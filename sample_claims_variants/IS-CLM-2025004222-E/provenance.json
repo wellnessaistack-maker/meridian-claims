@@ -1,0 +1,7 @@
+{
+  "kind": "variant",
+  "label": "Variant of IS-CLM-2025004222 (medical visit on the day of loss)",
+  "parentId": "IS-CLM-2025004222",
+  "change": "medical visit on the day of loss",
+  "generatedBy": "scripts/make-variants.ts"
+}

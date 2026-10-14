@@ -24,7 +24,8 @@ export interface ExtractRow {
   automationEligibilityScore: number;
   flaggedForHumanReview: boolean;
   /** The extract's own regulatory flag. For consent states this is the only record of consent. */
-  requiresHumanByRegulation: boolean;
+  /** Null when the export carries no value (the flag is not cleanly tracked). */
+  requiresHumanByRegulation: boolean | null;
   queueWaitHours: number;
   handlingHours: number;
   totalCycleTimeHours: number;
@@ -64,7 +65,7 @@ export function parseExtractCsv(text: string): ExtractRow[] {
       complexity: c[7] as Complexity,
       automationEligibilityScore: Number(c[8]),
       flaggedForHumanReview: yes(c[9]),
-      requiresHumanByRegulation: yes(c[10]),
+      requiresHumanByRegulation: c[10].trim() === "" ? null : yes(c[10]),
       queueWaitHours: Number(c[11]),
       handlingHours: Number(c[12]),
       totalCycleTimeHours: Number(c[13]),
@@ -91,7 +92,7 @@ export function rowToCsvLine(r: ExtractRow): string {
     r.complexity,
     r.automationEligibilityScore,
     yn(r.flaggedForHumanReview),
-    yn(r.requiresHumanByRegulation),
+    r.requiresHumanByRegulation === null ? "" : yn(r.requiresHumanByRegulation),
     r.queueWaitHours,
     r.handlingHours,
     r.totalCycleTimeHours,

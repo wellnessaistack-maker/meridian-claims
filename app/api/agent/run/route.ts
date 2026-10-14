@@ -8,13 +8,14 @@
 //
 // mode=background answers at once and finishes the run after the response,
 // then writes the run's transcript (every model turn, see lib/agent/transcript.ts)
-// into the function's runtime logs as hashed chunks (PKTREC lines). A caller
+// into the function's runtime logs as gzipped, hashed chunks (PKTGZ lines). A caller
 // that cannot hold a connection open for the length of a run (a minute or
 // more) collects the lines from the logs, decodes them with
 // scripts/decode-rec-log.ts and replays them with scripts/replay-run.ts, which
 // rebuilds the same packet from the same claim folder and checks the hashes.
 
 import { createHash, timingSafeEqual } from "node:crypto";
+import { gzipSync } from "node:zlib";
 import { after } from "next/server";
 
 import { findClaimFolder } from "@/lib/claim/catalog.ts";
@@ -48,17 +49,18 @@ async function runOne(claimId: string, model: string) {
 
 const sha8 = (s: string) => createHash("sha256").update(s).digest("hex").slice(0, 8);
 
-/** Writes the transcript to the logs in hashed chunks that fit a log line (see scripts/decode-rec-log.ts). */
+/** Writes the transcript to the logs, gzipped and base64, in hashed chunks that fit a log line (see scripts/decode-rec-log.ts). */
 function logTranscript(claimId: string, runId: string, t: Transcript) {
   const json = JSON.stringify(t);
-  const size = 1500;
-  const n = Math.ceil(json.length / size);
+  const b64 = gzipSync(Buffer.from(json), { level: 9 }).toString("base64");
+  const size = 1000;
+  const n = Math.ceil(b64.length / size);
   for (let i = 0; i < n; i++) {
-    const chunk = json.slice(i * size, (i + 1) * size);
-    console.log(`PKTREC ${claimId} ${runId} ${i + 1}/${n} ${sha8(chunk)} |${chunk}|`);
+    const chunk = b64.slice(i * size, (i + 1) * size);
+    console.log(`PKTGZ ${claimId} ${runId} ${i + 1}/${n} ${sha8(chunk)} |${chunk}|`);
   }
   const r = t.result;
-  console.log(`PKTDONE ${claimId} ${runId} ${n} chunks ${json.length} chars ok=${r?.ok} failure=${JSON.stringify(r?.failure ?? null)} inputHash=${r?.inputHash} packetHash=${r?.packetHash}`);
+  console.log(`PKTDONE ${claimId} ${runId} ${n} chunks ${b64.length} chars (${json.length} json) ok=${r?.ok} failure=${JSON.stringify(r?.failure ?? null)} inputHash=${r?.inputHash} packetHash=${r?.packetHash}`);
 }
 
 export async function GET(request: Request) {
@@ -83,7 +85,7 @@ export async function GET(request: Request) {
         console.error(`PKTFAIL ${claimId} ${runId} ${err instanceof Error ? err.message : String(err)}`);
       }
     });
-    return Response.json({ started: true, claimId, runId, model, note: "The run finishes after this response; the transcript is written to the runtime logs as PKTREC lines." });
+    return Response.json({ started: true, claimId, runId, model, note: "The run finishes after this response; the transcript is written to the runtime logs as PKTGZ lines." });
   }
 
   return Response.json(await runOne(claimId, model));

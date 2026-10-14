@@ -1,0 +1,7 @@
+{
+  "kind": "variant",
+  "label": "Variant of IS-CLM-2025000300 (claim amount $10,100)",
+  "parentId": "IS-CLM-2025000300",
+  "change": "claim amount $10,100",
+  "generatedBy": "scripts/make-variants.ts"
+}

@@ -1,0 +1,2 @@
+claim_id,filed_date,claim_type,state,intake_channel,cost_per_claim_usd,claim_amount_usd,complexity,automation_eligibility_score,flagged_for_human_review,requires_human_by_regulation,queue_wait_hours,handling_hours,total_cycle_time_hours,disposition,denial_reason,adjuster_id,document_count,customer_satisfaction_1to5,review_actually_needed
+IS-CLM-2025002993-D,2025-09-08,Bodily Injury,CA,Fax/EDI,637.95,48959.36,Complex,49,Yes,Yes,137.8,78.8,216.6,Denied,Pre-existing damage,ADJ-125,18,3,
