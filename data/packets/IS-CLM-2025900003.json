@@ -1,0 +1,784 @@
+{
+  "packet": {
+    "claimId": "IS-CLM-2025900003",
+    "provenance": {
+      "kind": "mock",
+      "label": "Mock claim (made up for the demo)",
+      "parentId": null,
+      "change": "Liability claim in a consent state with an attorney demand"
+    },
+    "status": "assembled",
+    "notAssembledReason": null,
+    "generatedAt": "2026-10-14T18:13:28.234Z",
+    "model": {
+      "requested": "claude-opus-5-5",
+      "served": "claude-opus-5-5",
+      "promptVersion": "packet-v2",
+      "agentVersion": "agent-v1"
+    },
+    "header": {
+      "claimId": "IS-CLM-2025900003",
+      "claimType": "Liability",
+      "state": "TX",
+      "country": "US",
+      "channel": "Phone",
+      "filedDate": "2025-11-14",
+      "dateOfLoss": "2025-11-08",
+      "amountUsd": 24500,
+      "policyNumber": "CA-TX-51822-19",
+      "policyholderToken": "[POLICYHOLDER]",
+      "claimantToken": "[CLAIMANT]",
+      "vehicle": "2019 Freightliner Cascadia",
+      "complexity": "Complex",
+      "regulatoryReviewRequired": true,
+      "policyStatus": "in_force",
+      "priorClaimsOnPolicy": 0,
+      "adjusterId": "ADJ-109"
+    },
+    "evidence": [
+      {
+        "id": "fnol_record",
+        "label": "First notice of loss record",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "loss_description",
+        "label": "Description of the loss",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "claimant_contact",
+        "label": "Claimant contact details",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": "Claimant contact: c/o Hartwell & Ruiz LLP, (512) 555-0177"
+      },
+      {
+        "id": "claimant_account",
+        "label": "Claimant's account of the injury",
+        "present": true,
+        "document": "call_excerpt.md",
+        "source": "databricks",
+        "note": null
+      },
+      {
+        "id": "police_report",
+        "label": "Police or incident report",
+        "present": true,
+        "document": "status_history.md",
+        "source": "claimspro",
+        "note": "Listed in the ClaimsPro document index: \"Police report (Travis County TC-25-118804) — requested, not on file\""
+      },
+      {
+        "id": "third_party_details",
+        "label": "Third party details",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": "Third party: Marisol Vega (driver of the other vehicle)"
+      },
+      {
+        "id": "third_party_demand",
+        "label": "Claim or demand from the third party",
+        "present": true,
+        "document": "demand_letter.md",
+        "source": "databricks",
+        "note": null
+      }
+    ],
+    "completeness": 1,
+    "fields": [
+      {
+        "key": "claim_amount",
+        "label": "Claim amount",
+        "value": "24500.00",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "claim_type",
+        "label": "Claim type",
+        "value": "Liability",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "loss_state",
+        "label": "Loss state",
+        "value": "TX",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "intake_channel",
+        "label": "Intake channel",
+        "value": "Phone",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "filed_date",
+        "label": "Filed date",
+        "value": "2025-11-14",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "date_of_loss",
+        "label": "Date of loss",
+        "value": "2025-11-08",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "policy_number",
+        "label": "Policy number",
+        "value": "CA-TX-51822-19",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "vehicle",
+        "label": "Insured vehicle",
+        "value": "2019 Freightliner Cascadia",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "regulatory_flag",
+        "label": "Requires human by regulation",
+        "value": "Yes",
+        "source": "claimspro",
+        "document": "status_history.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "model_loss_location",
+        "label": "Loss location",
+        "value": "US-290 westbound near Manor, TX",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"loss of 2025-11-08, US-290 westbound near Manor, TX\"",
+        "reread": null
+      },
+      {
+        "key": "model_loss_time",
+        "label": "Time of loss",
+        "value": "around 7:00 a.m., 2025-11-08",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.88,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.88 for the document). Quote: \"on the eighth, around seven in the morning\"",
+        "reread": null
+      },
+      {
+        "key": "model_contact_between_vehicles",
+        "label": "Contact between vehicles (claimant)",
+        "value": "Unknown",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.88,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.88 for the document). Quote: \"Whether there was a touch she can't say.\"",
+        "reread": null
+      },
+      {
+        "key": "model_insured_driver_account",
+        "label": "Insured driver's account",
+        "value": "No contact; did not see claimant",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Our driver says no contact and didn't see her\"",
+        "reread": null
+      },
+      {
+        "key": "model_injury",
+        "label": "Claimant injury",
+        "value": "Fracture of right distal radius",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"She sustained a fracture of the right distal radius\"",
+        "reread": null
+      },
+      {
+        "key": "model_treatment",
+        "label": "Treatment",
+        "value": "St. David's Medical Center, same day as loss",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"treated at St. David's Medical Center on the day of the loss\"",
+        "reread": null
+      },
+      {
+        "key": "model_claimant_vehicle",
+        "label": "Claimant vehicle",
+        "value": "2004 Volkswagen Golf, total loss",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"Her 2004 Volkswagen Golf is a total loss.\"",
+        "reread": null
+      },
+      {
+        "key": "model_demand_vehicle",
+        "label": "Demand: vehicle ACV less salvage",
+        "value": "$4,200.00",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"Vehicle, actual cash value less salvage | 4,200.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_demand_medical",
+        "label": "Demand: medical expenses",
+        "value": "$6,300.00",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"Medical expenses to date | 6,300.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_demand_earnings",
+        "label": "Demand: loss of earnings (6 weeks)",
+        "value": "$5,400.00",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"Loss of earnings, 6 weeks | 5,400.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_demand_general",
+        "label": "Demand: general damages",
+        "value": "$8,600.00",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"General damages | 8,600.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_demand_total",
+        "label": "Total demanded",
+        "value": "$24,500.00",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"Total demanded: **$24,500.00**\"",
+        "reread": null
+      },
+      {
+        "key": "model_police_incident",
+        "label": "Police incident number",
+        "value": "Travis County TC-25-118804",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"Travis County incident TC-25-118804\"",
+        "reread": null
+      },
+      {
+        "key": "model_insured_stopped",
+        "label": "Insured vehicle stopped",
+        "value": "No",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.88,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.88 for the document). Quote: \"The truck didn't stop. The police have the plate from a witness.\"",
+        "reread": null
+      },
+      {
+        "key": "model_response_deadline",
+        "label": "Acknowledgment requested",
+        "value": "Within 15 days of 2025-11-14",
+        "source": "databricks",
+        "document": "demand_letter.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from demand_letter.md (no engine confidence; a person can check the quote). Quote: \"Please acknowledge within 15 days.\"",
+        "reread": null
+      }
+    ],
+    "timeline": [
+      {
+        "at": "2025-11-08",
+        "event": "Date of loss",
+        "source": "claimspro",
+        "document": "intake.md"
+      },
+      {
+        "at": "2025-11-08",
+        "event": "Date of loss: claimant leaves US-290 and strikes a tree, about 7 a.m.",
+        "source": "databricks",
+        "document": "call_excerpt.md"
+      },
+      {
+        "at": "2025-11-08",
+        "event": "Claimant treated at St. David's Medical Center the same day (stated; no medical record on file)",
+        "source": "databricks",
+        "document": "demand_letter.md"
+      },
+      {
+        "at": "2025-11-14",
+        "event": "Phone report from the claimant's attorney, call started 11:12 CT, recording REC-2025900003-01",
+        "source": "databricks",
+        "document": "call_excerpt.md"
+      },
+      {
+        "at": "2025-11-14",
+        "event": "Attorney demand letter dated, $24,500, acknowledgment requested within 15 days",
+        "source": "databricks",
+        "document": "demand_letter.md"
+      },
+      {
+        "at": "2025-11-14",
+        "event": "Status: Received, 11:30 (phone report from attorney)",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-14",
+        "event": "Status: Assigned to ADJ-109, 11:30",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-14T11:30",
+        "event": "Received: Phone FNOL from attorney; call recorded + transcribed",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-14T11:30",
+        "event": "Assigned: Routed to queue ADJ-109",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-17",
+        "event": "Status: In Review, 08:10 (demand letter received; police report requested); 68.7 hours in queue before first touch",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-17",
+        "event": "Adjuster note: liability decision referred to a senior adjuster with the police report",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "at": "2025-11-17T08:10",
+        "event": "In Review: Demand letter received; police report requested",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-29",
+        "event": "About the end of the 15-day acknowledgment window requested in the demand",
+        "source": "databricks",
+        "document": "demand_letter.md"
+      }
+    ],
+    "contradictions": [
+      {
+        "topic": "Scene of loss: highway versus photographed location",
+        "a": {
+          "source": "databricks",
+          "document": "demand_letter.md",
+          "quote": "US-290 westbound near Manor, TX ... she left the roadway and struck a tree"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "IMG_3304.jpg",
+          "quote": "Photo shows a city street with parked cars, a crosswalk, flat-fronted delivery trucks, cordon tape with what looks like non-English wording and plates that look non-US"
+        },
+        "material": true,
+        "note": "The only photo, described in the demand as taken at the scene, does not match a roadside on a Texas US highway. It is unclear whether the photo shows this loss."
+      },
+      {
+        "topic": "Contact between the vehicles",
+        "a": {
+          "source": "databricks",
+          "document": "call_excerpt.md",
+          "quote": "Whether there was a touch she can't say."
+        },
+        "b": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "Our driver says no contact and didn't see her"
+        },
+        "material": true,
+        "note": "The two accounts differ on whether the insured's truck was involved at all. Liability depends on the police report and the witness, neither of which is on file."
+      },
+      {
+        "topic": "Time of loss versus lighting in the photo",
+        "a": {
+          "source": "databricks",
+          "document": "call_excerpt.md",
+          "quote": "around seven in the morning"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "IMG_3304.jpg",
+          "quote": "Bright daylight and green foliage, consistent with later in the day"
+        },
+        "material": false,
+        "note": "This adds to the photo-origin question but is not conclusive by itself."
+      },
+      {
+        "topic": "Police report shown as present but not on file",
+        "a": {
+          "source": "claimspro",
+          "document": "status_history.md",
+          "quote": "Police report (Travis County TC-25-118804) — requested, not on file"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "Police report requested, not here yet."
+        },
+        "material": true,
+        "note": "check_completeness counts the police report as present only because it appears in the ClaimsPro document index. The report itself has not been received."
+      }
+    ],
+    "missing": [],
+    "denialIndicators": [
+      {
+        "kind": "fraud_signal",
+        "evidence": "The photo the demand describes as taken at the scene shows an urban street with parked cars, a crosswalk, flat-fronted delivery trucks, cordon tape with what looks like non-English wording and plates that look non-US. That does not match the stated US-290 roadside near Manor, Texas. Where the photo came from has not been checked.",
+        "source": "databricks",
+        "document": "IMG_3304.jpg"
+      }
+    ],
+    "agentRoute": "specialist_review",
+    "rationale": "The packet contains the ClaimsPro intake and status history, the phone transcript (call_excerpt.md), the attorney demand (demand_letter.md), the adjuster notes (adjuster_notes.md) and one photo (IMG_3304.jpg). The policy was in force on 2025-11-08, and the demand totals $24,500, matching the intake amount. The claimant cannot say whether there was contact, and adjuster_notes.md records that the insured's driver says there was none. The photo's urban, apparently non-US setting does not match the US-290 location stated in demand_letter.md, which raises a question about where the photo came from. The Travis County police report, medical records and bills, proof of lost earnings, a vehicle valuation, a statement from the insured's driver, the witness's details and the original photo file are not on file. The checklist counts the police report as present when it has only been requested. The claim goes to specialist review because liability for a crash where contact is disputed, and the question over the photo, need senior and specialist judgment with the police report in hand, as the assigned adjuster also notes.",
+    "trace": [
+      {
+        "step": 1,
+        "tool": "get_structured",
+        "args": "{\"claim_id\":\"IS-CLM-2025900003\"}",
+        "result": "Liability TX Phone $24500; 49 fields",
+        "durationMs": 2,
+        "startedAt": "2026-10-14T18:12:29.798Z"
+      },
+      {
+        "step": 2,
+        "tool": "get_documents",
+        "args": "{\"claim_id\":\"IS-CLM-2025900003\"}",
+        "result": "3 documents, 0 OCR fields (0 weak: none), 1 photos",
+        "durationMs": 98,
+        "startedAt": "2026-10-14T18:12:32.364Z"
+      },
+      {
+        "step": 3,
+        "tool": "check_completeness",
+        "args": "{\"claim_id\":\"IS-CLM-2025900003\"}",
+        "result": "7 of 7 on file; missing: none",
+        "durationMs": 0,
+        "startedAt": "2026-10-14T18:12:41.296Z"
+      }
+    ],
+    "inputHash": "2a1938aef486f25d8ac3b09d83eaa257aa3dc5e395569c1788c073bd0768bea0",
+    "settingsUsed": {
+      "ocrRereadThreshold": 0.8
+    }
+  },
+  "decision": {
+    "protocolVersion": "0.1",
+    "settings": {
+      "simpleClaimCeilingUsd": 5000,
+      "minCompletenessPct": 100,
+      "ocrRereadThreshold": 0.8
+    },
+    "agentRoute": "specialist_review",
+    "route": "full_review",
+    "routeLabel": "Full review",
+    "escalatedByRules": true,
+    "segment": "regulatory",
+    "segmentLabel": "Regulatory review",
+    "regulatory": true,
+    "reasons": [
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "A denial indicator in the packet: fraud signal. A person adjudicates in full; the AI never recommends a denial.",
+        "evidence": "The photo the demand describes as taken at the scene shows an urban street with parked cars, a crosswalk, flat-fronted delivery trucks, cordon tape with what looks like non-English wording and plates that look non-US. That does not match the stated US-290 roadside near Manor, Texas. Where the photo came from has not been checked.",
+        "uses": [
+          "packet.denial_indicators"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$24,500 is above the $5,000 simple-claim ceiling.",
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "TX is a consent state and the record says a human is required; the claim cannot take the fast lane.",
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "3 material contradictions between sources: Scene of loss: highway versus photographed location; Contact between the vehicles; Police report shown as present but not on file.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      }
+    ],
+    "ruleResults": [
+      {
+        "id": "G1",
+        "title": "The AI never recommends a denial",
+        "group": "guardrail",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.rationale",
+          "packet.route"
+        ]
+      },
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "TX is a consent state and the record says a human is required; the claim cannot take the fast lane.",
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Canadian policyholder data",
+        "group": "scope",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "out_of_scope",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.country"
+        ]
+      },
+      {
+        "id": "D0",
+        "title": "Policy not in force at the date of loss",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "policy.status"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "A denial indicator in the packet: fraud signal. A person adjudicates in full; the AI never recommends a denial.",
+        "evidence": "The photo the demand describes as taken at the scene shows an urban street with parked cars, a crosswalk, flat-fronted delivery trucks, cordon tape with what looks like non-English wording and plates that look non-US. That does not match the stated US-290 roadside near Manor, Texas. Where the photo came from has not been checked.",
+        "uses": [
+          "packet.denial_indicators"
+        ]
+      },
+      {
+        "id": "E1",
+        "title": "Packet not assembled",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.route"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "3 material contradictions between sources: Scene of loss: highway versus photographed location; Contact between the vehicles; Police report shown as present but not on file.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$24,500 is above the $5,000 simple-claim ceiling.",
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.completeness"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.fields"
+        ]
+      }
+    ],
+    "humanDecision": "Every route ends with a person deciding in ClaimsPro. The AI recommends; it never approves and never denies."
+  },
+  "usage": {
+    "calls": 5,
+    "inputTokens": 40713,
+    "outputTokens": 5864,
+    "costUsd": 0.2801,
+    "durationMs": 60351
+  },
+  "savedAt": "2026-10-14T18:19:56.753Z"
+}
