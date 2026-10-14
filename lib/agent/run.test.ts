@@ -329,3 +329,13 @@ test("a recorded run replays to the same packet: same input hash, same packet ha
   const wrong = await runAgent(claim, { client: replayClient(other), vision: replayVision(other), images: false });
   assert.notEqual(packetHash(wrong.packet), packetHash(original.packet));
 });
+
+test("a real name in the model's output is masked before it becomes a packet", async () => {
+  const claim = loadClaimById(id300)!;
+  const name = claim.names[0].value;
+  const client = scripted([[{ name: "get_structured", input: { claim_id: id300 } }]], output({ summary: `The estimate is addressed to ${name}.`, photo_observations: [{ photo: "IMG_0071.jpg", observation: `Sticker reads ${name}` }] }));
+  const r = await runAgent(claim, { client, vision: null, images: false });
+  assert.equal(r.ok, true);
+  assert.equal(containsName(JSON.stringify(r.packet), claim.names), null);
+  assert.match(r.packet.rationale + JSON.stringify(r.packet), /\[POLICYHOLDER\]/);
+});

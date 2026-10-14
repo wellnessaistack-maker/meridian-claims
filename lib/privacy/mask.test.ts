@@ -39,3 +39,8 @@ test("masking is deterministic, so the audit input hash is stable", () => {
   const t = "Sunstate Logistics LLC, Tampa. Sunstate Logistics again.";
   assert.equal(maskText(t, names).text, maskText(t, names).text);
 });
+
+test("a claim ID's digits are not a phone number; a bare ten-digit number still is", () => {
+  const { text } = maskText("Claim IS-CLM-2025000300, call 5551234567 or (305) 555-0199.", []);
+  assert.equal(text, "Claim IS-CLM-2025000300, call [PHONE] or [PHONE].");
+});

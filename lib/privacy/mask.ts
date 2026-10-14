@@ -45,7 +45,8 @@ function patternsFor(value: string): RegExp[] {
   return out;
 }
 
-const PHONE = /(?:\(\d{3}\)\s?|\b\d{3}[-.\s])\d{3}[-.\s]\d{4}\b|\b\d{10}\b/g;
+// A bare ten-digit run counts only when it stands alone: the digits of a claim ID (IS-CLM-2025000300) are not a phone number.
+const PHONE = /(?:\(\d{3}\)\s?|\b\d{3}[-.\s])\d{3}[-.\s]\d{4}\b|(?<![\w-])\d{10}(?![\w-])/g;
 const EMAIL = /\b[\w.+-]+@[\w-]+\.[\w.]+\b/g;
 // Dates of birth: a labelled date, or the EDI DMG segment.
 const DOB = /(\bDOB\s*[:]?\s*)(\d{4}-\d{2}-\d{2})/gi;

@@ -11,7 +11,7 @@ import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 
 import type { LoadedClaim } from "../claim/load.ts";
 import { ROUTE_ORDER, type ClaimPacket } from "../claim/schema.ts";
-import { containsName } from "../privacy/mask.ts";
+import { containsName, maskText } from "../privacy/mask.ts";
 import { decide, type Decision } from "../rules/engine.ts";
 import { DEFAULT_SETTINGS, type Settings } from "../rules/protocol.ts";
 import { assemblePacket, packetView } from "./assemble.ts";
@@ -171,12 +171,21 @@ export async function runAgent(claim: LoadedClaim, opts: RunOptions = {}): Promi
     }
     served = fin.model;
     if (!fin.output) throw new AgentFailure("invalid_output", fin.problem ?? "No packet.");
-    return finish(ctx, fin.output, { modelRequested: model, modelServed: served }, null, usages, t0);
+    // A scanned page or a photo can show a printed name the text masking never saw. Nothing with a real name becomes a packet.
+    return finish(ctx, maskOutput(fin.output, claim.names), { modelRequested: model, modelServed: served }, null, usages, t0);
   } catch (err) {
     const message = describeFailure(err);
     console.error(`[agent] ${claim.header.claimId}: ${message}`);
     return finish(ctx, null, { modelRequested: model, modelServed: served }, message, usages, t0);
   }
+}
+
+/** Masks real names in every string of the model's output, however nested. */
+export function maskOutput<T>(value: T, names: LoadedClaim["names"]): T {
+  if (typeof value === "string") return maskText(value, names).text as T;
+  if (Array.isArray(value)) return value.map((v) => maskOutput(v, names)) as T;
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, maskOutput(v, names)])) as T;
+  return value;
 }
 
 function finish(ctx: ToolContext, output: AgentOutput | null, m: { modelRequested: string; modelServed: string | null }, failure: string | null, usages: { model: string; usage: Usage }[], t0: number): RunResult {

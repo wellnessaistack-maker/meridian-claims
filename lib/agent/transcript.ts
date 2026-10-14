@@ -45,16 +45,33 @@ export function newTranscript(claimId: string, model: string): Transcript {
   return { version: 1, claimId, model, startedAt: new Date().toISOString(), steps: [], finishes: [], vision: [] };
 }
 
+/** Only the token counts the cost needs; the API's usage block carries much more. */
+function slimUsage(u: Usage): Usage {
+  return { input_tokens: u.input_tokens, output_tokens: u.output_tokens, cache_read_input_tokens: u.cache_read_input_tokens ?? null, cache_creation_input_tokens: u.cache_creation_input_tokens ?? null } as Usage;
+}
+
+/**
+ * The replay needs the tool calls and the final output, not the model's
+ * thinking (a long opaque signature) or its narrative between calls (which no
+ * artifact keeps: the packet's words come from the final output). Each
+ * narrative block is replaced by a marker with its length.
+ */
+function slimContent(content: StepResult["content"]): StepResult["content"] {
+  return content
+    .filter((b) => b.type === "tool_use" || b.type === "text")
+    .map((b) => (b.type === "text" ? { type: "text" as const, text: `[model text omitted from the transcript: ${b.text.length} chars]`, citations: null } : b)) as StepResult["content"];
+}
+
 export function recordingClient(inner: ModelClient, t: Transcript): ModelClient {
   return {
     async step(messages) {
       const r = await inner.step(messages);
-      t.steps.push({ content: r.content, stopReason: r.stopReason, usage: r.usage, model: r.model });
+      t.steps.push({ content: slimContent(r.content), stopReason: r.stopReason, usage: slimUsage(r.usage), model: r.model });
       return r;
     },
     async finish(messages) {
       const r = await inner.finish(messages);
-      t.finishes.push({ output: r.output, usage: r.usage, model: r.model, problem: r.problem });
+      t.finishes.push({ output: r.output, usage: slimUsage(r.usage), model: r.model, problem: r.problem });
       return r;
     },
   };
