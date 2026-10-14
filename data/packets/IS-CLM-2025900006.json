@@ -1,0 +1,650 @@
+{
+  "packet": {
+    "claimId": "IS-CLM-2025900006",
+    "provenance": {
+      "kind": "mock",
+      "label": "Mock claim (made up for the demo)",
+      "parentId": null,
+      "change": "A damage photo that is byte-identical to one on a closed claim: a fraud signal from the record, not from image fingerprinting"
+    },
+    "status": "assembled",
+    "notAssembledReason": null,
+    "generatedAt": "2026-10-14T17:53:55.803Z",
+    "model": {
+      "requested": "claude-opus-5-5",
+      "served": "claude-opus-5-5",
+      "promptVersion": "packet-v2",
+      "agentVersion": "agent-v1"
+    },
+    "header": {
+      "claimId": "IS-CLM-2025900006",
+      "claimType": "Collision",
+      "state": "GA",
+      "country": "US",
+      "channel": "E-Portal",
+      "filedDate": "2025-11-19",
+      "dateOfLoss": "2025-11-18",
+      "amountUsd": 2410,
+      "policyNumber": "CA-GA-40561-22",
+      "policyholderToken": "[POLICYHOLDER]",
+      "claimantToken": null,
+      "vehicle": "2014 Acura TSX",
+      "complexity": "Simple",
+      "regulatoryReviewRequired": false,
+      "policyStatus": "in_force",
+      "priorClaimsOnPolicy": 0,
+      "adjusterId": "ADJ-118"
+    },
+    "evidence": [
+      {
+        "id": "fnol_record",
+        "label": "First notice of loss record",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "loss_description",
+        "label": "Description of the loss",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "vehicle_identified",
+        "label": "Insured vehicle identified",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": "VIN: JH4CU2F65EC001932"
+      },
+      {
+        "id": "damage_photos",
+        "label": "Damage photographs",
+        "present": true,
+        "document": "photos/",
+        "source": "databricks",
+        "note": "1 photo"
+      },
+      {
+        "id": "repair_estimate",
+        "label": "Repair estimate",
+        "present": true,
+        "document": "repair_estimate.md",
+        "source": "databricks",
+        "note": null
+      }
+    ],
+    "completeness": 1,
+    "fields": [
+      {
+        "key": "claim_amount",
+        "label": "Claim amount",
+        "value": "2410.00",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "claim_type",
+        "label": "Claim type",
+        "value": "Collision",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "loss_state",
+        "label": "Loss state",
+        "value": "GA",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "intake_channel",
+        "label": "Intake channel",
+        "value": "E-Portal",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "filed_date",
+        "label": "Filed date",
+        "value": "2025-11-19",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "date_of_loss",
+        "label": "Date of loss",
+        "value": "2025-11-18",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "policy_number",
+        "label": "Policy number",
+        "value": "CA-GA-40561-22",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "vehicle",
+        "label": "Insured vehicle",
+        "value": "2014 Acura TSX",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "regulatory_flag",
+        "label": "Requires human by regulation",
+        "value": "No",
+        "source": "claimspro",
+        "document": "status_history.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_number",
+        "label": "Estimate number",
+        "value": "CCC-8841",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Estimate #: CCC-8841\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_written_date",
+        "label": "Estimate written date",
+        "value": "2025-11-18",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Written: 2025-11-18\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_vin",
+        "label": "VIN on estimate",
+        "value": "JH4CU2F65EC001932",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Vehicle: 2014 Acura TSX, VIN JH4CU2F65EC001932, odometer 88,410\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_odometer",
+        "label": "Odometer on estimate",
+        "value": "88,410",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"odometer 88,410\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_parts",
+        "label": "Parts subtotal",
+        "value": "1,277.00",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Parts: 1,277.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_labor",
+        "label": "Labor subtotal",
+        "value": "493.00",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Labor: 493.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_paint_materials",
+        "label": "Paint and materials",
+        "value": "160.00",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Paint and materials: 160.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_tax",
+        "label": "Sales tax",
+        "value": "76.62",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Sales tax (6%): 76.62\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_supplies",
+        "label": "Supplies (unitemized)",
+        "value": "403.38",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Supplies: 403.38\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_net_total",
+        "label": "Estimate net total",
+        "value": "2,410.00",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Net total: 2,410.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_damage_lines",
+        "label": "Damage lines on estimate",
+        "value": "Front bumper cover R&R; LH headlamp R&R; LH fender repair; refinish bumper and fender",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Bumper cover, front | R&R | 540.00 ... Headlamp assembly LH | R&R | 690.00 ... Fender LH, repair\"",
+        "reread": null
+      },
+      {
+        "key": "model_adjuster_photo_concern",
+        "label": "Adjuster note on duplicate photo",
+        "value": "Photo matches a Florida claim paid in June, different policyholder, same model; SIU referral requested",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"System flagged the photo as the same file as one on a Florida claim paid in June, different policyholder, same model of car. Not a coincidence I can explain from here. SIU referral before anything else.\"",
+        "reread": null
+      }
+    ],
+    "timeline": [
+      {
+        "at": "2025-06-20",
+        "event": "Prior claim IS-CLM-2025000300 (policy CA-FL-4471-19), which carries the identical photo, was paid",
+        "source": "claimspro",
+        "document": "intake.md"
+      },
+      {
+        "at": "2025-11-18",
+        "event": "Date of loss",
+        "source": "claimspro",
+        "document": "intake.md"
+      },
+      {
+        "at": "2025-11-18",
+        "event": "Repair estimate CCC-8841 written by the shop, same day as the loss",
+        "source": "databricks",
+        "document": "repair_estimate.md"
+      },
+      {
+        "at": "2025-11-19",
+        "event": "Adjuster notes the duplicate photo and calls for an SIU referral before anything else",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "at": "2025-11-19T10:15",
+        "event": "Received: E-Portal FNOL; duplicate-image check: IMG_0071.jpg matches IS-CLM-2025000300",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-19T10:15",
+        "event": "Assigned: Routed to queue ADJ-118",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-19T10:15",
+        "event": "Status Received: E-Portal first notice of loss; duplicate-image check matches IMG_0071.jpg to IS-CLM-2025000300",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-19T10:15",
+        "event": "Status Assigned: routed to adjuster queue ADJ-118",
+        "source": "claimspro",
+        "document": "status_history.md"
+      }
+    ],
+    "contradictions": [
+      {
+        "topic": "Origin of the only damage photo",
+        "a": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "Damage photograph (1) — see `photos/`"
+        },
+        "b": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "IMG_0071.jpg is byte-identical to a photograph on closed claim IS-CLM-2025000300 (policy CA-FL-4471-19, paid 2025-06-20)"
+        },
+        "material": true,
+        "note": "The photo submitted as damage to the policyholder's Georgia vehicle is the same file as one on a paid Florida claim under a different policy. The adjuster's notes confirm a different policyholder and the same model of car. No other photo on file is independent of the prior claim."
+      },
+      {
+        "topic": "Unitemized supplies charge on the estimate",
+        "a": {
+          "source": "databricks",
+          "document": "repair_estimate.md",
+          "quote": "Parts: 1,277.00 Labor: 493.00 Paint and materials: 160.00 Sales tax (6%): 76.62"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "repair_estimate.md",
+          "quote": "Supplies: 403.38 ... Net total: 2,410.00"
+        },
+        "material": true,
+        "note": "The itemized lines and tax total $2,006.62. A $403.38 'Supplies' charge with no matching line item brings the total to exactly the claimed $2,410.00. Clips and fasteners are already billed on line 6. The shop has not explained the charge."
+      }
+    ],
+    "missing": [],
+    "denialIndicators": [
+      {
+        "kind": "fraud_signal",
+        "evidence": "The intake image check shows IMG_0071.jpg is byte-identical to a photo on closed claim IS-CLM-2025000300 (policy CA-FL-4471-19, paid 2025-06-20). The status history records the match at intake.",
+        "source": "claimspro",
+        "document": "intake.md"
+      },
+      {
+        "kind": "fraud_signal",
+        "evidence": "The adjuster recorded that the matching photo belongs to a Florida claim with a different policyholder and the same model of car, wrote 'Not a coincidence I can explain from here', and called for an SIU referral.",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      }
+    ],
+    "agentRoute": "specialist_review",
+    "rationale": "The packet contains the ClaimsPro intake and status history, the Snowflake extract, adjuster_notes.md, repair_estimate.md and one photo, IMG_0071.jpg. The checklist is complete, and the policy was in force on the 2025-11-18 date of loss. intake.md records that the only damage photo is byte-identical to a photo on a paid Florida claim under a different policy, and adjuster_notes.md asks for an SIU referral before anything else. repair_estimate.md includes an unitemized $403.38 supplies charge that brings the total to exactly the claimed $2,410.00. No account of how the accident happened came through with the retrieved documents, and no photo on file is independent of the prior claim. The claim is routed to specialist review so that a person can examine the duplicate-photo signal and the estimate; what these findings mean for the claim is for the adjuster and specialist to decide.",
+    "trace": [
+      {
+        "step": 1,
+        "tool": "get_structured",
+        "args": "{\"claim_id\":\"IS-CLM-2025900006\"}",
+        "result": "Collision GA E-Portal $2410; 46 fields",
+        "durationMs": 0,
+        "startedAt": "2026-10-14T17:53:01.662Z"
+      },
+      {
+        "step": 2,
+        "tool": "get_documents",
+        "args": "{\"claim_id\":\"IS-CLM-2025900006\"}",
+        "result": "2 documents, 0 OCR fields (0 weak: none), 1 photos",
+        "durationMs": 56,
+        "startedAt": "2026-10-14T17:53:05.242Z"
+      },
+      {
+        "step": 3,
+        "tool": "check_completeness",
+        "args": "{\"claim_id\":\"IS-CLM-2025900006\"}",
+        "result": "5 of 5 on file; missing: none",
+        "durationMs": 1,
+        "startedAt": "2026-10-14T17:53:05.298Z"
+      }
+    ],
+    "inputHash": "afadaccc316b00689d4a419b8552365cb958863c4b6269274827166c79e8e3ef",
+    "settingsUsed": {
+      "ocrRereadThreshold": 0.8
+    }
+  },
+  "decision": {
+    "protocolVersion": "0.1",
+    "settings": {
+      "simpleClaimCeilingUsd": 5000,
+      "minCompletenessPct": 100,
+      "ocrRereadThreshold": 0.8
+    },
+    "agentRoute": "specialist_review",
+    "route": "full_review",
+    "routeLabel": "Full review",
+    "escalatedByRules": true,
+    "segment": "regulatory",
+    "segmentLabel": "Regulatory review",
+    "regulatory": true,
+    "reasons": [
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 denial indicators in the packet: fraud signal, fraud signal. A person adjudicates in full; the AI never recommends a denial.",
+        "evidence": "The intake image check shows IMG_0071.jpg is byte-identical to a photo on closed claim IS-CLM-2025000300 (policy CA-FL-4471-19, paid 2025-06-20). The status history records the match at intake. | The adjuster recorded that the matching photo belongs to a Florida claim with a different policyholder and the same model of car, wrote 'Not a coincidence I can explain from here', and called for an SIU referral.",
+        "uses": [
+          "packet.denial_indicators"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 material contradictions between sources: Origin of the only damage photo; Unitemized supplies charge on the estimate.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      }
+    ],
+    "ruleResults": [
+      {
+        "id": "G1",
+        "title": "The AI never recommends a denial",
+        "group": "guardrail",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.rationale",
+          "packet.route"
+        ]
+      },
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Canadian policyholder data",
+        "group": "scope",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "out_of_scope",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.country"
+        ]
+      },
+      {
+        "id": "D0",
+        "title": "Policy not in force at the date of loss",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "policy.status"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 denial indicators in the packet: fraud signal, fraud signal. A person adjudicates in full; the AI never recommends a denial.",
+        "evidence": "The intake image check shows IMG_0071.jpg is byte-identical to a photo on closed claim IS-CLM-2025000300 (policy CA-FL-4471-19, paid 2025-06-20). The status history records the match at intake. | The adjuster recorded that the matching photo belongs to a Florida claim with a different policyholder and the same model of car, wrote 'Not a coincidence I can explain from here', and called for an SIU referral.",
+        "uses": [
+          "packet.denial_indicators"
+        ]
+      },
+      {
+        "id": "E1",
+        "title": "Packet not assembled",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.route"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 material contradictions between sources: Origin of the only damage photo; Unitemized supplies charge on the estimate.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.completeness"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.fields"
+        ]
+      }
+    ],
+    "humanDecision": "Every route ends with a person deciding in ClaimsPro. The AI recommends; it never approves and never denies."
+  },
+  "usage": {
+    "calls": 4,
+    "inputTokens": 28770,
+    "outputTokens": 5542,
+    "costUsd": 0.2259,
+    "durationMs": 56649
+  },
+  "savedAt": "2026-10-14T17:58:54.552Z"
+}
