@@ -39,6 +39,7 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
   const last = row.audit[row.audit.length - 1] ?? null;
   // After a reply the earlier confirmation is history: the claim is open again.
   const reviewed = last?.humanReviewed && !replied ? last : null;
+  const unmask = (s: string) => row.names.reduce((t, n) => t.split(n.token).join(n.name), s);
   const waitingOnClaimant = !!reviewed && (reviewed.reviewerRoute ?? reviewed.output.route) === "request_information";
   const [replyText, setReplyText] = useState(() => (p ? draftReply(row) : ""));
   const [auditOpen, setAuditOpen] = useState(false);
@@ -69,7 +70,6 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
     if (err) setConfirmError(err);
     else setChanging(false);
   };
-  const unmask = (s: string) => row.names.reduce((t, n) => t.split(n.token).join(n.name), s);
   const fired = decision.reasons;
   const material = p?.contradictions.filter((c) => c.material) ?? [];
   const minor = p?.contradictions.filter((c) => !c.material) ?? [];
