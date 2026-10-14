@@ -1,77 +1,123 @@
 # Meridian claim readiness
 
-A prototype for the week-2 workshop: an AI agent reads a commercial auto claim across ClaimsPro, Snowflake and Databricks, assembles a readiness packet, and recommends one of five routes. Code rules then apply the regulatory floors, the most conservative route wins, and an adjuster confirms it in one click. Nothing here approves, denies or pays. The decision itself stays in ClaimsPro.
+A working prototype for the week-2 workshop with Meridian.
 
-Live: https://meridian-claims-sigma.vercel.app
+**Live demo:** https://meridian-claims-sigma.vercel.app
 
-## Principles
+## What it does
 
-- **The model describes, the code decides.** The agent fills a fixed packet (fields with sources, timeline, contradictions, denial indicators, what is missing) and recommends a route. The routing protocol in `lib/rules/protocol.ts` applies the floors in code. A rule can only move a claim toward more review.
-- **No denial from AI.** The route list has no such value. Denial indicators are surfaced for a person, with the evidence and its source.
-- **No self-reported confidence.** The three numbers on the audit record are measured: per-field extraction confidence from the OCR engine and re-reads, evidence completeness from the checklist, and route confidence from the evaluation against labelled cases.
-- **No client PII in prompts.** Names, phones, emails, dates of birth and addresses are masked before anything reaches the model (`lib/privacy/mask.ts`); a leak check stops a run that would echo a name.
-- **Never fail silently, never fake a model call.** Without a key the app shows cached packets and says so; re-run is disabled.
-- **Every correction is a test case.** Changing a route needs a reason; the reason is recorded and lands in `eval/cases.csv`.
+An adjuster at Meridian starts the day with a queue of commercial auto claims. Today, every claim means opening about seven ClaimsPro screens, reading the fax, the estimate, the photos and the notes, and working out by gut what to do first.
 
-## The five routes
+This prototype does the reading. For each claim, an AI agent pulls together everything on file from the three systems (ClaimsPro, Snowflake and Databricks), writes up a one-page "readiness packet", and recommends what should happen next. The adjuster sees the packet, the reasons, and the evidence behind every line, and confirms the route with one click.
 
-| Route | Meaning |
+The AI never decides a claim. It never approves, never denies, never pays. The decision is still made by a person in ClaimsPro, exactly as it is today.
+
+## How a claim moves through it
+
+1. **The agent reads.** It opens the claim across the three systems and the documents attached to it. Names, phone numbers and other personal details are masked before anything reaches the model.
+2. **The agent describes.** It fills in a fixed form: the key facts and where each came from, a timeline, places where the sources disagree, anything that looks like a reason a claim might be denied, and anything missing. Then it recommends one of five routes.
+3. **The rules decide.** A set of plain-code rules checks the packet against Meridian's regulatory floor: human review over $10,000 in the twelve threshold states, consent states, Canadian residency, a lapsed policy, any denial indicator. A rule can only push a claim toward more review, never less. The most cautious answer wins.
+4. **A person confirms.** The adjuster confirms the route, or changes it and says why. Every change is recorded and becomes a test case for the next version.
+
+### The five routes
+
+| Route | What it means |
 |---|---|
-| Ready to decide | Complete, consistent, under the ceiling, no floor. The adjuster confirms the decision in ClaimsPro. |
-| Request information | Something is missing from the claimant or the shop. A request is drafted. |
-| Verify documents | A field or a document needs a person's eyes before the claim can be decided. |
-| Specialist review | A senior adjuster: over the simple-claim ceiling or a contradiction the sources cannot settle. |
-| Full review | A person adjudicates in full with a written justification: a regulatory threshold or a denial indicator. |
+| **Ready to decide** | Everything is on file, nothing disagrees, the amount is under the simple-claim ceiling. The adjuster can decide now. |
+| **Request information** | Something is missing from the claimant or the repair shop. A request is drafted and sent; the claim waits until it comes back. |
+| **Verify documents** | A document or a field needs a person's eyes before the claim can be decided (for example, a faxed estimate the OCR read badly). |
+| **Specialist review** | A senior adjuster should look: the amount is over the ceiling, or two sources disagree on something that matters. |
+| **Full review** | A person adjudicates in full and writes it up: a regulatory threshold applies, or there is a possible reason for denial. |
 
-`out_of_scope` is a rules-only exit for Canadian policyholders (residency constraint); it is never a model output and is flagged for review in the protocol.
+Claims for Canadian policyholders are never sent to the model at all, because of the data-residency constraint. They are marked out of scope by the rules and handled by a person.
 
-## The rules (protocol 0.1)
+## The rules behind the routing
 
-Locked: R1 human review over $10,000 in the threshold states; R2 consent states where consent is not recorded; R3 Canadian residency; D0 policy lapsed at the date of loss; D1 any denial indicator in the packet; G1 guardrails. Configurable with bounds: C1 simple-claim ceiling ($5,000), C2 completeness, C3 weak OCR fields not confirmed by a re-read (0.8), E1 and E2 contradictions. The Routing protocol page renders the same file the code runs.
+There are two kinds of rule, and the Routing protocol page in the app shows the same file the code runs.
 
-## Evaluation
+- **Locked rules** come from regulation and Meridian's compliance floor. Changing one is a new protocol version with compliance sign-off. These cover the $10,000 threshold states, the consent states, Canadian residency, a policy that had lapsed on the date of loss, and any denial indicator in the packet.
+- **Operating settings** are Meridian's own dials, with safe limits: the simple-claim ceiling (currently $5,000), how complete the evidence must be, how weak an OCR reading can be before a person checks it, and how to treat disagreements between sources.
 
-**Rules only, on the extract** (5,000 rows, scored on the 500 with a `requires_human_review` label; pinned in `lib/eval/rules-only.test.ts`):
+## Does it work? The numbers so far
 
-| | Flagged of 5,000 | Missed (needed review, not flagged) | Unnecessary | Regulatory misses |
+### The rules alone, on Meridian's own extract
+
+Meridian sent an extract of 5,000 closed claims. Five hundred of them carry a label saying whether a human review was actually needed. We ran the structured rules (state, amount, regulatory flag) over all 5,000 and compared them with the flag ClaimsPro raises today.
+
+| | Claims flagged (of 5,000) | Needed review but not flagged | Flagged but did not need it | Regulatory cases missed |
 |---|---|---|---|---|
-| Today's flag | 2,280 | 21 of 159 | 63 | 31 of 134 |
-| Protocol 0.1, default settings | 2,513 | 34 | 71 | 0 |
-| Regulatory floor only (R1, R2, R3) | 1,272 | 88 | 0 | 0 |
+| ClaimsPro's flag today | 2,280 | 21 of 159 | 63 | **31 of 134** |
+| This protocol, default settings | 2,513 | 34 | 71 | **0** |
+| Regulatory floor only | 1,272 | 88 | 0 | 0 |
 
-The label is set after the fact and tracks the final complexity of the claim; a rule that runs at intake cannot see that. The regulatory floor is exact by construction, which is the point: today's flag misses 31 claims the law requires a person on.
+The headline: today's flag misses 31 claims where the law requires a person. The protocol misses none, by construction. It flags slightly more claims overall, which is the price of that guarantee; the ceiling is a dial Meridian can turn.
 
-**Packets, on the 16 labelled cases** (`npm run eval`, cached packets, draft labels by one person in `eval/cases.csv`): 10 of 10 claims that must reach a person did; 12 exact and 16 acceptable routes of 16; 0 over-escalated of 6; the fax line that OCR read as `1,B00` re-read as `1,800.00` on both the garbled and the clean copy. The four non-exact cases are the three mocks whose photos do not match their stories and the variant of the provided claim with its estimate removed, where a material contradiction outranks the missing document. Two adjusters labelling independently, with disagreements resolved, is the next step before any of these numbers is quoted.
+One caveat. The "needed review" label is set after the claim closes, so it knows how complex the claim turned out to be. A rule running at intake cannot know that. These numbers are a floor, not a forecast.
 
-## Where the data comes from
+### The full agent, on labelled test claims
 
-- `meridian/sample_claims/` and `meridian/reference/claims_processing.csv`: the three claims and the extract Meridian provided. Real model runs, cached in `data/packets/`.
-- `sample_claims_variants/`: the provided claims edited by `scripts/make-variants.ts` (estimate removed, amount over $10k, Texas with the flag blank, clean OCR, a repainted date on the fax page), plus two variants of the clean mock claim with the estimate and the photo removed, which route to request information. Each folder's `provenance.json` records the change.
-- `sample_claims_mock/`: six claims written for claim types Meridian did not send (flood, third-party property damage, liability demand, Canadian residency, lapsed policy, a reused photo). Photos are reused from an earlier prototype's set and do not always match the story; the agent noticed. `SOURCES.md` records origins.
-- `data/worklist.json`: 30 extract rows seeded as queue entries with no documents, routed by the structured rules only.
+Sixteen claims have a hand-written label saying what the right route is. Fifteen have been through the agent for real; the Canadian one is rules-only by design. Results:
 
-Every row on the screen carries its provenance.
+- Every claim that had to reach a person did: **10 of 10**.
+- The route matched the label exactly on **12 of 16**, and was within the acceptable range on **16 of 16**.
+- No claim was escalated that did not need to be: **0 of 6**.
+- The faxed estimate line that the OCR read as `1,B00` was re-read as `1,800.00`, on both the garbled copy and the clean one.
 
-## Run it
+The four that did not match exactly are three mock claims whose stock photos do not match their stories (the agent noticed and escalated) and one variant where a contradiction outranked a missing document. All four landed on a more cautious route, not a less cautious one.
+
+These labels were written by one person. Before any of these numbers goes on a slide, two adjusters should label the same cases independently and resolve the disagreements.
+
+## Where the claims on screen come from
+
+Every row in the app says which of these it is.
+
+- **Meridian sample claims.** The three real claims Meridian provided, plus the 5,000-row extract. These are the base. Thirty extract rows also appear in the queue as claims with no documents, routed by the structured rules alone.
+- **Variants.** The sample claims with one thing changed by a script: the estimate removed, the amount nudged over $10,000, the state changed to Texas with the consent flag blank, a clean copy of the garbled fax, a date repainted on the fax image. Each variant records what was changed and from which parent.
+- **Mock claims.** Six claims written from scratch to cover situations Meridian's three samples do not: a flood, third-party property damage, a liability demand letter, a Canadian policyholder, a lapsed policy, and a photo reused from a closed claim. Their photos are borrowed from an earlier prototype and do not always match the story. The agent flagged the mismatches, which is reassuring about the agent and embarrassing about the photos.
+
+## What the demo shows
+
+- **Play the morning.** The inbox starts empty and the claims arrive one at a time, oldest first, each assessed and sorted into its group as it lands. This replays the real model runs that are saved in the repo, so it needs no API key and costs nothing.
+- **The amount.** What was claimed, against the totals actually on file in the documents, each with its source. This is a code check of the paperwork, not a valuation. There is no rate card and the model never estimates a price.
+- **How this route was decided.** For each claim: what was read, which tools the agent called, what it recommended, which rules fired, and why the final route is what it is.
+- **The audit record.** The five fields the compliance floor asks for (input, model version, output, confidence, human reviewed), plus the written rationale and the full history. Downloadable, printable.
+- **Ask and wait.** Confirming a "request information" claim sends the drafted request and moves the claim to Waiting. In the demo, a prefilled reply from the claimant can be received with one click; the claim comes back to the inbox to be re-checked. In production the reply would be a ClaimsPro document event.
+
+## Running it yourself
 
 ```
 npm install
-cp .env.example .env.local   # ANTHROPIC_API_KEY; optional ANTHROPIC_MODEL
-npm run dev                  # http://localhost:3000
+cp .env.example .env.local   # add your ANTHROPIC_API_KEY
+npm run dev                  # open http://localhost:3000
 npm test                     # 72 tests, no key needed
-npm run eval                 # scores the cached packets, writes eval/results/latest.json
-npm run agent -- IS-CLM-2025000300   # one live run (spends money)
+npm run eval                 # re-scores the saved runs against the labels
+npm run agent -- IS-CLM-2025000300   # one live run of the agent (costs money)
 ```
 
-On the deployment, `/api/agent/run?claim=<id>` needs the `x-agent-run-token` header (`AGENT_RUN_TOKEN`). Background mode logs the gzipped transcript so a run can be replayed and verified locally with `scripts/decode-rec-log.ts` and `scripts/replay-run.ts`.
+Without a key, the app shows the saved runs and says so; re-running is disabled. It never pretends to call the model.
 
-## The ask-and-wait loop
+On the hosted version, re-running a claim needs a token, so nobody can spend Meridian's API budget by guessing a URL.
 
-Confirming a request-information route sends the drafted request through the ClaimsPro correspondence stub and moves the claim to Waiting. In production the claimant's reply is a ClaimsPro document event; in the demo, the Waiting view carries a prefilled reply and a button that receives it. The claim then comes back to the inbox under Verify documents with the earlier confirmation kept as history, to be re-run with the new document or verified by hand.
+## Design principles
 
-## Known gaps
+- **The model describes, the code decides.** The AI's job is to read and write up. Routing logic lives in code that a compliance officer can read.
+- **The AI never recommends a denial.** That word is not in its vocabulary. Possible reasons for denial are surfaced, with evidence, for a person.
+- **No self-reported confidence.** The confidence numbers on the audit record are measured: OCR confidence and re-reads, evidence completeness, and how often the route matched the label in evaluation.
+- **No personal data in prompts.** Names, phone numbers, emails, dates of birth and addresses are masked before the model sees them, and a check stops any run that would echo a name back.
+- **Never fail silently.** If something could not be read or could not be run, the screen says so.
+- **Every correction is a test case.** When an adjuster changes a route, the reason is recorded and feeds the next evaluation.
 
-- Page images of scanned documents reach the vision model unmasked; printed names on them are masked in the output only.
-- The mock claims' photos are inconsistent with their stories, so three of their labels are provisional until matching photos exist.
-- `.env.example` defaults the model to Sonnet; the cached packets were made with `claude-opus-5-5`, thirteen on prompt `packet-v2` and three on `packet-v3` (which says a missing document is a gap, not a contradiction).
-- Confirmations on the deployment live in the instance's memory and clear on redeploy; production writes go through ClaimsPro's SOAP operations, which this prototype only stubs (`/api/writes`).
+## Honest limitations
+
+- Scanned page images reach the vision model as pictures, so a printed name on a fax is not masked on the way in. It is masked on the way out. Production needs image redaction.
+- Three of the mock claims have photos that do not match their stories, so their labels are provisional.
+- Thirteen of the saved runs used prompt version 2 and three used version 3 (which adds one line: a missing document is a gap, not a contradiction). Both are recorded on each run.
+- The default model in `.env.example` is Sonnet; the saved runs used Opus.
+- Confirmations on the hosted demo live in memory and clear when it is redeployed. Writing back to ClaimsPro is stubbed; nothing leaves the building.
+
+## Where things are
+
+- `lib/agent/` the agent and its tools · `lib/rules/` the routing protocol and engine · `lib/privacy/` masking · `lib/audit/` the audit record · `lib/eval/` the evaluations
+- `components/` the screen · `app/` pages and API routes
+- `data/packets/` and `data/audit/` the saved runs · `eval/cases.csv` the labels · `eval/results/latest.json` the latest scores
+- `meridian/` the engagement repo as received, including the sample claims and the extract
