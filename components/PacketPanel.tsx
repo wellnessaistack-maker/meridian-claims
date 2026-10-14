@@ -256,8 +256,8 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onOp
           <div className="note" style={{ marginTop: 0 }}>A person confirms the route or changes it with a reason. Every change becomes a test case. Nothing here approves or denies a claim.</div>
         )}
         <div className="actionbar-row">
-          <button className="btn btn-primary" disabled={!last} onClick={() => onOpenAudit("confirm")} title={!last ? "No packet to confirm" : ""}>
-            Confirm route: {ROUTE_LABELS[decision.route]}
+          <button className="btn btn-primary" disabled={!last || !!reviewed} onClick={() => onOpenAudit("confirm")} title={!last ? "No packet to confirm" : reviewed ? "Already confirmed; change the route to add a new record" : ""}>
+            {reviewed ? `Confirmed: ${ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}` : `Confirm route: ${ROUTE_LABELS[decision.route]}`}
           </button>
           <button className="btn" disabled={!last} onClick={() => onOpenAudit("change")}>Change route…</button>
           <button className="btn" onClick={onRerun} disabled={!apiKey || rerun.running || row.documentCount === 0 || row.header.country === "CA"} title={!apiKey ? "No API key. Re-run is disabled." : row.documentCount === 0 ? "No documents to read" : row.header.country === "CA" ? "Canadian policyholder: never sent to the model" : `Run the agent again with ${model}`}>
