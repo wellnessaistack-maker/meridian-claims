@@ -27,10 +27,41 @@ for (const m of text.matchAll(/PKT(GZ|REC) (\S+) (\S+) (\d+)\/(\d+) ([0-9a-f]{8}
   if (!runs.has(key)) runs.set(key, { n: Number(n), parts: new Map(), bad: [], gz: kind === "GZ" });
   const run = runs.get(key)!;
   if (sha8(chunk) !== hash) {
-    run.bad.push(Number(i));
+    const fixed = repair(chunk, hash);
+    if (fixed === null) {
+      run.bad.push(Number(i));
+      continue;
+    }
+    console.error(`${key}: chunk ${i} was off by one character and was repaired against its hash.`);
+    run.parts.set(Number(i), fixed);
     continue;
   }
   run.parts.set(Number(i), chunk);
+}
+
+/**
+ * A hand-copied chunk is usually wrong by one character. Try every single
+ * substitution, deletion and insertion against the recorded hash; the
+ * 32-bit hash makes a false match about one in thirty thousand per chunk.
+ */
+function repair(chunk: string, hash: string): string | null {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  for (let k = 0; k <= chunk.length; k++) {
+    if (k < chunk.length) {
+      const del = chunk.slice(0, k) + chunk.slice(k + 1);
+      if (sha8(del) === hash) return del;
+      for (const c of alphabet) {
+        if (c === chunk[k]) continue;
+        const sub = chunk.slice(0, k) + c + chunk.slice(k + 1);
+        if (sha8(sub) === hash) return sub;
+      }
+    }
+    for (const c of alphabet) {
+      const ins = chunk.slice(0, k) + c + chunk.slice(k);
+      if (sha8(ins) === hash) return ins;
+    }
+  }
+  return null;
 }
 if (!runs.size) {
   console.error("No PKTGZ or PKTREC lines found.");

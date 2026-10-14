@@ -339,3 +339,13 @@ test("a real name in the model's output is masked before it becomes a packet", a
   assert.equal(containsName(JSON.stringify(r.packet), claim.names), null);
   assert.match(r.packet.rationale + JSON.stringify(r.packet), /\[POLICYHOLDER\]/);
 });
+
+test("a third party named in a checklist note is masked on the way out: the completeness tool leaks nothing", async () => {
+  const claim = loadClaimById("IS-CLM-2025900002")!;
+  assert.ok(claim.names.length >= 2);
+  const client = scripted([[{ name: "get_structured", input: { claim_id: claim.header.claimId } }], [{ name: "get_documents", input: { claim_id: claim.header.claimId } }], [{ name: "check_completeness", input: { claim_id: claim.header.claimId } }]], output({ route: "specialist_review" }));
+  const r = await runAgent(claim, { client, vision: null, images: false });
+  assert.equal(r.ok, true, r.failure ?? "");
+  assert.equal(containsName(r.snapshot.join("\n"), claim.names), null);
+  assert.match(r.snapshot.join("\n"), /\[THIRD_PARTY\]/);
+});

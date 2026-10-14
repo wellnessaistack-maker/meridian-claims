@@ -1,0 +1,768 @@
+{
+  "packet": {
+    "claimId": "IS-CLM-2025000300-C",
+    "provenance": {
+      "kind": "variant",
+      "label": "Variant of IS-CLM-2025000300 (loss state Texas, regulatory flag blank)",
+      "parentId": "IS-CLM-2025000300",
+      "change": "loss state Texas, regulatory flag blank"
+    },
+    "status": "assembled",
+    "notAssembledReason": null,
+    "generatedAt": "2026-10-14T17:38:56.799Z",
+    "model": {
+      "requested": "claude-opus-5-5",
+      "served": "claude-opus-5-5",
+      "promptVersion": "packet-v2",
+      "agentVersion": "agent-v1"
+    },
+    "header": {
+      "claimId": "IS-CLM-2025000300-C",
+      "claimType": "Collision",
+      "state": "TX",
+      "country": "US",
+      "channel": "E-Portal",
+      "filedDate": "2025-06-19",
+      "dateOfLoss": null,
+      "amountUsd": 2825.07,
+      "policyNumber": "CA-FL-4471-19",
+      "policyholderToken": "[POLICYHOLDER]",
+      "claimantToken": null,
+      "vehicle": "2013 Acura TSX",
+      "complexity": "Simple",
+      "regulatoryReviewRequired": null,
+      "policyStatus": "unknown",
+      "priorClaimsOnPolicy": 0,
+      "adjusterId": "ADJ-110"
+    },
+    "evidence": [
+      {
+        "id": "fnol_record",
+        "label": "First notice of loss record",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "loss_description",
+        "label": "Description of the loss",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "vehicle_identified",
+        "label": "Insured vehicle identified",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": "VIN: JH4CU2F63DC802291"
+      },
+      {
+        "id": "damage_photos",
+        "label": "Damage photographs",
+        "present": true,
+        "document": "photos/",
+        "source": "databricks",
+        "note": "2 photos"
+      },
+      {
+        "id": "repair_estimate",
+        "label": "Repair estimate",
+        "present": true,
+        "document": "repair_estimate.pdf",
+        "source": "databricks",
+        "note": null
+      }
+    ],
+    "completeness": 1,
+    "fields": [
+      {
+        "key": "claim_amount",
+        "label": "Claim amount",
+        "value": "2825.07",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "claim_type",
+        "label": "Claim type",
+        "value": "Collision",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "loss_state",
+        "label": "Loss state",
+        "value": "TX",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "intake_channel",
+        "label": "Intake channel",
+        "value": "E-Portal",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "filed_date",
+        "label": "Filed date",
+        "value": "2025-06-19",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "date_of_loss",
+        "label": "Date of loss",
+        "value": null,
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Not on the intake record",
+        "reread": null
+      },
+      {
+        "key": "policy_number",
+        "label": "Policy number",
+        "value": "CA-FL-4471-19",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "vehicle",
+        "label": "Insured vehicle",
+        "value": "2013 Acura TSX",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "regulatory_flag",
+        "label": "Requires human by regulation",
+        "value": null,
+        "source": "claimspro",
+        "document": "status_history.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Not on file; the rules treat unknown as required",
+        "reread": null
+      },
+      {
+        "key": "model_notes_loss_account",
+        "label": "Loss account (adjuster)",
+        "value": "Single vehicle, no injury, no third party, backing incident at low speed",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"single-veh, no BI, no 3rd party — backing incident, low speed\"",
+        "reread": null
+      },
+      {
+        "key": "model_notes_damage",
+        "label": "Damage noted by adjuster",
+        "value": "Front-left bumper, LH headlamp, fender",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"front-left bumper, LH headlamp, fender\"",
+        "reread": null
+      },
+      {
+        "key": "model_notes_price_market",
+        "label": "Adjuster pricing check market",
+        "value": "TX",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"line items reasonable for TX market on first pass\"",
+        "reread": null
+      },
+      {
+        "key": "model_notes_next_step",
+        "label": "Adjuster next step",
+        "value": "Queued for coverage review",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Queuing for coverage review.\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_number",
+        "label": "Estimate number",
+        "value": "GC-24418",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Estimate # : GC-24418\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_written",
+        "label": "Estimate written date",
+        "value": "2025-06-19",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Written : 2025-06-19\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_claim_ref",
+        "label": "Claim # on estimate",
+        "value": "IS-CLM-2025000300",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Claim # : IS-CLM-2025000300\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_owner_location",
+        "label": "Owner location on estimate",
+        "value": "Tampa, FL",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Policy CA-FL-4471-19 / Tampa, FL\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_plate",
+        "label": "Plate on estimate",
+        "value": "FL SLX-4471",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Plate FL SLX-4471\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_vin",
+        "label": "VIN on estimate",
+        "value": "JH4CU2F63DC802291",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"VIN JH4CU2F63DC802291\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_odometer",
+        "label": "Odometer",
+        "value": "61,204",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Odometer 61,204\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_loss_description",
+        "label": "Loss description on estimate",
+        "value": "Struck a stationary parking-lot bollard at low speed while pulling into a parking space; front-left damage; no airbag; drivable",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Insured unit struck a stationary parking-lot bollard at low speed while pulling into a parking space.\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_damage_areas",
+        "label": "Damaged parts on estimate",
+        "value": "Front bumper cover, LH headlamp, LH fender, upper grille",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Damage to front bumper cover, LH headlamp, LH fender, upper grille.\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_line5",
+        "label": "Estimate line 5",
+        "value": "Bracket, bumper reinf., R&I, 88.00",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"5 Bracket, bumper reinf. R&I 88.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_price_market",
+        "label": "Parts pricing market",
+        "value": "Tampa FL",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Prices per CCC ONE parts feed, Tampa FL market, at date of estimate.\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_parts",
+        "label": "Parts total",
+        "value": "1,760.39",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Parts: 1,760.39\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_paint_materials",
+        "label": "Paint & materials",
+        "value": "142.00",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Paint & materials: 142.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_labor",
+        "label": "Labor total",
+        "value": "780.00",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Labor: 780.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_tax",
+        "label": "Sales tax",
+        "value": "142.68 (7.5%)",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Sales tax (7.5%): 142.68\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_net_total",
+        "label": "Estimate net total",
+        "value": "2,825.07",
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"NET TOTAL: 2,825.07\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_date_of_loss",
+        "label": "Date of loss on estimate",
+        "value": null,
+        "source": "databricks",
+        "document": "repair_estimate.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.pdf (no engine confidence; a person can check the quote). Quote: \"Collision - front left.\"",
+        "reread": null
+      }
+    ],
+    "timeline": [
+      {
+        "at": "2025-06-19",
+        "event": "Repair estimate GC-24418 written (Type: Original, Source: Meridian E-Portal)",
+        "source": "databricks",
+        "document": "repair_estimate.pdf"
+      },
+      {
+        "at": "2025-06-19",
+        "event": "Adjuster first look; queued for coverage review",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Received: E-Portal FNOL; package complete",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Assigned: Routed to queue ADJ-110",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Status Received: E-Portal first notice of loss, package complete",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Status Assigned: routed to queue ADJ-110",
+        "source": "claimspro",
+        "document": "status_history.md"
+      }
+    ],
+    "contradictions": [
+      {
+        "topic": "Loss state / location of vehicle and insured",
+        "a": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "Loss state: TX; Plate: TX SLX-4471"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "repair_estimate.pdf",
+          "quote": "Policy CA-FL-4471-19 / Tampa, FL ... Plate FL SLX-4471"
+        },
+        "material": true,
+        "note": "The structured record says Texas; the estimate puts the insured, the plate, the shop and the parts pricing in Florida. Which state applies changes the rules and deadlines for the claim."
+      },
+      {
+        "topic": "How the loss happened",
+        "a": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "backing incident, low speed"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "repair_estimate.pdf",
+          "quote": "struck a stationary parking-lot bollard at low speed while pulling into a parking space"
+        },
+        "material": true,
+        "note": "Backing up versus pulling forward. All the damage on file is to the front left, which fits the estimate's account rather than a backing incident."
+      },
+      {
+        "topic": "Market used to check repair pricing",
+        "a": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "line items reasonable for TX market on first pass"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "repair_estimate.pdf",
+          "quote": "Prices per CCC ONE parts feed, Tampa FL market"
+        },
+        "material": false,
+        "note": "The adjuster's reasonableness check may have used the wrong market. This follows from the state contradiction above."
+      },
+      {
+        "topic": "Claim disposition versus status history",
+        "a": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "Disposition: Paid in Full"
+        },
+        "b": {
+          "source": "claimspro",
+          "document": "status_history.md",
+          "quote": "2025-06-19 08:12 Assigned — Routed to queue ADJ-110"
+        },
+        "material": true,
+        "note": "The intake record shows the claim paid, with handling time and a post-closure satisfaction score, but the status history has no first touch and no close date, and the adjuster notes say the claim is only queued for coverage review."
+      },
+      {
+        "topic": "Line 5 operation versus charge",
+        "a": {
+          "source": "databricks",
+          "document": "repair_estimate.pdf",
+          "quote": "5 Bracket, bumper reinf. R&I 88.00"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "repair_estimate.pdf",
+          "quote": "5 Bracket, bumper reinf. 71130-TL2-A00 1 88.00"
+        },
+        "material": false,
+        "note": "Marked as remove and refit, yet charged as a new part with a part number."
+      }
+    ],
+    "missing": [],
+    "denialIndicators": [],
+    "agentRoute": "request_information",
+    "rationale": "The packet contains the ClaimsPro and Snowflake intake record, the adjuster notes (adjuster_notes.md), the 4-page shop estimate GC-24418 (repair_estimate.pdf) and 2 damage photos (IMG_0071.jpg, IMG_0072.jpg); the checklist is complete and the estimate total of 2,825.07 matches the intake amount. The date of loss is blank in every source and the policy period is not in the record, so neither coverage at the time of loss nor timely filing can yet be checked. The intake record gives the loss state and plate as Texas, while repair_estimate.pdf places the insured, the plate, the shop and the pricing in Tampa, Florida. adjuster_notes.md describes a backing incident, while repair_estimate.pdf describes pulling forward into a bollard. The intake record shows 'Paid in Full' while status_history.md shows the claim only received and assigned. The claim needs information requested from the insured: the date of loss, confirmation of where the loss happened and which state applies, the policy period, and a consistent account of the incident, before a person can decide it. No denial indicator is supported by positive evidence on file.",
+    "trace": [
+      {
+        "step": 1,
+        "tool": "get_structured",
+        "args": "{\"claim_id\":\"IS-CLM-2025000300-C\"}",
+        "result": "Collision TX E-Portal $2825.07; 38 fields",
+        "durationMs": 0,
+        "startedAt": "2026-10-14T17:37:53.429Z"
+      },
+      {
+        "step": 2,
+        "tool": "get_documents",
+        "args": "{\"claim_id\":\"IS-CLM-2025000300-C\"}",
+        "result": "2 documents, 0 OCR fields (0 weak: none), 2 photos",
+        "durationMs": 132,
+        "startedAt": "2026-10-14T17:37:57.053Z"
+      },
+      {
+        "step": 3,
+        "tool": "check_completeness",
+        "args": "{\"claim_id\":\"IS-CLM-2025000300-C\"}",
+        "result": "5 of 5 on file; missing: none",
+        "durationMs": 0,
+        "startedAt": "2026-10-14T17:37:57.185Z"
+      }
+    ],
+    "inputHash": "f32c242a24adb4e3797efabf1188df9833581833127333aae116db5c49f4f9e0",
+    "settingsUsed": {
+      "ocrRereadThreshold": 0.8
+    }
+  },
+  "decision": {
+    "protocolVersion": "0.1",
+    "settings": {
+      "simpleClaimCeilingUsd": 5000,
+      "minCompletenessPct": 100,
+      "ocrRereadThreshold": 0.8
+    },
+    "agentRoute": "request_information",
+    "route": "verify_documents",
+    "routeLabel": "Verify documents",
+    "escalatedByRules": true,
+    "segment": "regulatory",
+    "segmentLabel": "Regulatory review",
+    "regulatory": true,
+    "reasons": [
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "TX is a consent state and ClaimsPro has no consent flag for this policyholder, so the claim cannot take the fast lane.",
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "3 material contradictions between sources: Loss state / location of vehicle and insured; How the loss happened; Claim disposition versus status history.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      }
+    ],
+    "ruleResults": [
+      {
+        "id": "G1",
+        "title": "The AI never recommends a denial",
+        "group": "guardrail",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.rationale",
+          "packet.route"
+        ]
+      },
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "TX is a consent state and ClaimsPro has no consent flag for this policyholder, so the claim cannot take the fast lane.",
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Canadian policyholder data",
+        "group": "scope",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "out_of_scope",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.country"
+        ]
+      },
+      {
+        "id": "D0",
+        "title": "Policy not in force at the date of loss",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "policy.status"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.denial_indicators"
+        ]
+      },
+      {
+        "id": "E1",
+        "title": "Packet not assembled",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.route"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "3 material contradictions between sources: Loss state / location of vehicle and insured; How the loss happened; Claim disposition versus status history.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.completeness"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.fields"
+        ]
+      }
+    ],
+    "humanDecision": "Every route ends with a person deciding in ClaimsPro. The AI recommends; it never approves and never denies."
+  },
+  "usage": {
+    "calls": 4,
+    "inputTokens": 41500,
+    "outputTokens": 6911,
+    "costUsd": 0.3042,
+    "durationMs": 65209
+  },
+  "savedAt": "2026-10-14T17:52:51.485Z"
+}

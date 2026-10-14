@@ -1,0 +1,584 @@
+{
+  "packet": {
+    "claimId": "IS-CLM-2025000300-A",
+    "provenance": {
+      "kind": "variant",
+      "label": "Variant of IS-CLM-2025000300 (repair estimate missing)",
+      "parentId": "IS-CLM-2025000300",
+      "change": "repair estimate missing"
+    },
+    "status": "assembled",
+    "notAssembledReason": null,
+    "generatedAt": "2026-10-14T17:38:31.605Z",
+    "model": {
+      "requested": "claude-opus-5-5",
+      "served": "claude-opus-5-5",
+      "promptVersion": "packet-v2",
+      "agentVersion": "agent-v1"
+    },
+    "header": {
+      "claimId": "IS-CLM-2025000300-A",
+      "claimType": "Collision",
+      "state": "FL",
+      "country": "US",
+      "channel": "E-Portal",
+      "filedDate": "2025-06-19",
+      "dateOfLoss": null,
+      "amountUsd": 2825.07,
+      "policyNumber": "CA-FL-4471-19",
+      "policyholderToken": "[POLICYHOLDER]",
+      "claimantToken": null,
+      "vehicle": "2013 Acura TSX",
+      "complexity": "Simple",
+      "regulatoryReviewRequired": false,
+      "policyStatus": "unknown",
+      "priorClaimsOnPolicy": 0,
+      "adjusterId": "ADJ-110"
+    },
+    "evidence": [
+      {
+        "id": "fnol_record",
+        "label": "First notice of loss record",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "loss_description",
+        "label": "Description of the loss",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "vehicle_identified",
+        "label": "Insured vehicle identified",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": "VIN: JH4CU2F63DC802291"
+      },
+      {
+        "id": "damage_photos",
+        "label": "Damage photographs",
+        "present": true,
+        "document": "photos/",
+        "source": "databricks",
+        "note": "2 photos"
+      },
+      {
+        "id": "repair_estimate",
+        "label": "Repair estimate",
+        "present": false,
+        "document": null,
+        "source": null,
+        "note": null
+      }
+    ],
+    "completeness": 0.8,
+    "fields": [
+      {
+        "key": "claim_amount",
+        "label": "Claim amount",
+        "value": "2825.07",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "claim_type",
+        "label": "Claim type",
+        "value": "Collision",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "loss_state",
+        "label": "Loss state",
+        "value": "FL",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "intake_channel",
+        "label": "Intake channel",
+        "value": "E-Portal",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "filed_date",
+        "label": "Filed date",
+        "value": "2025-06-19",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "date_of_loss",
+        "label": "Date of loss",
+        "value": null,
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Not on the intake record",
+        "reread": null
+      },
+      {
+        "key": "policy_number",
+        "label": "Policy number",
+        "value": "CA-FL-4471-19",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "vehicle",
+        "label": "Insured vehicle",
+        "value": "2013 Acura TSX",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "regulatory_flag",
+        "label": "Requires human by regulation",
+        "value": "No",
+        "source": "claimspro",
+        "document": "status_history.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "model_loss_description",
+        "label": "Loss description",
+        "value": "Backing incident, low speed",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"backing incident, low speed, consistent w/ photos\"",
+        "reread": null
+      },
+      {
+        "key": "model_vehicles_involved",
+        "label": "Vehicles involved",
+        "value": "Single vehicle",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"single-veh, no BI, no\n3rd party\"",
+        "reread": null
+      },
+      {
+        "key": "model_bodily_injury",
+        "label": "Bodily injury",
+        "value": "None",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"no BI\"",
+        "reread": null
+      },
+      {
+        "key": "model_third_party",
+        "label": "Third party involved",
+        "value": "None",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"no\n3rd party\"",
+        "reread": null
+      },
+      {
+        "key": "model_damage_areas",
+        "label": "Damage areas",
+        "value": "Front-left bumper, left headlamp, fender",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"front-left\nbumper, LH headlamp, fender\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_status",
+        "label": "Repair estimate status",
+        "value": "Not attached; estimate field empty",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"no shop estimate\nattached; estimate field empty\"",
+        "reread": null
+      },
+      {
+        "key": "model_amount_support",
+        "label": "Support for claimed amount",
+        "value": "None on file",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Claimed $2,825.07 with nothing to support the\nnumber yet\"",
+        "reread": null
+      }
+    ],
+    "timeline": [
+      {
+        "at": "2025-06-19",
+        "event": "Adjuster first look: photos received, no shop estimate, estimate needed before the claim proceeds",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Received: E-Portal FNOL; package complete",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Assigned: Routed to queue ADJ-110",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Status: Received (E-Portal FNOL; 'package complete'). Claim filed. Date of loss not recorded.",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-06-19T08:12",
+        "event": "Status: Assigned, routed to queue ADJ-110",
+        "source": "claimspro",
+        "document": "status_history.md"
+      }
+    ],
+    "contradictions": [
+      {
+        "topic": "Recorded disposition and claim progress",
+        "a": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "Disposition: Paid in Full"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "Need the estimate before this goes anywhere."
+        },
+        "material": true,
+        "note": "ClaimsPro records the claim as paid in full. The status history ends at 'Assigned', no estimate is on file, and the adjuster says the claim cannot proceed without one. The disposition needs to be checked."
+      },
+      {
+        "topic": "Package completeness at intake",
+        "a": {
+          "source": "claimspro",
+          "document": "status_history.md",
+          "quote": "E-Portal FNOL; package complete"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "no shop estimate\nattached; estimate field empty"
+        },
+        "material": true,
+        "note": "Intake marked the package complete. The checklist also shows the repair estimate missing (4 of 5 items)."
+      },
+      {
+        "topic": "How the damage happened compared with where it is",
+        "a": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "backing incident, low speed"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "IMG_0071.jpg",
+          "quote": "Photo shows damage only to the front-left bumper, fender joint and headlamp"
+        },
+        "material": false,
+        "note": "Front-only damage from a 'backing incident' is possible but not explained. A fuller account of how the loss happened would clear this up. The adjuster considered the damage consistent with the account."
+      }
+    ],
+    "missing": [
+      {
+        "id": "repair_estimate",
+        "label": "Repair estimate",
+        "why": "The amount claimed has to be supported by a shop estimate or an invoice.",
+        "from": "provider"
+      }
+    ],
+    "denialIndicators": [],
+    "agentRoute": "request_information",
+    "rationale": "The packet contains the ClaimsPro intake record (intake.md), the status history (status_history.md), the adjuster notes (adjuster_notes.md) and two damage photos (IMG_0071.jpg, IMG_0072.jpg). The photos show front-left bumper, fender and headlamp damage, matching the adjuster's description of a low-speed single-vehicle incident. The required repair estimate is missing, so nothing on file supports the $2,825.07 claimed. The date of loss and the policy period are blank, so coverage on the date of loss cannot be checked from the file and must be confirmed in ClaimsPro. The intake record shows a disposition of 'Paid in Full', which contradicts the status history (last status 'Assigned') and the adjuster's note that the estimate is needed before the claim proceeds. The claim is routed to request the estimate from the shop and the date of loss from the policyholder, and to have a person check the recorded disposition. No denial indicator is supported by the evidence on file.",
+    "trace": [
+      {
+        "step": 1,
+        "tool": "get_structured",
+        "args": "{\"claim_id\":\"IS-CLM-2025000300-A\"}",
+        "result": "Collision FL E-Portal $2825.07; 39 fields",
+        "durationMs": 12,
+        "startedAt": "2026-10-14T17:37:50.516Z"
+      },
+      {
+        "step": 2,
+        "tool": "get_documents",
+        "args": "{\"claim_id\":\"IS-CLM-2025000300-A\"}",
+        "result": "1 documents, 0 OCR fields (0 weak: none), 2 photos",
+        "durationMs": 91,
+        "startedAt": "2026-10-14T17:37:53.803Z"
+      },
+      {
+        "step": 3,
+        "tool": "check_completeness",
+        "args": "{\"claim_id\":\"IS-CLM-2025000300-A\"}",
+        "result": "4 of 5 on file; missing: repair_estimate",
+        "durationMs": 1,
+        "startedAt": "2026-10-14T17:37:53.894Z"
+      }
+    ],
+    "inputHash": "c6a0b9337f0ee7dae714644bd5514b69ad8874e23c6c498b127cff3a851e56b1",
+    "settingsUsed": {
+      "ocrRereadThreshold": 0.8
+    }
+  },
+  "decision": {
+    "protocolVersion": "0.1",
+    "settings": {
+      "simpleClaimCeilingUsd": 5000,
+      "minCompletenessPct": 100,
+      "ocrRereadThreshold": 0.8
+    },
+    "agentRoute": "request_information",
+    "route": "verify_documents",
+    "routeLabel": "Verify documents",
+    "escalatedByRules": true,
+    "segment": "waiting",
+    "segmentLabel": "Waiting on information",
+    "regulatory": false,
+    "reasons": [
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 material contradictions between sources: Recorded disposition and claim progress; Package completeness at intake.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": true,
+        "skipped": false,
+        "reason": "80% of the checklist is on file, below the 100% minimum. Missing: Repair estimate.",
+        "uses": [
+          "packet.completeness"
+        ]
+      }
+    ],
+    "ruleResults": [
+      {
+        "id": "G1",
+        "title": "The AI never recommends a denial",
+        "group": "guardrail",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.rationale",
+          "packet.route"
+        ]
+      },
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Canadian policyholder data",
+        "group": "scope",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "out_of_scope",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.country"
+        ]
+      },
+      {
+        "id": "D0",
+        "title": "Policy not in force at the date of loss",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "policy.status"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.denial_indicators"
+        ]
+      },
+      {
+        "id": "E1",
+        "title": "Packet not assembled",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.route"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 material contradictions between sources: Recorded disposition and claim progress; Package completeness at intake.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": true,
+        "skipped": false,
+        "reason": "80% of the checklist is on file, below the 100% minimum. Missing: Repair estimate.",
+        "uses": [
+          "packet.completeness"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.fields"
+        ]
+      }
+    ],
+    "humanDecision": "Every route ends with a person deciding in ClaimsPro. The AI recommends; it never approves and never denies."
+  },
+  "usage": {
+    "calls": 4,
+    "inputTokens": 28133,
+    "outputTokens": 4223,
+    "costUsd": 0.197,
+    "durationMs": 44139
+  },
+  "savedAt": "2026-10-14T17:52:51.369Z"
+}

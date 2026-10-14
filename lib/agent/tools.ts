@@ -101,8 +101,12 @@ export async function runTool(ctx: ToolContext, name: string, input: unknown): P
   const startedAt = new Date().toISOString();
   const t0 = Date.now();
   const args = JSON.stringify(input ?? {});
-  const done = (tool: AgentTool, result: string, content: ToolContent, isError = false) => {
-    ctx.trace.push({ step: ctx.trace.length + 1, tool, args: summarize(args), result: summarize(result), durationMs: Date.now() - t0, startedAt });
+  const mask = (s: string) => maskText(s, ctx.claim.names).text;
+  // Every text block goes through the mask here, whatever tool built it, so a
+  // name copied into a checklist note or an error message cannot reach the model.
+  const done = (tool: AgentTool, result: string, rawContent: ToolContent, isError = false) => {
+    const content: ToolContent = rawContent.map((c) => (c.type === "text" ? { ...c, text: mask(c.text) } : c));
+    ctx.trace.push({ step: ctx.trace.length + 1, tool, args: summarize(args), result: summarize(mask(result)), durationMs: Date.now() - t0, startedAt });
     for (const c of content) if (c.type === "text") ctx.snapshot.push(`[${tool} ${args}]\n${c.text}`);
     return { content, isError };
   };
@@ -114,7 +118,6 @@ export async function runTool(ctx: ToolContext, name: string, input: unknown): P
     ctx.budgetExhausted = true;
     return done(name, "refused: step budget exhausted", [{ type: "text", text: `Step budget of ${ctx.budget} tool calls exhausted. Finish with what you have.` }], true);
   }
-  const mask = (s: string) => maskText(s, ctx.claim.names).text;
   const id = ctx.claim.header.claimId;
   const checkId = (i: unknown): string | null => {
     const given = (i as { claim_id?: string })?.claim_id;

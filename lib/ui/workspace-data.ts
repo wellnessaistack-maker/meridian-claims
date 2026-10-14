@@ -34,8 +34,12 @@ export interface ClaimRow {
   audit: AuditRecord[];
   /** Real names for the screen only. Never in a prompt or a packet. */
   names: { token: string; name: string }[];
-  /** Photos and page images, as paths under the claim folder. */
+  /** Photos, as repo-relative paths. */
   photos: string[];
+  /** Page images of the PDFs, as repo-relative paths, with the document they belong to. */
+  pages: { document: string; page: number; image: string }[];
+  documents: { name: string; kind: string; engineConfidence: number | null; pages: number }[];
+  lossDescription: string | null;
 }
 
 export interface WorkspaceData {
@@ -70,7 +74,7 @@ function fromWorklistEntry(e: WorklistEntry, settings: Settings): ClaimRow {
     adjusterId: null,
   };
   const decision = decide({ claimId: e.claimId, claimType: e.claimType, state: e.state, country: "US", amountUsd: e.amountUsd, regulatoryReviewRequired: e.regulatoryReviewRequired, policyStatus: "unknown", packet: null }, settings, { structuredOnly: true });
-  return { claimId: e.claimId, provenance: e.provenance, header, queueAgeHours: e.queueAgeHours, todayFlagged: e.todayFlagged, todayQueue: e.todayFlagged ? "Human review" : "Standard", documentCount: e.documentCount, packet: null, decision, audit: [], names: [], photos: [] };
+  return { claimId: e.claimId, provenance: e.provenance, header, queueAgeHours: e.queueAgeHours, todayFlagged: e.todayFlagged, todayQueue: e.todayFlagged ? "Human review" : "Standard", documentCount: e.documentCount, packet: null, decision, audit: [], names: [], photos: [], pages: [], documents: [], lossDescription: null };
 }
 
 export function loadWorkspaceData(root = process.cwd(), settings: Settings = DEFAULT_SETTINGS): WorkspaceData {
@@ -96,6 +100,9 @@ export function loadWorkspaceData(root = process.cwd(), settings: Settings = DEF
       audit: readAudit(folder.claimId, root),
       names: claim.names.map((n) => ({ token: n.token, name: n.value })),
       photos: claim.databricks.photos.map((p) => p.path),
+      pages: claim.databricks.pdfs.flatMap((d) => d.pages.map((pg) => ({ document: d.name, page: pg.page, image: pg.image }))),
+      documents: claim.databricks.documents.map((d) => ({ name: d.name, kind: d.kind, engineConfidence: d.engineConfidence, pages: d.pages.length })),
+      lossDescription: claim.claimsPro.lossDescription,
     });
   }
   const seedFile = path.join(root, "data", "worklist.json");
