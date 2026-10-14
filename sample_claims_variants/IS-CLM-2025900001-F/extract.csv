@@ -1,2 +1,2 @@
 claim_id,filed_date,claim_type,state,intake_channel,cost_per_claim_usd,claim_amount_usd,complexity,automation_eligibility_score,flagged_for_human_review,requires_human_by_regulation,queue_wait_hours,handling_hours,total_cycle_time_hours,disposition,denial_reason,adjuster_id,document_count,customer_satisfaction_1to5,review_actually_needed
-IS-CLM-2025900001-F,2025-11-18,Comprehensive,CO,E-Portal,0,4480,Simple,88,No,No,9.5,0,0,Pending Review,,ADJ-114,3,,
+IS-CLM-2025900001-F,2025-11-18,Comprehensive,CO,E-Portal,0,4480,Simple,88,No,No,9.5,0,0,Pending Review,,ADJ-114,2,,

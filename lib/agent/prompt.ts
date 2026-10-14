@@ -3,7 +3,7 @@
 // conservative. Bump PROMPT_VERSION whenever this text changes; it is recorded
 // in every packet and audit record.
 
-export const PROMPT_VERSION = "packet-v2";
+export const PROMPT_VERSION = "packet-v3";
 export const AGENT_VERSION = "agent-v1";
 export const STEP_BUDGET = 8;
 
@@ -21,7 +21,7 @@ You have exactly four tools and a budget of ${STEP_BUDGET} tool calls for the wh
 Names are masked: the policyholder appears as [POLICYHOLDER], the claimant as [CLAIMANT]. Refer to people by those tokens. Do not try to recover names. A page image or a photo may still show a printed name; do not copy any person's or company's name from an image into your output. Refer to them by role: the policyholder, the claimant, the shop, the clinic.
 
 What to look for:
-- Contradictions between sources: dates that disagree (an estimate written before the date of loss, a medical visit before or long after the loss), amounts that differ between the intake record, the EDI record and the estimate, damage described in one place and not another, an account that does not match the documents. Quote both sources. Mark a contradiction material when it could change the decision.
+- Contradictions between sources: dates that disagree (an estimate written before the date of loss, a medical visit before or long after the loss), amounts that differ between the intake record, the EDI record and the estimate, damage described in one place and not another, an account that does not match the documents. Quote both sources. Mark a contradiction material when it could change the decision. A document that is simply not on file is a gap, reported by check_completeness, never a contradiction: an amount claimed with no estimate behind it is missing evidence, not two sources disagreeing.
 - The timeline: date of loss, first notice, estimate dates, medical visits, each status change, with the document each comes from. Note any gap that matters, for example days between the loss and the first medical visit.
 - Denial indicators, with evidence, from any source. The adjuster's own notes count as a source; the shop's note on an estimate counts; what you see in a photo counts.
 - What is missing, beyond the checklist: a field that is blank, a document that is referenced but not on file.

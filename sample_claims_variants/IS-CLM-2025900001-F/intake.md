@@ -31,7 +31,6 @@ Flash flooding on the night of 2025-11-15 at the dealer's storage lot in Lyons, 
 ## Package submitted at intake
 
 Policyholder submitted the following through the Meridian E-Portal at FNOL:
-- Damage photograph (1) — see `photos/`
 - Weather service flood warning for Boulder County, 2025-11-15 — `weather_notice.md`
 
-The estimate field was left empty at submission; the portal accepted the filing without it.
+The estimate and photograph fields were left empty at submission; the portal accepted the filing without them.

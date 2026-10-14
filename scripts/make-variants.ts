@@ -46,13 +46,14 @@ const VARIANTS: Variant[] = [
     id: "IS-CLM-2025900001-F",
     parent: "IS-CLM-2025900001",
     src: "sample_claims_mock",
-    change: "repair estimate missing",
-    row: (r) => ({ ...r, documentCount: 3 }),
+    change: "repair estimate and damage photo missing",
+    row: (r) => ({ ...r, documentCount: 2 }),
     apply: (dir) => {
       rmSync(path.join(dir, "repair_estimate.md"));
-      edit(path.join(dir, "intake.md"), (s) => s.replace("- Repair estimate (Boulder Valley Euro Works, est. BV-7718) — `repair_estimate.md`\n", "").replace("All required E-Portal fields were populated at submission.", "The estimate field was left empty at submission; the portal accepted the filing without it."));
-      edit(path.join(dir, "status_history.md"), (s) => s.replace("| Documents on file | 4 |", "| Documents on file | 3 |").replace("## Documents on file (4)", "## Documents on file (3)").replace("2. Repair estimate — Boulder Valley Euro Works (BV-7718)\n3. Damage photograph — rear three-quarter, vehicle in standing water\n4. Weather notice", "2. Damage photograph — rear three-quarter, vehicle in standing water\n3. Weather notice").replace("E-Portal FNOL; package complete", "E-Portal FNOL; estimate not attached"));
-      edit(path.join(dir, "adjuster_notes.md"), (s) => s.replace("One photo, car sitting in water to the sills. Est BV-7718\n$4,480 reads like a flood clean-up, no bodywork.", "One photo, car sitting in water to the sills. No estimate\nin the package; $4,480 claimed with nothing behind it yet.").replace("Nothing to chase.", "Need the shop's estimate before this moves."));
+      rmSync(path.join(dir, "photos"), { recursive: true });
+      edit(path.join(dir, "intake.md"), (s) => s.replace("- Repair estimate (Boulder Valley Euro Works, est. BV-7718) — `repair_estimate.md`\n", "").replace("- Damage photograph (1) — see `photos/`\n", "").replace("All required E-Portal fields were populated at submission.", "The estimate and photograph fields were left empty at submission; the portal accepted the filing without them."));
+      edit(path.join(dir, "status_history.md"), (s) => s.replace("| Documents on file | 4 |", "| Documents on file | 2 |").replace("## Documents on file (4)", "## Documents on file (2)").replace("2. Repair estimate — Boulder Valley Euro Works (BV-7718)\n3. Damage photograph — rear three-quarter, vehicle in standing water\n4. Weather notice", "2. Weather notice").replace("E-Portal FNOL; package complete", "E-Portal FNOL; no estimate or photograph attached"));
+      edit(path.join(dir, "adjuster_notes.md"), (s) => s.replace("One photo, car sitting in water to the sills. Est BV-7718\n$4,480 reads like a flood clean-up, no bodywork.", "No photo and no estimate in the package; $4,480 claimed\nwith nothing behind it yet.").replace("Nothing to chase.", "Need the shop's estimate and a photo before this moves."));
     },
   },
   {

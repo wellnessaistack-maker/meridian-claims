@@ -27,13 +27,20 @@ export interface PacketPanelProps {
   onConfirm: (change?: { route: FinalRoute; reason: string }) => Promise<string | null>;
   /** The adjuster whose name goes on the record. */
   reviewer: string;
+  /** Demo: the claimant's reply arrives. */
+  onReply: (text: string) => void;
+  /** The claimant replied after the request went out; the packet predates the reply. */
+  replied: boolean;
   onFocus: (s: Shown | null) => void;
 }
 
-export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onConfirm, reviewer, onFocus }: PacketPanelProps) {
+export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onConfirm, onReply, replied, reviewer, onFocus }: PacketPanelProps) {
   const p = row.packet?.packet ?? null;
   const last = row.audit[row.audit.length - 1] ?? null;
-  const reviewed = last?.humanReviewed ? last : null;
+  // After a reply the earlier confirmation is history: the claim is open again.
+  const reviewed = last?.humanReviewed && !replied ? last : null;
+  const waitingOnClaimant = !!reviewed && (reviewed.reviewerRoute ?? reviewed.output.route) === "request_information";
+  const [replyText, setReplyText] = useState(() => (p ? draftReply(row) : ""));
   const [auditOpen, setAuditOpen] = useState(false);
   const [changing, setChanging] = useState(false);
   const [newRoute, setNewRoute] = useState<FinalRoute>(decision.route);
@@ -103,10 +110,35 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
           <div className="banner-why">{ROUTE_MEANING[decision.route]}</div>
           <div className="banner-flags">
             {p?.agentRoute && (decision.escalatedByRules ? <span className="chip chip-warn">Agent said {ROUTE_LABELS[p.agentRoute].toLowerCase()}; a rule moved it</span> : <span className="chip chip-ok">Agent and rules agree</span>)}
-            {reviewed && <span className="chip chip-ok">Confirmed by {reviewed.reviewer}</span>}
+            {reviewed && !waitingOnClaimant && <span className="chip chip-ok">Confirmed by {reviewed.reviewer}</span>}
+            {waitingOnClaimant && <span className="chip chip-warn">Request sent; waiting on the claimant</span>}
+            {replied && <span className="chip chip-ok">Reply received {when(row.reply!.at)}</span>}
             {!p && <span className="chip">{row.documentCount === 0 ? "Structured rules only" : "Not run yet"}</span>}
           </div>
         </div>
+
+        {replied && (
+          <div className="card">
+            <div className="card-head"><h3>The claimant replied</h3><span className="sub">{when(row.reply!.at)} · via the portal</span></div>
+            <div className="card-body">
+              <pre className="message" style={{ whiteSpace: "pre-wrap", margin: 0 }}>{row.reply!.text}</pre>
+              <div className="note">The packet above was built before this reply, so it still lists the item as missing. Re-run the agent to re-read the claim with the new document{apiKey ? "" : " (needs a key)"}, or verify the document by hand and confirm.</div>
+            </div>
+          </div>
+        )}
+        {waitingOnClaimant && (
+          <div className="card">
+            <div className="card-head"><h3>Waiting on the claimant</h3><span className="sub">Demo: the reply arrives when you say so</span></div>
+            <div className="card-body">
+              <div className="note" style={{ marginTop: 0, marginBottom: 8 }}>In production the reply is a ClaimsPro document event. For the demo, this prefilled reply stands in for it; edit it or send it as is.</div>
+              <textarea className="message" value={replyText} onChange={(e) => setReplyText(e.target.value)} rows={5} />
+              <div className="actionbar-row" style={{ marginTop: 8 }}>
+                <button className="btn btn-primary" style={{ flex: "0 0 auto" }} onClick={() => onReply(replyText)} disabled={!replyText.trim()}>Receive the reply</button>
+                <span className="note" style={{ marginTop: 0 }}>The claim returns to the inbox under Verify documents.</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {rerun.error && <div className="err">{rerun.error}</div>}
 
@@ -356,8 +388,13 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onCo
             </>
           ) : (
             <>
-              <button className="btn btn-primary" disabled={!last || !!reviewed || busy} onClick={() => submit()} title={!last ? "No packet to confirm" : reviewed ? "Already confirmed" : `Records ${reviewer} as the reviewer and opens the next claim`}>
-                {busy ? "Recording…" : reviewed ? `Confirmed: ${ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}` : decision.route === "request_information" ? "Send the request and wait" : `Confirm route: ${ROUTE_LABELS[decision.route]}`}
+              <button
+                className="btn btn-primary"
+                disabled={!last || !!reviewed || busy}
+                onClick={() => (replied ? submit({ route: "verify_documents", reason: `Claimant replied ${when(row.reply!.at)}: ${row.reply!.text.split("\n")[0]} Verified by hand.` }) : submit())}
+                title={!last ? "No packet to confirm" : reviewed ? "Already confirmed" : `Records ${reviewer} as the reviewer and opens the next claim`}
+              >
+                {busy ? "Recording…" : reviewed ? `Confirmed: ${ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}` : replied ? "Verified by hand: confirm" : decision.route === "request_information" ? "Send the request and wait" : `Confirm route: ${ROUTE_LABELS[decision.route]}`}
               </button>
               <button className="btn" disabled={!last || !!reviewed || busy} onClick={() => setChanging(true)}>Change route…</button>
             </>
@@ -471,6 +508,14 @@ export function draftRequest(row: ClaimRow, unmask: (s: string) => string): stri
   const p = row.packet!.packet;
   const external = p.missing.filter((m) => m.from !== "internal");
   return `Dear ${unmask(p.header.claimantToken ?? p.header.policyholderToken)},\n\nTo continue with claim ${row.claimId} we need:\n${external.map((m) => `- ${m.label}: ${m.why}`).join("\n")}\n\nYou can reply to this message or upload the documents through the portal.\n\nMeridian Claims`;
+}
+
+/** Demo: a plausible reply from the claimant, built from the checklist items the request asked for. */
+export function draftReply(row: ClaimRow): string {
+  const p = row.packet!.packet;
+  const external = p.missing.filter((m) => m.from !== "internal");
+  const items = external.length ? external.map((m) => m.label.toLowerCase()) : ["the information you asked for"];
+  return `Hello,\n\nPlease find attached ${items.join(" and ")} for claim ${row.claimId}, as requested. Let me know if you need anything else.\n\nThanks`;
 }
 
 /** The ClaimsPro correspondence write, through the stub. Returns the log line or an error. */

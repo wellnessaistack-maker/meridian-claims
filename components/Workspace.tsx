@@ -13,7 +13,7 @@ import type { ClaimRow, WorkspaceData } from "@/lib/ui/workspace-data.ts";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { PacketPanel } from "./PacketPanel";
 import { Viewer, type Shown } from "./Viewer";
-import { Worklist, inboxOrder, type DemoState } from "./Worklist";
+import { Worklist, inboxOrder, hasReply, type DemoState } from "./Worklist";
 import { ADJUSTER, reviewerLabel } from "@/lib/ui/session.ts";
 
 const NO_KEY = "No API key. Showing cached packets; re-run is disabled.";
@@ -99,6 +99,13 @@ export function Workspace({ data }: { data: WorkspaceData }) {
     if (next) select(next.claimId);
     return null;
   };
+  /** Demo: the claimant's reply arrives and the claim comes back to the inbox. In production this is the ClaimsPro document event. */
+  const onReply = (text: string) => {
+    if (!row) return;
+    const current = row;
+    setOverrides((o) => ({ ...o, [current.claimId]: { ...o[current.claimId], reply: { at: new Date().toISOString(), text } } }));
+    setToast({ text: `${current.claimId.replace("IS-CLM-2025", "…")}: the claimant replied; the claim is back in the inbox under Verify documents.`, claimId: current.claimId });
+  };
   const [running, setRunning] = useState<string | null>(null);
   const runOne = async (target: ClaimRow) => {
     let token = window.localStorage.getItem("agentRunToken");
@@ -169,7 +176,7 @@ export function Workspace({ data }: { data: WorkspaceData }) {
           </section>
           <section className="col assess">
             {row ? (
-              <PacketPanel key={row.claimId} row={row} decision={row.decision} apiKey={data.apiKey} model={data.model} rerun={rerun} onRerun={onRerun} onConfirm={onConfirm} reviewer={`${ADJUSTER.name} (${ADJUSTER.id})`} onFocus={setFocus} />
+              <PacketPanel key={row.claimId} row={row} decision={row.decision} apiKey={data.apiKey} model={data.model} rerun={rerun} onRerun={onRerun} onConfirm={onConfirm} onReply={onReply} replied={hasReply(row)} reviewer={`${ADJUSTER.name} (${ADJUSTER.id})`} onFocus={setFocus} />
             ) : (
               <div className="viewer-empty"><div><b>{demo.active ? "The morning is starting." : "No claims."}</b><div>{demo.active ? "Claims arrive on the left as they come in; each is assessed and sorted on arrival." : ""}</div></div></div>
             )}

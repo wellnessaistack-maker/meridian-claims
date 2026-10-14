@@ -24,22 +24,29 @@ type Group = Exclude<Segment, "waiting"> | "request" | "verify";
 // Easiest first, as the earlier prototype ordered its inbox: clear the quick ones, then the ones that need more.
 const INBOX_ORDER: Group[] = ["ready", "request", "verify", "senior", "regulatory"];
 const GROUP_LABELS: Record<Group, string> = { ready: SEGMENT_LABELS.ready, request: "Request information", verify: "Verify documents", senior: SEGMENT_LABELS.senior, regulatory: SEGMENT_LABELS.regulatory };
-const groupOf = (r: ClaimRow): Group => (r.decision.segment === "waiting" ? (r.decision.route === "verify_documents" ? "verify" : "request") : r.decision.segment);
+const groupOf = (r: ClaimRow): Group => (hasReply(r) ? "verify" : r.decision.segment === "waiting" ? (r.decision.route === "verify_documents" ? "verify" : "request") : r.decision.segment);
 
 const PROVENANCE_SHORT: Record<string, string> = { provided: "Meridian sample", variant: "Variant", mock: "Mock", extract: "Extract row" };
 
 const lastReview = (r: ClaimRow) => r.audit.filter((a) => a.humanReviewed).pop() ?? null;
-/** Confirmed as "request information": the request went out and the claim waits on someone outside Meridian. */
-export const isWaiting = (r: ClaimRow) => {
+const requested = (r: ClaimRow) => {
   const a = lastReview(r);
-  return !!a && (a.reviewerRoute ?? a.output.route) === "request_information";
+  return !!a && (a.reviewerRoute ?? a.output.route) === "request_information" ? a : null;
 };
+/** The claimant replied after the request went out: the claim is back in the inbox to be re-read. */
+export const hasReply = (r: ClaimRow) => {
+  const a = requested(r);
+  return !!a && !!r.reply && r.reply.at >= (a.reviewedAt ?? "");
+};
+/** Confirmed as "request information": the request went out and the claim waits on someone outside Meridian. */
+export const isWaiting = (r: ClaimRow) => !!requested(r) && !hasReply(r);
 /** Confirmed on any other route: the adjuster's own work, or a hand-off to a senior or a full review. */
-export const isDone = (r: ClaimRow) => !!lastReview(r) && !isWaiting(r);
+export const isDone = (r: ClaimRow) => !!lastReview(r) && !requested(r);
 export const tabOf = (r: ClaimRow): Tab => (isDone(r) ? "done" : isWaiting(r) ? "waiting" : "inbox");
 
 export function reasonLine(r: ClaimRow): string {
   const p = r.packet?.packet;
+  if (hasReply(r)) return `Claimant replied: ${r.reply!.text.split("\n")[0]} The packet predates the reply: re-run it, or verify the new document by hand.`;
   const top = r.decision.reasons[0];
   if (p && p.status === "not_assembled") return `Not assembled: ${p.notAssembledReason}`;
   if (top) return `${top.title}. ${top.reason}`;
@@ -81,7 +88,7 @@ export function Worklist({ rows, selected, onSelect, onRunUnprocessed, running, 
 
   const item = (r: ClaimRow) => {
     const isLate = r.header.complexity === "Simple" && r.queueAgeHours > SLA_HOURS && !isDone(r);
-    const reviewed = r.audit.filter((a) => a.humanReviewed).pop();
+    const reviewed = hasReply(r) ? undefined : r.audit.filter((a) => a.humanReviewed).pop();
     return (
       <button key={r.claimId} className={`wl-item ${r.claimId === selected ? "active" : ""}`} onClick={() => onSelect(r.claimId)}>
         <div className="wl-item-top">
@@ -108,7 +115,8 @@ export function Worklist({ rows, selected, onSelect, onRunUnprocessed, running, 
           )}
         </div>
         <div className="wl-item-chips">
-          <RoutePill route={reviewed?.reviewerRoute ?? r.decision.route} small />
+          <RoutePill route={hasReply(r) ? "verify_documents" : (reviewed?.reviewerRoute ?? r.decision.route)} small />
+          {hasReply(r) && <span className="chip chip-ok">Reply received</span>}
           {!r.packet && r.documentCount > 0 && r.header.country !== "CA" && <span className="chip">Not run</span>}
         </div>
       </button>
@@ -204,7 +212,7 @@ function bySegment(rows: ClaimRow[], seg: Group) {
 /** How often the person kept the recommendation, across the confirmed claims. Every change is a test case. */
 function AgreementSummary({ rows }: { rows: ClaimRow[] }) {
   const last = rows.map((r) => r.audit.filter((a) => a.humanReviewed).pop()!);
-  const kept = last.filter((a) => !a.reviewerRoute || a.reviewerRoute === a.output.route).length;
+  const kept = last.filter((a) => !a.reviewerRoute || a.reviewerRoute === a.output.route || a.reviewerReason?.startsWith("Claimant replied")).length;
   const changed = last.length - kept;
   const download = () => {
     const header = "claim_id,recommended_route,reviewer_route,reviewer,reason,reviewed_at";
@@ -222,7 +230,7 @@ function AgreementSummary({ rows }: { rows: ClaimRow[] }) {
         <span className="hint">{Math.round((kept / last.length) * 100)}%</span>
       </div>
       <div className="wl-agree-bar" aria-hidden><span className="k" style={{ flex: kept }} /><span className="c" style={{ flex: changed }} /></div>
-      <div className="hint">{changed} route{changed === 1 ? "" : "s"} changed, each with a reason. A change is the start of a test case: {changed ? last.filter((a) => a.reviewerRoute && a.reviewerRoute !== a.output.route).map((a) => `${a.claimId.replace("IS-CLM-2025", "…")} → ${ROUTE_LABELS[a.reviewerRoute!].toLowerCase()}`).join("; ") : "none yet"}.</div>
+      <div className="hint">{changed} route{changed === 1 ? "" : "s"} changed, each with a reason. A change is the start of a test case: {changed ? last.filter((a) => a.reviewerRoute && a.reviewerRoute !== a.output.route && !a.reviewerReason?.startsWith("Claimant replied")).map((a) => `${a.claimId.replace("IS-CLM-2025", "…")} → ${ROUTE_LABELS[a.reviewerRoute!].toLowerCase()}`).join("; ") : "none yet"}.</div>
       <button className="btn btn-sm" onClick={download}>Download review log (CSV)</button>
     </div>
   );
