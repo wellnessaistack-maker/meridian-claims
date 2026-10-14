@@ -56,7 +56,7 @@ export function AuditDrawer({ row, onClose, onConfirmed }: { row: ClaimRow; onCl
           <>
             <Field n="1" label="Input snapshot">
               SHA-256 <code className="font-mono text-xs">{last.input.hash}</code>
-              <div className="text-xs text-slate-500">{last.input.snapshot.length} items the model was shown (masked), {last.input.documents.length} documents: {last.input.documents.join(", ") || "none"}</div>
+              <div className="text-xs text-slate-500">{last.input.snapshot.length} items the model was shown (masked), {new Set(last.input.documents).size} documents: {[...new Set(last.input.documents)].join(", ") || "none"}</div>
               <details className="mt-1 text-xs">
                 <summary className="cursor-pointer text-blue-700">Show what the model saw</summary>
                 <pre className="mt-1 max-h-64 overflow-auto whitespace-pre-wrap rounded bg-slate-50 p-2 font-mono text-[11px]">{last.input.snapshot.join("\n\n")}</pre>

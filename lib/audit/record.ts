@@ -62,7 +62,7 @@ export function recordFor(packet: ClaimPacket, decision: Decision, snapshot: str
     id: "aud_" + createHash("sha256").update(`${packet.claimId}|${packet.inputHash}|${createdAt}`).digest("hex").slice(0, 12),
     claimId: packet.claimId,
     createdAt,
-    input: { hash: packet.inputHash, snapshot, documents: packet.evidence.filter((e) => e.present && e.document).map((e) => e.document!) },
+    input: { hash: packet.inputHash, snapshot, documents: [...new Set(packet.evidence.filter((e) => e.present && e.document).map((e) => e.document!))] },
     modelVersion: { model: packet.model.requested, modelServed: packet.model.served, promptVersion: packet.model.promptVersion, agentVersion: packet.model.agentVersion, protocolVersion: decision.protocolVersion },
     output: { route: decision.route, agentRoute: decision.agentRoute, rulesFired: decision.reasons.map((r) => r.id), segment: decision.segment },
     confidence: { fieldExtraction: fieldConfidence(packet), evidenceCompleteness: packet.completeness, route: routeConfidence(decision.segment, root) },
