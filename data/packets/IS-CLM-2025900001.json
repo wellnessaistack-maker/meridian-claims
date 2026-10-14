@@ -9,11 +9,11 @@
     },
     "status": "assembled",
     "notAssembledReason": null,
-    "generatedAt": "2026-10-14T17:43:40.817Z",
+    "generatedAt": "2026-10-14T19:40:36.773Z",
     "model": {
       "requested": "claude-opus-5-5",
       "served": "claude-opus-5-5",
-      "promptVersion": "packet-v2",
+      "promptVersion": "packet-v3",
       "agentVersion": "agent-v1"
     },
     "header": {
@@ -182,7 +182,7 @@
     "timeline": [
       {
         "at": "2025-03-01",
-        "event": "Policy CA-CO-20917-21 takes effect",
+        "event": "Policy CA-CO-20917-21 effective",
         "source": "claimspro",
         "document": "intake.md"
       },
@@ -194,7 +194,7 @@
       },
       {
         "at": "2025-11-15",
-        "event": "Date of loss; intake package lists a flood warning for Boulder County for this date",
+        "event": "Date of loss; weather service flood warning issued for Boulder County the same day (listed in the intake package)",
         "source": "claimspro",
         "document": "intake.md"
       },
@@ -211,12 +211,6 @@
         "document": "status_history.md"
       },
       {
-        "at": "2025-11-18T07:40",
-        "event": "Received: first notice through the E-Portal; package logged as complete",
-        "source": "claimspro",
-        "document": "status_history.md"
-      },
-      {
         "at": "2026-02-28",
         "event": "Policy expiry",
         "source": "claimspro",
@@ -227,15 +221,15 @@
     "missing": [],
     "denialIndicators": [],
     "agentRoute": "ready_to_decide",
-    "rationale": "The packet contains the ClaimsPro intake record (intake.md), the status history (status_history.md) and the Snowflake extract (extract.csv). These sources agree on the claim amount ($4,480), loss state (CO), claim type (Comprehensive), channel (E-Portal) and filed date (2025-11-18). The date of loss, 2025-11-15, falls within the policy period of 2025-03-01 to 2026-02-28, so the policy was in force on that date, and there are no prior claims on the policy. The completeness check found all five Comprehensive items on file, including the repair estimate (repair_estimate.md) and one damage photo. The intake package also lists a flood warning for 2025-11-15 (weather_notice.md). No contradictions or denial indicators were found in the structured record. The document contents were not reviewed under the routing rule for complete E-Portal claims, so the adjuster should check the estimate date, the photo and the weather notice against the loss. The adjuster should also confirm that the policy covers a vehicle held as dealer stock, and account for the fourth document the record counts beyond the three listed in the intake package. The claim is routed for an adjuster's decision in ClaimsPro.",
+    "rationale": "The packet contains the claim and policy record from the claims system (intake.md, status_history.md) and the data warehouse extract (sample_claims_mock/IS-CLM-2025900001/extract.csv). The two sources agree on the amount ($4,480), state, claim type, channel, filed date and policy period, and the policy was in force on the 2025-11-15 date of loss. The evidence checklist for a Comprehensive claim is complete: FNOL record, loss description, vehicle identified, one damage photo in photos/, and a repair estimate (repair_estimate.md); a weather notice (weather_notice.md) is also listed in the intake package. No contradictions, prior claims or denial indicators were found in the records reviewed. The underlying documents were not opened because the claim is a complete, fully populated E-Portal claim, so the adjuster should confirm the estimate date and the photo when reviewing, along with how the policy covers the vehicle as dealer-stock import inventory. On this basis the file is ready for the assigned adjuster to decide in ClaimsPro.",
     "trace": [
       {
         "step": 1,
         "tool": "get_structured",
         "args": "{\"claim_id\":\"IS-CLM-2025900001\"}",
         "result": "Comprehensive CO E-Portal $4480; 45 fields",
-        "durationMs": 0,
-        "startedAt": "2026-10-14T17:43:04.475Z"
+        "durationMs": 2,
+        "startedAt": "2026-10-14T19:40:06.107Z"
       },
       {
         "step": 2,
@@ -243,7 +237,7 @@
         "args": "{\"claim_id\":\"IS-CLM-2025900001\"}",
         "result": "5 of 5 on file; missing: none",
         "durationMs": 1,
-        "startedAt": "2026-10-14T17:43:07.713Z"
+        "startedAt": "2026-10-14T19:40:09.515Z"
       }
     ],
     "inputHash": "e3d5293d48822882ea1f4758f165b1dcd69b981e1eb143fe878681ea62ee812e",
@@ -418,10 +412,10 @@
   },
   "usage": {
     "calls": 4,
-    "inputTokens": 24217,
-    "outputTokens": 2773,
-    "costUsd": 0.1523,
-    "durationMs": 39127
+    "inputTokens": 24306,
+    "outputTokens": 2521,
+    "costUsd": 0.1476,
+    "durationMs": 33204
   },
-  "savedAt": "2026-10-14T17:57:31.311Z"
+  "savedAt": "2026-10-14T19:44:52.314Z"
 }

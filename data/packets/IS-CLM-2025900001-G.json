@@ -1,0 +1,586 @@
+{
+  "packet": {
+    "claimId": "IS-CLM-2025900001-G",
+    "provenance": {
+      "kind": "variant",
+      "label": "Variant of IS-CLM-2025900001 (damage photo missing)",
+      "parentId": "IS-CLM-2025900001",
+      "change": "damage photo missing"
+    },
+    "status": "assembled",
+    "notAssembledReason": null,
+    "generatedAt": "2026-10-14T19:40:51.779Z",
+    "model": {
+      "requested": "claude-opus-5-5",
+      "served": "claude-opus-5-5",
+      "promptVersion": "packet-v3",
+      "agentVersion": "agent-v1"
+    },
+    "header": {
+      "claimId": "IS-CLM-2025900001-G",
+      "claimType": "Comprehensive",
+      "state": "CO",
+      "country": "US",
+      "channel": "E-Portal",
+      "filedDate": "2025-11-18",
+      "dateOfLoss": "2025-11-15",
+      "amountUsd": 4480,
+      "policyNumber": "CA-CO-20917-21",
+      "policyholderToken": "[POLICYHOLDER]",
+      "claimantToken": null,
+      "vehicle": "1988 Mercedes-Benz 230TE (UK import, dealer stock)",
+      "complexity": "Simple",
+      "regulatoryReviewRequired": false,
+      "policyStatus": "in_force",
+      "priorClaimsOnPolicy": 0,
+      "adjusterId": "ADJ-114"
+    },
+    "evidence": [
+      {
+        "id": "fnol_record",
+        "label": "First notice of loss record",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "loss_description",
+        "label": "Description of the loss",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "vehicle_identified",
+        "label": "Insured vehicle identified",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": "VIN: WDB1240831F031177"
+      },
+      {
+        "id": "damage_photos",
+        "label": "Damage photographs",
+        "present": false,
+        "document": null,
+        "source": null,
+        "note": null
+      },
+      {
+        "id": "repair_estimate",
+        "label": "Repair estimate",
+        "present": true,
+        "document": "repair_estimate.md",
+        "source": "databricks",
+        "note": null
+      }
+    ],
+    "completeness": 0.8,
+    "fields": [
+      {
+        "key": "claim_amount",
+        "label": "Claim amount",
+        "value": "4480.00",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "claim_type",
+        "label": "Claim type",
+        "value": "Comprehensive",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "loss_state",
+        "label": "Loss state",
+        "value": "CO",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "intake_channel",
+        "label": "Intake channel",
+        "value": "E-Portal",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "filed_date",
+        "label": "Filed date",
+        "value": "2025-11-18",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "date_of_loss",
+        "label": "Date of loss",
+        "value": "2025-11-15",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "policy_number",
+        "label": "Policy number",
+        "value": "CA-CO-20917-21",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "vehicle",
+        "label": "Insured vehicle",
+        "value": "1988 Mercedes-Benz 230TE (UK import, dealer stock)",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "regulatory_flag",
+        "label": "Requires human by regulation",
+        "value": "No",
+        "source": "claimspro",
+        "document": "status_history.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_number",
+        "label": "Repair estimate number",
+        "value": "BV-7718",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Estimate #: BV-7718\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_written_date",
+        "label": "Estimate written date",
+        "value": "2025-11-17",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Written: 2025-11-17\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_vin",
+        "label": "VIN on estimate",
+        "value": "WDB1240831F031177",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"VIN WDB1240831F031177, odometer 142,310 mi\"",
+        "reread": null
+      },
+      {
+        "key": "model_odometer",
+        "label": "Odometer",
+        "value": "142,310 mi",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"odometer 142,310 mi\"",
+        "reread": null
+      },
+      {
+        "key": "model_loss_description_estimate",
+        "label": "Loss described on estimate",
+        "value": "Flood immersion to approx. sill height, 2025-11-15",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Loss: flood immersion to approx. sill height, 2025-11-15\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_net_total",
+        "label": "Estimate net total",
+        "value": "$4,480.00",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"Net total: 4,480.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_estimate_shop_note",
+        "label": "Shop note on estimate",
+        "value": "No body damage; vehicle not driven since loss",
+        "source": "databricks",
+        "document": "repair_estimate.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from repair_estimate.md (no engine confidence; a person can check the quote). Quote: \"no body damage; paint and panels unaffected. Vehicle not driven since the loss.\"",
+        "reread": null
+      },
+      {
+        "key": "model_weather_warning",
+        "label": "Weather warning",
+        "value": "Flash Flood Warning, northern Boulder County incl. Lyons, 2025-11-15 21:10 to 2025-11-16 06:30 MST",
+        "source": "databricks",
+        "document": "weather_notice.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from weather_notice.md (no engine confidence; a person can check the quote). Quote: \"Issued 2025-11-15 21:10 MST for northern Boulder County including Lyons... Warning cancelled 2025-11-16 06:30 MST.\"",
+        "reread": null
+      },
+      {
+        "key": "model_loss_location",
+        "label": "Loss location per adjuster",
+        "value": "Dealer lot",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Flood loss at the dealer lot, matches the NWS warning for that night.\"",
+        "reread": null
+      },
+      {
+        "key": "model_adjuster_photo_request",
+        "label": "Adjuster request",
+        "value": "Photo of the vehicle needed",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Need a photo of the car before this moves.\"",
+        "reread": null
+      }
+    ],
+    "timeline": [
+      {
+        "at": "2025-11-15",
+        "event": "Date of loss",
+        "source": "claimspro",
+        "document": "intake.md"
+      },
+      {
+        "at": "2025-11-15",
+        "event": "Date of loss: flood immersion of the vehicle to sill height at the dealer lot",
+        "source": "claimspro",
+        "document": "intake.md"
+      },
+      {
+        "at": "2025-11-15T21:10",
+        "event": "Flash Flood Warning issued for northern Boulder County including Lyons",
+        "source": "databricks",
+        "document": "weather_notice.md"
+      },
+      {
+        "at": "2025-11-16T06:30",
+        "event": "Flash Flood Warning cancelled",
+        "source": "databricks",
+        "document": "weather_notice.md"
+      },
+      {
+        "at": "2025-11-17",
+        "event": "Repair estimate BV-7718 written for $4,480.00",
+        "source": "databricks",
+        "document": "repair_estimate.md"
+      },
+      {
+        "at": "2025-11-18",
+        "event": "Adjuster note: intake clean, matches NWS warning; photo of the vehicle needed before the claim moves",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "at": "2025-11-18T07:40",
+        "event": "Received: E-Portal FNOL; no photograph attached",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-18T07:40",
+        "event": "Assigned: Routed to queue ADJ-114",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-18T07:40",
+        "event": "Status Received: E-Portal FNOL filed, no photograph attached (3 days after loss)",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-11-18T07:40",
+        "event": "Status Assigned: routed to queue ADJ-114",
+        "source": "claimspro",
+        "document": "status_history.md"
+      }
+    ],
+    "contradictions": [],
+    "missing": [
+      {
+        "id": "damage_photos",
+        "label": "Damage photographs",
+        "why": "Photos are the evidence that the damage matches the loss described.",
+        "from": "claimant"
+      }
+    ],
+    "denialIndicators": [],
+    "agentRoute": "request_information",
+    "rationale": "The policy record in intake.md shows the policy in force on the 2025-11-15 date of loss, with no prior claims. Repair estimate BV-7718 (repair_estimate.md, written 2025-11-17) matches the $4,480 intake amount and the VIN, its figures add up, and it describes flood damage to sill height with no body damage. That account agrees with adjuster_notes.md and with the overnight Flash Flood Warning in weather_notice.md. No contradictions or denial indicators were found in any source. The evidence checklist is incomplete because no damage photographs are on file: status_history.md records 'no photograph attached', and adjuster_notes.md says 'Need a photo of the car before this moves.' Photographs should be requested from the policyholder. The adjuster may also wish to confirm three things: that the dealer lot lies within the warned area of northern Boulder County, the time of loss, and whether dealer-stock vehicles are covered under this policy.",
+    "trace": [
+      {
+        "step": 1,
+        "tool": "get_structured",
+        "args": "{\"claim_id\":\"IS-CLM-2025900001-G\"}",
+        "result": "Comprehensive CO E-Portal $4480; 45 fields",
+        "durationMs": 0,
+        "startedAt": "2026-10-14T19:40:10.507Z"
+      },
+      {
+        "step": 2,
+        "tool": "check_completeness",
+        "args": "{\"claim_id\":\"IS-CLM-2025900001-G\"}",
+        "result": "4 of 5 on file; missing: damage_photos",
+        "durationMs": 1,
+        "startedAt": "2026-10-14T19:40:14.357Z"
+      },
+      {
+        "step": 3,
+        "tool": "get_documents",
+        "args": "{\"claim_id\":\"IS-CLM-2025900001-G\"}",
+        "result": "3 documents, 0 OCR fields (0 weak: none), 0 photos",
+        "durationMs": 0,
+        "startedAt": "2026-10-14T19:40:16.511Z"
+      }
+    ],
+    "inputHash": "4b127e505b9e293e60c3fad76b7a029e3e66edf3536b1975260ad35708d1cb5d",
+    "settingsUsed": {
+      "ocrRereadThreshold": 0.8
+    }
+  },
+  "decision": {
+    "protocolVersion": "0.1",
+    "settings": {
+      "simpleClaimCeilingUsd": 5000,
+      "minCompletenessPct": 100,
+      "ocrRereadThreshold": 0.8
+    },
+    "agentRoute": "request_information",
+    "route": "request_information",
+    "routeLabel": "Request information",
+    "escalatedByRules": false,
+    "segment": "waiting",
+    "segmentLabel": "Waiting on information",
+    "regulatory": false,
+    "reasons": [
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": true,
+        "skipped": false,
+        "reason": "80% of the checklist is on file, below the 100% minimum. Missing: Damage photographs.",
+        "uses": [
+          "packet.completeness"
+        ]
+      }
+    ],
+    "ruleResults": [
+      {
+        "id": "G1",
+        "title": "The AI never recommends a denial",
+        "group": "guardrail",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.rationale",
+          "packet.route"
+        ]
+      },
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Canadian policyholder data",
+        "group": "scope",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "out_of_scope",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.country"
+        ]
+      },
+      {
+        "id": "D0",
+        "title": "Policy not in force at the date of loss",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "policy.status"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.denial_indicators"
+        ]
+      },
+      {
+        "id": "E1",
+        "title": "Packet not assembled",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.route"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": true,
+        "skipped": false,
+        "reason": "80% of the checklist is on file, below the 100% minimum. Missing: Damage photographs.",
+        "uses": [
+          "packet.completeness"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.fields"
+        ]
+      }
+    ],
+    "humanDecision": "Every route ends with a person deciding in ClaimsPro. The AI recommends; it never approves and never denies."
+  },
+  "usage": {
+    "calls": 5,
+    "inputTokens": 34632,
+    "outputTokens": 4077,
+    "costUsd": 0.2201,
+    "durationMs": 43740
+  },
+  "savedAt": "2026-10-14T19:44:53.081Z"
+}

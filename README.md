@@ -41,12 +41,12 @@ Locked: R1 human review over $10,000 in the threshold states; R2 consent states 
 
 The label is set after the fact and tracks the final complexity of the claim; a rule that runs at intake cannot see that. The regulatory floor is exact by construction, which is the point: today's flag misses 31 claims the law requires a person on.
 
-**Packets, on the 14 labelled cases** (`npm run eval`, cached packets, draft labels by one person in `eval/cases.csv`): 10 of 10 claims that must reach a person did; 10 exact and 14 acceptable routes of 14; 0 over-escalated of 4; the fax line that OCR read as `1,B00` re-read as `1,800.00` on both the garbled and the clean copy. Two adjusters labelling independently, with disagreements resolved, is the next step before any of these numbers is quoted.
+**Packets, on the 16 labelled cases** (`npm run eval`, cached packets, draft labels by one person in `eval/cases.csv`): 10 of 10 claims that must reach a person did; 12 exact and 16 acceptable routes of 16; 0 over-escalated of 6; the fax line that OCR read as `1,B00` re-read as `1,800.00` on both the garbled and the clean copy. The four non-exact cases are the three mocks whose photos do not match their stories and the variant of the provided claim with its estimate removed, where a material contradiction outranks the missing document. Two adjusters labelling independently, with disagreements resolved, is the next step before any of these numbers is quoted.
 
 ## Where the data comes from
 
 - `meridian/sample_claims/` and `meridian/reference/claims_processing.csv`: the three claims and the extract Meridian provided. Real model runs, cached in `data/packets/`.
-- `sample_claims_variants/`: the three claims edited by `scripts/make-variants.ts` (estimate removed, amount over $10k, Texas with the flag blank, clean OCR, a repainted date on the fax page). Each folder's `provenance.json` records the change.
+- `sample_claims_variants/`: the provided claims edited by `scripts/make-variants.ts` (estimate removed, amount over $10k, Texas with the flag blank, clean OCR, a repainted date on the fax page), plus two variants of the clean mock claim with the estimate and the photo removed, which route to request information. Each folder's `provenance.json` records the change.
 - `sample_claims_mock/`: six claims written for claim types Meridian did not send (flood, third-party property damage, liability demand, Canadian residency, lapsed policy, a reused photo). Photos are reused from an earlier prototype's set and do not always match the story; the agent noticed. `SOURCES.md` records origins.
 - `data/worklist.json`: 30 extract rows seeded as queue entries with no documents, routed by the structured rules only.
 
@@ -65,9 +65,13 @@ npm run agent -- IS-CLM-2025000300   # one live run (spends money)
 
 On the deployment, `/api/agent/run?claim=<id>` needs the `x-agent-run-token` header (`AGENT_RUN_TOKEN`). Background mode logs the gzipped transcript so a run can be replayed and verified locally with `scripts/decode-rec-log.ts` and `scripts/replay-run.ts`.
 
+## The ask-and-wait loop
+
+Confirming a request-information route sends the drafted request through the ClaimsPro correspondence stub and moves the claim to Waiting. In production the claimant's reply is a ClaimsPro document event; in the demo, the Waiting view carries a prefilled reply and a button that receives it. The claim then comes back to the inbox under Verify documents with the earlier confirmation kept as history, to be re-run with the new document or verified by hand.
+
 ## Known gaps
 
 - Page images of scanned documents reach the vision model unmasked; printed names on them are masked in the output only.
 - The mock claims' photos are inconsistent with their stories, so three of their labels are provisional until matching photos exist.
-- `.env.example` defaults the model to Sonnet; the cached packets were made with `claude-opus-5-5`.
+- `.env.example` defaults the model to Sonnet; the cached packets were made with `claude-opus-5-5`, thirteen on prompt `packet-v2` and three on `packet-v3` (which says a missing document is a gap, not a contradiction).
 - Confirmations on the deployment live in the instance's memory and clear on redeploy; production writes go through ClaimsPro's SOAP operations, which this prototype only stubs (`/api/writes`).

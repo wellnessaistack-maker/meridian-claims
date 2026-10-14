@@ -14,7 +14,7 @@ const cases = loadCases();
 const report = scorePackets(cases, loadWorkspaceData().rows, "test");
 
 test("every labelled case has a claim folder, and every provided and variant case a cached packet", () => {
-  assert.equal(cases.length, 14);
+  assert.equal(cases.length, 16);
   for (const c of report.cases) assert.equal(c.failure, null, `${c.caseId}: ${c.failure}`);
 });
 
@@ -29,8 +29,8 @@ test("the re-read of the fax line reads 1,800.00 on both the garbled and the cle
 });
 
 test("route agreement on the cached packets, as it stands", () => {
-  assert.equal(report.summary.agreement.exact, 10);
-  assert.equal(report.summary.agreement.acceptable, 14);
+  assert.equal(report.summary.agreement.exact, 12);
+  assert.equal(report.summary.agreement.acceptable, 16);
   assert.equal(report.summary.overEscalated.count, 0);
 });
 

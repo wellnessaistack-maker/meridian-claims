@@ -136,7 +136,7 @@ export function scorePackets(cases: EvalCase[], rows: ClaimRow[], model: string)
     if (r.exact) s.agreed++;
   }
   const allFields = results.flatMap((r) => r.fieldChecks);
-  const promptVersion = rows.find((r) => r.packet)?.packet?.packet.model.promptVersion ?? "unknown";
+  const promptVersion = [...new Set(results.map((r) => byId.get(r.claimId)?.packet?.packet.model.promptVersion).filter(Boolean))].join(", ") || "unknown";
   return {
     runAt: new Date().toISOString(),
     model,
