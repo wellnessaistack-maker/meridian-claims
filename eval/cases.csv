@@ -13,3 +13,5 @@ case_id,claim_id,provenance,expected_route,acceptable_routes,field_checks,note
 900004,IS-CLM-2025900004,mock,out_of_scope,,,Ontario policyholder: rules only; never sent to the model.
 900005,IS-CLM-2025900005,mock,full_review,,,Loss twelve days after the policy expired: the lapse must reach a person.
 900006,IS-CLM-2025900006,mock,specialist_review,full_review,,A damage photo byte-identical to a closed claim's: a signal from the record.
+900001-F,IS-CLM-2025900001-F,variant,request_information,,,The clean flood claim with the estimate removed: nothing to verify until the shop sends it.
+900001-G,IS-CLM-2025900001-G,variant,request_information,,,The clean flood claim with the photo removed: ask the dealer for one.
