@@ -288,3 +288,44 @@ test("cache and audit: a packet round-trips, the audit record has the five field
   assert.equal(history.length, 2);
   assert.equal(history[0].humanReviewed, false, "the original record is untouched");
 });
+
+test("a recorded run replays to the same packet: same input hash, same packet hash, timings carried over", async () => {
+  const { applyRecordedTimings, completeTranscript, newTranscript, packetHash, replayClient, replayVision } = await import("./transcript.ts");
+  const claim = loadClaimById(id2993)!;
+  const turns: ToolCall[][] = [
+    [{ name: "get_structured", input: { claim_id: id2993 } }],
+    [{ name: "get_documents", input: { claim_id: id2993 } }],
+    [
+      { name: "reread_field", input: { document: "ocr_output.txt", field_key: "ocr_line_1", page: 4 } },
+      { name: "reread_field", input: { document: "ocr_output.txt", field_key: "ocr_claimant_contact", page: 1 } },
+      { name: "reread_field", input: { document: "ocr_output.txt", field_key: "ocr_date_of_loss", page: 1 } },
+    ],
+    [{ name: "check_completeness", input: { claim_id: id2993 } }],
+  ];
+  const t = newTranscript(id2993, "scripted");
+  const original = await runAgent(claim, { client: scripted(turns, output({ route: "verify_documents" })), vision: fakeVision, images: false, transcript: t });
+  assert.equal(original.ok, true, original.failure ?? "");
+  completeTranscript(t, original);
+  assert.equal(t.steps.length, 5);
+  assert.equal(t.finishes.length, 1);
+  assert.equal(t.vision.length, 3);
+  assert.deepEqual(t.vision.map((v) => v.fieldKey), ["ocr_line_1", "ocr_claimant_contact", "ocr_date_of_loss"]);
+
+  // Through JSON, as it travels through the logs.
+  const copy = JSON.parse(JSON.stringify(t)) as typeof t;
+  const replayed = applyRecordedTimings(copy, await runAgent(claim, { client: replayClient(copy), vision: replayVision(copy), images: false }));
+  assert.equal(replayed.ok, true, replayed.failure ?? "");
+  assert.equal(replayed.packet.inputHash, original.packet.inputHash);
+  assert.equal(packetHash(replayed.packet), packetHash(original.packet));
+  assert.equal(replayed.packet.generatedAt, original.packet.generatedAt);
+  assert.deepEqual(replayed.packet.trace, original.packet.trace);
+  assert.deepEqual(replayed.usage, original.usage);
+  assert.deepEqual(replayed.snapshot, original.snapshot);
+  assert.deepEqual(replayed.decision, original.decision);
+
+  // A transcript for a different sequence of tool calls does not silently fit.
+  const other = newTranscript(id2993, "scripted");
+  await runAgent(claim, { client: scripted(turns.slice(0, 2), output()), vision: null, images: false, transcript: other });
+  const wrong = await runAgent(claim, { client: replayClient(other), vision: replayVision(other), images: false });
+  assert.notEqual(packetHash(wrong.packet), packetHash(original.packet));
+});

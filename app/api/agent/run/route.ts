@@ -7,19 +7,21 @@
 // Nothing is written on the server: Vercel's filesystem is read-only.
 //
 // mode=background answers at once and finishes the run after the response,
-// writing the same JSON into the function's runtime logs as gzip+base64
-// chunks (PKTCHUNK lines). A caller that cannot hold a connection open for the
-// length of a run (a minute or more) collects the chunks from the logs and
-// decodes them with scripts/decode-run-log.ts.
+// then writes the run's transcript (every model turn, see lib/agent/transcript.ts)
+// into the function's runtime logs as hashed chunks (PKTREC lines). A caller
+// that cannot hold a connection open for the length of a run (a minute or
+// more) collects the lines from the logs, decodes them with
+// scripts/decode-rec-log.ts and replays them with scripts/replay-run.ts, which
+// rebuilds the same packet from the same claim folder and checks the hashes.
 
-import { timingSafeEqual } from "node:crypto";
-import { gzipSync } from "node:zlib";
+import { createHash, timingSafeEqual } from "node:crypto";
 import { after } from "next/server";
 
 import { findClaimFolder } from "@/lib/claim/catalog.ts";
 import { loadClaim } from "@/lib/claim/load.ts";
 import { apiKeyConfigured, modelFromEnv, NO_KEY_MESSAGE } from "@/lib/agent/models.ts";
 import { runAgent } from "@/lib/agent/run.ts";
+import { completeTranscript, newTranscript, type Transcript } from "@/lib/agent/transcript.ts";
 import { recordFor } from "@/lib/audit/record.ts";
 
 export const dynamic = "force-dynamic";
@@ -36,19 +38,27 @@ function tokenOk(given: string | null): boolean {
 async function runOne(claimId: string, model: string) {
   const folder = findClaimFolder(claimId)!;
   const claim = loadClaim(folder);
-  const r = await runAgent(claim, { model });
+  const transcript = newTranscript(claimId, model);
+  const r = await runAgent(claim, { model, transcript });
+  completeTranscript(transcript, r);
   const audit = r.ok ? recordFor(r.packet, r.decision, r.snapshot) : null;
   // The audit record carries the input snapshot, so it is not repeated at the top level.
-  return { ok: r.ok, failure: r.failure, model, packet: r.packet, decision: r.decision, usage: r.usage, audit };
+  return { ok: r.ok, failure: r.failure, model, packet: r.packet, decision: r.decision, usage: r.usage, audit, transcript };
 }
 
-/** Writes a JSON result to the logs in chunks that fit a log line. */
-function logChunks(claimId: string, runId: string, body: unknown) {
-  const gz = gzipSync(Buffer.from(JSON.stringify(body))).toString("base64");
-  const size = 3000;
-  const n = Math.ceil(gz.length / size);
-  for (let i = 0; i < n; i++) console.log(`PKTCHUNK ${claimId} ${runId} ${i + 1}/${n} ${gz.slice(i * size, (i + 1) * size)}`);
-  console.log(`PKTDONE ${claimId} ${runId} ${n} chunks ${gz.length} chars`);
+const sha8 = (s: string) => createHash("sha256").update(s).digest("hex").slice(0, 8);
+
+/** Writes the transcript to the logs in hashed chunks that fit a log line (see scripts/decode-rec-log.ts). */
+function logTranscript(claimId: string, runId: string, t: Transcript) {
+  const json = JSON.stringify(t);
+  const size = 1500;
+  const n = Math.ceil(json.length / size);
+  for (let i = 0; i < n; i++) {
+    const chunk = json.slice(i * size, (i + 1) * size);
+    console.log(`PKTREC ${claimId} ${runId} ${i + 1}/${n} ${sha8(chunk)} |${chunk}|`);
+  }
+  const r = t.result;
+  console.log(`PKTDONE ${claimId} ${runId} ${n} chunks ${json.length} chars ok=${r?.ok} failure=${JSON.stringify(r?.failure ?? null)} inputHash=${r?.inputHash} packetHash=${r?.packetHash}`);
 }
 
 export async function GET(request: Request) {
@@ -66,12 +76,14 @@ export async function GET(request: Request) {
     after(async () => {
       try {
         const body = await runOne(claimId, model);
-        logChunks(claimId, runId, body);
+        const tools = body.packet.trace.map((e) => e.tool).join(",");
+        console.log(`PKTRUN ${claimId} ${runId} ok=${body.ok} route=${body.decision.route} agent=${body.packet.agentRoute} tools=${tools} cost=${body.usage.costUsd} ms=${body.usage.durationMs}`);
+        logTranscript(claimId, runId, body.transcript);
       } catch (err) {
         console.error(`PKTFAIL ${claimId} ${runId} ${err instanceof Error ? err.message : String(err)}`);
       }
     });
-    return Response.json({ started: true, claimId, runId, model, note: "The run finishes after this response; the result is written to the runtime logs as PKTCHUNK lines." });
+    return Response.json({ started: true, claimId, runId, model, note: "The run finishes after this response; the transcript is written to the runtime logs as PKTREC lines." });
   }
 
   return Response.json(await runOne(claimId, model));

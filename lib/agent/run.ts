@@ -20,6 +20,7 @@ import { apiKeyConfigured, costUsd, modelFromEnv, type Usage } from "./models.ts
 import { agentOutputSchema, type AgentOutput } from "./output.ts";
 import { AGENT_VERSION, ASSEMBLE_INSTRUCTION, PROMPT_VERSION, SYSTEM_PROMPT } from "./prompt.ts";
 import { newToolContext, runTool, TOOL_DEFS, type ToolContext, type VisionReader } from "./tools.ts";
+import { recordingClient, recordingVision, type Transcript } from "./transcript.ts";
 import { anthropicVision } from "./vision.ts";
 
 export type Msg = Anthropic.Beta.BetaMessageParam;
@@ -91,6 +92,8 @@ export interface RunOptions {
   vision?: VisionReader | null;
   images?: boolean;
   root?: string;
+  /** When given, every model turn and vision read is recorded into it (see transcript.ts). */
+  transcript?: Transcript;
 }
 
 export interface RunResult {
@@ -116,6 +119,10 @@ export async function runAgent(claim: LoadedClaim, opts: RunOptions = {}): Promi
     const sdk = makeClient();
     client = anthropicModelClient(model, sdk);
     vision = vision === undefined ? anthropicVision(sdk, model) : vision;
+  }
+  if (opts.transcript) {
+    client = recordingClient(client, opts.transcript);
+    if (vision) vision = recordingVision(vision, opts.transcript);
   }
   const ctx = newToolContext(claim, settings, { images: opts.images ?? true, vision: vision ?? null, root: opts.root });
 
