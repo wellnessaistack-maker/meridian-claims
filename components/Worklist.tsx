@@ -178,6 +178,12 @@ export function Worklist({ rows, selected, onSelect, onRunUnprocessed, running, 
   );
 }
 
+/** The inbox in the order it is shown: easiest group first, oldest first within a group. */
+export function inboxOrder(rows: ClaimRow[]): ClaimRow[] {
+  const inbox = rows.filter((r) => tabOf(r) === "inbox");
+  return INBOX_ORDER.flatMap((s) => bySegment(inbox, s));
+}
+
 function bySegment(rows: ClaimRow[], seg: Group) {
   return rows.filter((r) => groupOf(r) === seg).sort((a, b) => b.queueAgeHours - a.queueAgeHours);
 }

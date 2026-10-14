@@ -1,25 +1,26 @@
 "use client";
 
-// The shell: top bar, three columns (queue, packet, documents), the audit
-// drawer as an overlay. State lives here: the open claim, the drawer, packets
+// The shell: top bar, three columns (queue, packet, documents) with the
+// audit record inline in the packet pane. State lives here: the open claim, packets
 // re-run in this session, audit records confirmed in this session.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { AuditRecord } from "@/lib/audit/record.ts";
+import { ROUTE_LABELS, type FinalRoute } from "@/lib/claim/schema.ts";
 import type { PacketRecord } from "@/lib/agent/cache.ts";
 import type { ClaimRow, WorkspaceData } from "@/lib/ui/workspace-data.ts";
-import { AuditDrawer, type DrawerMode } from "./AuditDrawer";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { PacketPanel } from "./PacketPanel";
 import { Viewer, type Shown } from "./Viewer";
-import { Worklist, type DemoState } from "./Worklist";
+import { Worklist, inboxOrder, type DemoState } from "./Worklist";
+import { ADJUSTER, reviewerLabel } from "@/lib/ui/session.ts";
 
 const NO_KEY = "No API key. Showing cached packets; re-run is disabled.";
 
 export function Workspace({ data }: { data: WorkspaceData }) {
   const [selected, setSelected] = useState<string | null>(data.rows.find((r) => r.packet)?.claimId ?? data.rows[0]?.claimId ?? null);
-  const [drawer, setDrawer] = useState<DrawerMode | null>(null);
+  const [toast, setToast] = useState<{ text: string; claimId: string } | null>(null);
   const [overrides, setOverrides] = useState<Record<string, Partial<ClaimRow>>>({});
   const [rerun, setRerun] = useState<{ running: boolean; error: string | null }>({ running: false, error: null });
   const [focus, setFocus] = useState<Shown | null>(null);
@@ -58,7 +59,7 @@ export function Workspace({ data }: { data: WorkspaceData }) {
     return () => { if (timer.current) clearTimeout(timer.current); };
   }, [demo.active, demo.playing, demo.assessing, demo.arrived.length]); // eslint-disable-line react-hooks/exhaustive-deps
   const onDemo = (action: "start" | "play" | "pause" | "step" | "reset") => {
-    if (action === "start") { setDemo({ active: true, playing: true, arrived: [], assessing: null, total: arrivalOrder.length }); setSelected(null); setDrawer(null); }
+    if (action === "start") { setDemo({ active: true, playing: true, arrived: [], assessing: null, total: arrivalOrder.length }); setSelected(null); }
     else if (action === "play") setDemo((d) => ({ ...d, playing: true }));
     else if (action === "pause") setDemo((d) => ({ ...d, playing: false }));
     else if (action === "step") advance();
@@ -76,10 +77,21 @@ export function Workspace({ data }: { data: WorkspaceData }) {
     setFocus(null);
     setRerun({ running: false, error: null });
   };
-  const onConfirmed = (rec: AuditRecord) => {
-    if (!row) return;
-    setOverrides((o) => ({ ...o, [row.claimId]: { ...o[row.claimId], audit: [...row.audit, rec] } }));
-    setDrawer("view");
+  const roleLabel = role === "senior" ? "Senior adjuster" : "Adjuster";
+  // One click: the record is appended under the signed-in adjuster and the next claim in the inbox opens.
+  const onConfirm = async (change?: { route: FinalRoute; reason: string }): Promise<string | null> => {
+    if (!row) return "No claim open.";
+    const current = row;
+    const res = await fetch("/api/audit/confirm", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ claimId: current.claimId, reviewer: reviewerLabel(roleLabel), route: change?.route, reason: change?.reason }) });
+    const j = (await res.json().catch(() => null)) as { ok: boolean; record?: AuditRecord; error?: string } | null;
+    if (!j?.ok || !j.record) return j?.error ?? `Could not confirm (HTTP ${res.status}).`;
+    const rec = j.record;
+    setOverrides((o) => ({ ...o, [current.claimId]: { ...o[current.claimId], audit: [...current.audit, rec] } }));
+    const next = inboxOrder(rows).find((r) => r.claimId !== current.claimId && r.packet);
+    const label = ROUTE_LABELS[rec.reviewerRoute ?? rec.output.route];
+    setToast({ text: `${current.claimId.replace("IS-CLM-2025", "…")} ${change ? "changed to" : "confirmed as"} ${label.toLowerCase()}. Record ${rec.id} appended.`, claimId: current.claimId });
+    if (next) select(next.claimId);
+    return null;
   };
   const [running, setRunning] = useState<string | null>(null);
   const runOne = async (target: ClaimRow) => {
@@ -136,10 +148,10 @@ export function Workspace({ data }: { data: WorkspaceData }) {
           <option value="senior">Role: Senior adjuster</option>
         </select>
         <div className="user">
-          <div className="avatar">AD</div>
+          <div className="avatar">{ADJUSTER.initials}</div>
           <div>
-            ADJ-110
-            <div style={{ fontSize: 11, color: "#94a3b8" }}>{role === "senior" ? "Senior adjuster" : "Adjuster"} · queue ADJ-110</div>
+            {ADJUSTER.name}
+            <div style={{ fontSize: 11, color: "#94a3b8" }}>{roleLabel} · {ADJUSTER.id} · mock sign-in</div>
           </div>
         </div>
       </header>
@@ -151,7 +163,7 @@ export function Workspace({ data }: { data: WorkspaceData }) {
           </section>
           <section className="col assess">
             {row ? (
-              <PacketPanel key={row.claimId} row={row} decision={row.decision} apiKey={data.apiKey} model={data.model} rerun={rerun} onRerun={onRerun} onOpenAudit={(m) => setDrawer(m)} onFocus={setFocus} />
+              <PacketPanel key={row.claimId} row={row} decision={row.decision} apiKey={data.apiKey} model={data.model} rerun={rerun} onRerun={onRerun} onConfirm={onConfirm} reviewer={`${ADJUSTER.name} (${ADJUSTER.id})`} onFocus={setFocus} />
             ) : (
               <div className="viewer-empty"><div><b>{demo.active ? "The morning is starting." : "No claims."}</b><div>{demo.active ? "Claims arrive on the left as they come in; each is assessed and sorted on arrival." : ""}</div></div></div>
             )}
@@ -159,7 +171,13 @@ export function Workspace({ data }: { data: WorkspaceData }) {
           <section className="col viewer">{row && <Viewer key={row.claimId} row={row} images={images} focus={focus} />}</section>
         </div>
       </ErrorBoundary>
-      {drawer && row && <AuditDrawer key={`${row.claimId}-${row.audit.length}-${drawer}`} row={row} mode={drawer} onClose={() => setDrawer(null)} onConfirmed={onConfirmed} />}
+      {toast && (
+        <div className="toast" role="status">
+          <span>{toast.text}</span>
+          <button className="btn btn-sm btn-ghost" onClick={() => { select(toast.claimId); setToast(null); }}>Open it</button>
+          <button className="btn btn-sm btn-ghost" onClick={() => setToast(null)} aria-label="Dismiss">×</button>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Design system carried over from the earlier prototype: tokens, shell, chips, cards, drawer. */
+/* Design system carried over from the earlier prototype: tokens, shell, chips, cards, toast. */
 :root {
   --bg: #f4f6f9;
   --panel: #ffffff;
@@ -191,12 +191,6 @@ table.t td { padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-al
 .doclist li:first-child { border-top: 0; }
 
 /* Drawer */
-.overlay { position: fixed; inset: 0; background: rgb(15 23 42 / 0.35); z-index: 40; display: flex; justify-content: flex-end; }
-.drawer { width: min(760px, 100vw); height: 100%; background: var(--panel); display: flex; flex-direction: column; box-shadow: -8px 0 24px rgb(15 23 42 / 0.15); }
-.drawer-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
-.drawer-head h2 { font-size: 16px; }
-.drawer-head .sub { font-size: 12px; color: var(--text-3); }
-.drawer-body { flex: 1; overflow-y: auto; padding: 16px 18px 32px; display: flex; flex-direction: column; gap: 16px; }
 .kv { display: grid; grid-template-columns: 170px 1fr; gap: 4px 12px; font-size: 12.5px; }
 .kv dt { color: var(--text-3); }
 .kv dd { margin: 0; }
@@ -224,7 +218,7 @@ pre.json { font-family: var(--mono); font-size: 11.5px; background: #0f172a; col
 
 @media (max-width: 1100px) { .workspace { grid-template-columns: 260px 1fr; } .workspace .viewer { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); } .app { height: auto; } }
 @media (max-width: 720px) { .workspace { grid-template-columns: 1fr; } .col + .col { border-left: 0; border-top: 1px solid var(--line); } .topbar { flex-wrap: wrap; height: auto; padding: 8px 12px; } .claim-meta, .checklist, .stats3, .quotes { grid-template-columns: 1fr; } }
-@media print { .topbar, .worklist, .viewer, .actionbar, .keybar { display: none !important; } .overlay { position: static; background: none; } .drawer { width: 100%; box-shadow: none; } }
+@media print { .topbar, .worklist, .viewer, .actionbar, .keybar { display: none !important; } .assess-scroll { overflow: visible; } .toast { display: none; } }
 
 /* Worklist tabs, actions and the completed-tab summary (from the earlier prototype) */
 .wl-tabs { display: flex; gap: 2px; margin-top: 10px; border-bottom: 1px solid var(--line); }
@@ -278,3 +272,9 @@ pre.json { font-family: var(--mono); font-size: 11.5px; background: #0f172a; col
 .steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; }
 .steps li { padding-left: 4px; }
 @media (max-width: 720px) { .amount-row { grid-template-columns: 1fr; } }
+
+/* Confirmation toast: what was recorded, and a way back to it */
+.toast { position: fixed; left: 50%; top: 92px; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 8px; background: var(--ink, #0f172a); color: #fff; border-radius: 8px; padding: 8px 10px 8px 14px; font-size: 12.5px; box-shadow: 0 8px 24px rgb(15 23 42 / 0.25); max-width: min(720px, calc(100vw - 32px)); }
+.toast .btn-ghost { color: #cbd5e1; }
+.toast .btn-ghost:hover { color: #fff; background: rgb(255 255 255 / 0.1); }
+.inline-form .row { display: flex; gap: 10px; }

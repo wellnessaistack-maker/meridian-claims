@@ -8,7 +8,8 @@
 
 import { useState } from "react";
 
-import { DENIAL_INDICATOR_LABELS, ROUTE_LABELS, ROUTE_MEANING } from "@/lib/claim/schema.ts";
+import { DENIAL_INDICATOR_LABELS, ROUTE_LABELS, ROUTE_MEANING, ROUTES, type FinalRoute } from "@/lib/claim/schema.ts";
+import { AuditRecordCard } from "./AuditRecordCard";
 import type { Decision } from "@/lib/rules/engine.ts";
 import type { ClaimRow } from "@/lib/ui/workspace-data.ts";
 import { RoutePill, SourceTag, pct, usd, when } from "./ui";
@@ -22,14 +23,35 @@ export interface PacketPanelProps {
   model: string;
   rerun: { running: boolean; error: string | null };
   onRerun: () => void;
-  onOpenAudit: (mode: "view" | "confirm" | "change") => void;
+  /** Confirm the route as recommended, or change it with a reason. Resolves to an error message or null. */
+  onConfirm: (change?: { route: FinalRoute; reason: string }) => Promise<string | null>;
+  /** The adjuster whose name goes on the record. */
+  reviewer: string;
   onFocus: (s: Shown | null) => void;
 }
 
-export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onOpenAudit, onFocus }: PacketPanelProps) {
+export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onConfirm, reviewer, onFocus }: PacketPanelProps) {
   const p = row.packet?.packet ?? null;
   const last = row.audit[row.audit.length - 1] ?? null;
   const reviewed = last?.humanReviewed ? last : null;
+  const [auditOpen, setAuditOpen] = useState(false);
+  const [changing, setChanging] = useState(false);
+  const [newRoute, setNewRoute] = useState<FinalRoute>(decision.route);
+  const [reason, setReason] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [confirmError, setConfirmError] = useState<string | null>(null);
+  const showAudit = () => {
+    setAuditOpen(true);
+    setTimeout(() => document.getElementById("audit-record")?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+  };
+  const submit = async (change?: { route: FinalRoute; reason: string }) => {
+    setBusy(true);
+    setConfirmError(null);
+    const err = await onConfirm(change);
+    setBusy(false);
+    if (err) setConfirmError(err);
+    else setChanging(false);
+  };
   const unmask = (s: string) => row.names.reduce((t, n) => t.split(n.token).join(n.name), s);
   const fired = decision.reasons;
   const material = p?.contradictions.filter((c) => c.material) ?? [];
@@ -64,7 +86,7 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onOp
             <span className="banner-label">Recommended route</span>
             <div className="banner-links">
               <a className="btn btn-sm btn-ghost" href="/rules">Protocol {decision.protocolVersion}</a>
-              <button className="btn btn-sm btn-ghost" onClick={() => onOpenAudit("view")}>Audit record</button>
+              <button className="btn btn-sm btn-ghost" onClick={showAudit}>Audit record</button>
             </div>
           </div>
           <h2>{ROUTE_LABELS[decision.route]}</h2>
@@ -271,6 +293,8 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onOp
           </>
         )}
 
+        <AuditRecordCard row={row} open={auditOpen} onToggle={setAuditOpen} />
+
         {row.todayFlagged !== null && (
           <div className="today">
             <b>Today:</b> ClaimsPro's flag puts this claim in the <b>{row.todayQueue}</b> queue{row.header.complexity ? ` (complexity ${row.header.complexity})` : ""}. Where the two differ, a person decides either way.
@@ -285,13 +309,45 @@ export function PacketPanel({ row, decision, apiKey, model, rerun, onRerun, onOp
             {reviewed.reviewerReason ? ` — “${reviewed.reviewerReason}”` : ""}. The decision itself is made in ClaimsPro.
           </div>
         ) : (
-          <div className="note" style={{ marginTop: 0 }}>A person confirms the route or changes it with a reason. Every change becomes a test case. Nothing here approves or denies a claim.</div>
+          <div className="note" style={{ marginTop: 0 }}>
+            One click confirms the route as <b>{reviewer}</b> and moves to the next claim. A change needs a reason and becomes a test case. Nothing here approves or denies a claim.
+          </div>
         )}
+        {changing && last && !reviewed && (
+          <div className="inline-form">
+            <div className="row">
+              <label>
+                Route
+                <select value={newRoute} onChange={(e) => setNewRoute(e.target.value as FinalRoute)}>
+                  {ROUTES.map((r) => (
+                    <option key={r} value={r}>{ROUTE_LABELS[r]}{r === decision.route ? " (recommended)" : ""}</option>
+                  ))}
+                </select>
+              </label>
+              <label style={{ flex: 1 }}>
+                Reason for the change (required)
+                <input value={reason} onChange={(e) => setReason(e.target.value)} placeholder="What the packet got wrong, in a sentence" />
+              </label>
+            </div>
+          </div>
+        )}
+        {confirmError && <div className="err">{confirmError}</div>}
         <div className="actionbar-row">
-          <button className="btn btn-primary" disabled={!last || !!reviewed} onClick={() => onOpenAudit("confirm")} title={!last ? "No packet to confirm" : reviewed ? "Already confirmed; change the route to add a new record" : ""}>
-            {reviewed ? `Confirmed: ${ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}` : `Confirm route: ${ROUTE_LABELS[decision.route]}`}
-          </button>
-          <button className="btn" disabled={!last} onClick={() => onOpenAudit("change")}>Change route…</button>
+          {changing && !reviewed ? (
+            <>
+              <button className="btn btn-primary" disabled={busy || newRoute === decision.route || !reason.trim()} onClick={() => submit({ route: newRoute, reason: reason.trim() })} title={newRoute === decision.route ? "Pick a different route, or confirm instead" : ""}>
+                {busy ? "Recording…" : `Record the change to ${ROUTE_LABELS[newRoute]}`}
+              </button>
+              <button className="btn" onClick={() => setChanging(false)} disabled={busy}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <button className="btn btn-primary" disabled={!last || !!reviewed || busy} onClick={() => submit()} title={!last ? "No packet to confirm" : reviewed ? "Already confirmed" : `Records ${reviewer} as the reviewer and opens the next claim`}>
+                {busy ? "Recording…" : reviewed ? `Confirmed: ${ROUTE_LABELS[reviewed.reviewerRoute ?? reviewed.output.route]}` : `Confirm route: ${ROUTE_LABELS[decision.route]}`}
+              </button>
+              <button className="btn" disabled={!last || !!reviewed || busy} onClick={() => setChanging(true)}>Change route…</button>
+            </>
+          )}
           <button className="btn" onClick={onRerun} disabled={!apiKey || rerun.running || row.documentCount === 0 || row.header.country === "CA"} title={!apiKey ? "No API key. Re-run is disabled." : row.documentCount === 0 ? "No documents to read" : row.header.country === "CA" ? "Canadian policyholder: never sent to the model" : `Run the agent again with ${model}`}>
             {rerun.running ? "Running…" : p ? "Re-run" : "Run the agent"}
           </button>
