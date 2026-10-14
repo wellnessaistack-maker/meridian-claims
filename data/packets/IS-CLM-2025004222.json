@@ -1,0 +1,801 @@
+{
+  "packet": {
+    "claimId": "IS-CLM-2025004222",
+    "provenance": {
+      "kind": "provided",
+      "label": "Meridian sample claim",
+      "parentId": null,
+      "change": null
+    },
+    "status": "assembled",
+    "notAssembledReason": null,
+    "generatedAt": "2026-10-14T17:15:44.794Z",
+    "model": {
+      "requested": "claude-opus-5-5",
+      "served": "claude-opus-5-5",
+      "promptVersion": "packet-v2",
+      "agentVersion": "agent-v1"
+    },
+    "header": {
+      "claimId": "IS-CLM-2025004222",
+      "claimType": "Bodily Injury",
+      "state": "NY",
+      "country": "US",
+      "channel": "Phone",
+      "filedDate": "2025-09-25",
+      "dateOfLoss": "2025-09-19",
+      "amountUsd": 59533.85,
+      "policyNumber": "CA-NY-30712-20",
+      "policyholderToken": "[POLICYHOLDER]",
+      "claimantToken": "[CLAIMANT]",
+      "vehicle": null,
+      "complexity": "Complex",
+      "regulatoryReviewRequired": true,
+      "policyStatus": "unknown",
+      "priorClaimsOnPolicy": 0,
+      "adjusterId": "ADJ-106"
+    },
+    "evidence": [
+      {
+        "id": "fnol_record",
+        "label": "First notice of loss record",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "loss_description",
+        "label": "Description of the loss",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "claimant_contact",
+        "label": "Claimant contact details",
+        "present": true,
+        "document": "call_excerpt.md",
+        "source": "databricks",
+        "note": "Call-back number captured at FNOL"
+      },
+      {
+        "id": "claimant_account",
+        "label": "Claimant's account of the injury",
+        "present": true,
+        "document": "call_excerpt.md",
+        "source": "databricks",
+        "note": null
+      },
+      {
+        "id": "medical_documentation",
+        "label": "Medical documentation",
+        "present": true,
+        "document": "medical_summary.pdf",
+        "source": "databricks",
+        "note": null
+      },
+      {
+        "id": "police_report",
+        "label": "Police or incident report",
+        "present": true,
+        "document": "status_history.md",
+        "source": "claimspro",
+        "note": "Listed in the ClaimsPro document index: \"Police report (NYSP)\""
+      }
+    ],
+    "completeness": 1,
+    "fields": [
+      {
+        "key": "claim_amount",
+        "label": "Claim amount",
+        "value": "59533.85",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "claim_type",
+        "label": "Claim type",
+        "value": "Bodily Injury",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "loss_state",
+        "label": "Loss state",
+        "value": "NY",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "intake_channel",
+        "label": "Intake channel",
+        "value": "Phone",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "filed_date",
+        "label": "Filed date",
+        "value": "2025-09-25",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "date_of_loss",
+        "label": "Date of loss",
+        "value": "2025-09-19",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "policy_number",
+        "label": "Policy number",
+        "value": "CA-NY-30712-20",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "vehicle",
+        "label": "Insured vehicle",
+        "value": null,
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "regulatory_flag",
+        "label": "Requires human by regulation",
+        "value": "Yes",
+        "source": "claimspro",
+        "document": "status_history.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "model_medical_date_of_service",
+        "label": "Medical date of service",
+        "value": "2025-09-22",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"Date of svc: 2025-09-22\"",
+        "reread": null
+      },
+      {
+        "key": "model_medical_date_of_loss",
+        "label": "Date of loss on medical summary",
+        "value": "2025-09-19",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"Date of loss: 2025-09-19\"",
+        "reread": null
+      },
+      {
+        "key": "model_medical_chief_complaint",
+        "label": "Chief complaint",
+        "value": "Neck and lower-back pain following rear-impact motor-vehicle collision, restrained driver",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"Neck and lower-back pain following motor-vehicle collision (rear impact, restrained driver).\"",
+        "reread": null
+      },
+      {
+        "key": "model_medical_assessment",
+        "label": "Assessment",
+        "value": "Cervical strain S13.4XXA; lumbar strain S33.5XXA; rule out disc involvement, MRI ordered",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"Cervical strain S13.4XXA ... Lumbar strain S33.5XXA ... R/O disc involvement; MRI ordered.\"",
+        "reread": null
+      },
+      {
+        "key": "model_medical_treatment_plan",
+        "label": "Treatment plan",
+        "value": "NSAIDs; physical therapy 3x/week for 6 weeks; re-evaluation in 4 weeks",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"NSAIDs; physical therapy 3x/wk x 6 wks; re-eval 4 wks.\"",
+        "reread": null
+      },
+      {
+        "key": "model_medical_work_status",
+        "label": "Work status",
+        "value": "Out of work pending re-evaluation; no commercial vehicle operation until cleared",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"Out of work pending re-evaluation. No lifting > 10 lb, no operation of commercial vehicles until cleared.\"",
+        "reread": null
+      },
+      {
+        "key": "model_medical_charges_visit",
+        "label": "Charges, this visit",
+        "value": "485.00",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"Charges, this visit: 485.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_medical_mri_estimate",
+        "label": "MRI estimate (ordered)",
+        "value": "2,150.00",
+        "source": "databricks",
+        "document": "medical_summary.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from medical_summary.pdf (no engine confidence; a person can check the quote). Quote: \"MRI lumbar/cervical (ordered, est.): 2,150.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_call_date_of_loss",
+        "label": "Date of loss per caller",
+        "value": "2025-09-19",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.85,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.85 for the document). Quote: \"The nineteenth. September nineteenth. [crosstalk] — sorry, yeah, last Friday.\"",
+        "reread": null
+      },
+      {
+        "key": "model_call_loss_location",
+        "label": "Loss location per caller",
+        "value": "I-90 eastbound before the Kensington Expressway split (several tokens marked low-confidence by the transcription)",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.85,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.85 for the document). Quote: \"On I ninety [*], eastbound, right before the split for the Kensington express way [*].\"",
+        "reread": null
+      },
+      {
+        "key": "model_call_loss_description",
+        "label": "Loss description per caller",
+        "value": "Rear-ended by policyholder's van while stopped in traffic",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.85,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.85 for the document). Quote: \"Traffic was stopped and he came right into the back of me.\"",
+        "reread": null
+      },
+      {
+        "key": "model_call_injury_account",
+        "label": "Claimant's injury account",
+        "value": "Neck and lower back pain since the loss; orthopedic visit a couple days after; X-rays, MRI planned; out of work",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.85,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.85 for the document). Quote: \"My neck's been bad since. And my lower back. I went in to the orthopedic place a couple days after\"",
+        "reread": null
+      },
+      {
+        "key": "model_call_restraint",
+        "label": "Occupants / restraint",
+        "value": "Claimant alone, seatbelt worn",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.85,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.85 for the document). Quote: \"Just me. I had my belt on.\"",
+        "reread": null
+      },
+      {
+        "key": "model_call_police",
+        "label": "Police involvement",
+        "value": "Police attended; report number not given",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.85,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.85 for the document). Quote: \"The police did all that. I've got the report number somewhere.\"",
+        "reread": null
+      },
+      {
+        "key": "model_call_insured_driver_statement",
+        "label": "Insured driver's reported statement",
+        "value": "Policyholder's driver said he did not see the claimant stop",
+        "source": "databricks",
+        "document": "call_excerpt.md",
+        "page": null,
+        "confidence": 0.85,
+        "basis": "Read by the model from call_excerpt.md (engine confidence 0.85 for the document). Quote: \"He said he didn't see me stop\"",
+        "reread": null
+      },
+      {
+        "key": "model_adjuster_causation_initial",
+        "label": "Adjuster initial causation view",
+        "value": "Causation link not airtight on documents then held",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"the causation link isn't airtight on the docs I have\"",
+        "reread": null
+      },
+      {
+        "key": "model_adjuster_senior_review",
+        "label": "Senior review outcome",
+        "value": "Coverage responds; liability clear; causation supported with full records and imaging",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Sr review: coverage responds, insured rear-ended a stopped vehicle, liability clear. Med causation supported on re-read w/ full records + imaging.\"",
+        "reread": null
+      }
+    ],
+    "timeline": [
+      {
+        "at": "2025-09-19",
+        "event": "Date of loss",
+        "source": "claimspro",
+        "document": "intake.md"
+      },
+      {
+        "at": "2025-09-19",
+        "event": "Date of loss: rear-end collision on I-90 eastbound (Friday)",
+        "source": "databricks",
+        "document": "call_excerpt.md"
+      },
+      {
+        "at": "2025-09-22",
+        "event": "First medical visit, 3 days after the loss: cervical and lumbar strain diagnosed, MRI ordered, claimant taken off work",
+        "source": "databricks",
+        "document": "medical_summary.pdf"
+      },
+      {
+        "at": "2025-09-25T09:52",
+        "event": "Phone FNOL call begins (ends 10:07)",
+        "source": "databricks",
+        "document": "call_excerpt.md"
+      },
+      {
+        "at": "2025-09-25T10:00",
+        "event": "Received: Phone FNOL; call recorded + transcribed",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-25T10:00",
+        "event": "Assigned: Routed to queue ADJ-106",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-25T10:00",
+        "event": "Status: Received; Assigned to ADJ-106",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-30T07:12",
+        "event": "In Review: Injury timeline build; account/records recon",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-30T07:12",
+        "event": "Status: In Review, first adjuster touch after 117.2 hours in queue",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-30T15:40",
+        "event": "Escalated: Senior review — coverage judgment",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-30T15:40",
+        "event": "Status: Escalated to senior review for coverage judgment",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-10-02T09:30",
+        "event": "Medical Review: Causation confirmed w/ full records",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-10-02T09:30",
+        "event": "Status: Medical Review; causation confirmed with full records (records not on file)",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-10-04T00:00",
+        "event": "Payment Issued: Settlement within reserve",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-10-04T00:00",
+        "event": "Status: Payment Issued, settlement within reserve",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-10-04T02:00",
+        "event": "Closed: Paid in Full",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-10-04T02:00",
+        "event": "Status: Closed, Paid in Full",
+        "source": "claimspro",
+        "document": "status_history.md"
+      }
+    ],
+    "contradictions": [
+      {
+        "topic": "Claim amount versus documented medical charges",
+        "a": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "Claim amount: $59,533.85"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "medical_summary.pdf",
+          "quote": "Charges, this visit: 485.00 ... MRI lumbar/cervical (ordered, est.): 2,150.00"
+        },
+        "material": true,
+        "note": "About $2,635 in charges is documented against $59,533.85 claimed and paid. The provider bill, wage-loss records and settlement worksheet that might account for the difference are listed in the document index but are not on file."
+      },
+      {
+        "topic": "Medical causation support",
+        "a": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "the causation link isn't airtight on the docs I have"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "Med causation supported on re-read w/ full records + imaging."
+        },
+        "material": true,
+        "note": "The causation finding rests on full records and imaging that are not on file. Only the one-page medical summary is available."
+      },
+      {
+        "topic": "Coverage confirmation versus policy record",
+        "a": {
+          "source": "databricks",
+          "document": "adjuster_notes.md",
+          "quote": "Sr review: coverage responds"
+        },
+        "b": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "Policy period not in the sample export; coverage is verified on the ClaimsPro Coverage screen."
+        },
+        "material": true,
+        "note": "Policy status is unknown and the policy start and end dates are blank. The coverage verification listed in the index is not on file, so the coverage statement cannot be checked from the packet. This is a gap, not evidence of a lapse."
+      },
+      {
+        "topic": "Onset of symptoms versus first care",
+        "a": {
+          "source": "databricks",
+          "document": "call_excerpt.md",
+          "quote": "My neck's been bad since. ... I went in to the orthopedic place a couple days after"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "medical_summary.pdf",
+          "quote": "Date of svc: 2025-09-22"
+        },
+        "material": false,
+        "note": "A 3-day gap between the loss and first care is consistent with the caller's 'a couple days after'. Senior review noted the claimant 'worked through it before seeking care'."
+      },
+      {
+        "topic": "Scene photo season versus date of loss",
+        "a": {
+          "source": "databricks",
+          "document": "IMG_0205.jpg",
+          "quote": "Highway overlook with leafless trees and overcast, wet conditions"
+        },
+        "b": {
+          "source": "claimspro",
+          "document": "intake.md",
+          "quote": "Date of loss: 2025-09-19"
+        },
+        "material": false,
+        "note": "Bare trees do not fit mid-September in western NY. The photo shows no vehicles involved in the loss and no date, so it is unclear whether it was taken at the loss or at another time. This needs confirming but does not affect the injury account on its own."
+      }
+    ],
+    "missing": [],
+    "denialIndicators": [],
+    "agentRoute": "request_information",
+    "rationale": "The packet holds the claim header and status history (intake.md, status_history.md), the phone transcript (call_excerpt.md), the adjuster notes (adjuster_notes.md), a one-page medical summary (medical_summary.pdf) and three photos. The transcript, medical summary and claim header agree on the date of loss (2025-09-19) and the injuries reported. The 3-day gap before first care matches the claimant's account. The amount claimed and paid, $59,533.85, is supported on file by only $485.00 in visit charges and a $2,150.00 MRI estimate. The adjuster notes say causation and coverage were confirmed using full records, imaging and a coverage review, none of which is on file. Not on file are the police report, medical exam notes, imaging, provider bill, claimant statement, coverage verification, settlement worksheet and payment confirmation, though all are listed in the document index. The policy status and policy period are blank. The claim needs those records requested and placed on file so a person can review the amount, causation and coverage. Regulation requires human review of this claim regardless of route.",
+    "trace": [
+      {
+        "step": 1,
+        "tool": "get_structured",
+        "args": "{\"claim_id\":\"IS-CLM-2025004222\"}",
+        "result": "Bodily Injury NY Phone $59533.85; 36 fields",
+        "durationMs": 5,
+        "startedAt": "2026-10-14T17:14:31.415Z"
+      },
+      {
+        "step": 2,
+        "tool": "get_documents",
+        "args": "{\"claim_id\":\"IS-CLM-2025004222\"}",
+        "result": "3 documents, 0 OCR fields (0 weak: none), 3 photos",
+        "durationMs": 100,
+        "startedAt": "2026-10-14T17:14:33.025Z"
+      },
+      {
+        "step": 3,
+        "tool": "check_completeness",
+        "args": "{\"claim_id\":\"IS-CLM-2025004222\"}",
+        "result": "6 of 6 on file; missing: none",
+        "durationMs": 1,
+        "startedAt": "2026-10-14T17:14:44.078Z"
+      }
+    ],
+    "inputHash": "2105a9914367c58c2766ba5ea452523357cc9230487a0c278a9acd42136d7990",
+    "settingsUsed": {
+      "ocrRereadThreshold": 0.8
+    }
+  },
+  "decision": {
+    "protocolVersion": "0.1",
+    "settings": {
+      "simpleClaimCeilingUsd": 5000,
+      "minCompletenessPct": 100,
+      "ocrRereadThreshold": 0.8
+    },
+    "agentRoute": "request_information",
+    "route": "full_review",
+    "routeLabel": "Full review",
+    "escalatedByRules": true,
+    "segment": "regulatory",
+    "segmentLabel": "Regulatory review",
+    "regulatory": true,
+    "reasons": [
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$59,534 in NY: a human must review any decision over $10,000 in this state.",
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$59,534 is above the $5,000 simple-claim ceiling.",
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "3 material contradictions between sources: Claim amount versus documented medical charges; Medical causation support; Coverage confirmation versus policy record.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      }
+    ],
+    "ruleResults": [
+      {
+        "id": "G1",
+        "title": "The AI never recommends a denial",
+        "group": "guardrail",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.rationale",
+          "packet.route"
+        ]
+      },
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$59,534 in NY: a human must review any decision over $10,000 in this state.",
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Canadian policyholder data",
+        "group": "scope",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "out_of_scope",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.country"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.denial_indicators",
+          "policy.status"
+        ]
+      },
+      {
+        "id": "E1",
+        "title": "Packet not assembled",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.route"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "3 material contradictions between sources: Claim amount versus documented medical charges; Medical causation support; Coverage confirmation versus policy record.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$59,534 is above the $5,000 simple-claim ceiling.",
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.completeness"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.fields"
+        ]
+      }
+    ],
+    "humanDecision": "Every route ends with a person deciding in ClaimsPro. The AI recommends; it never approves and never denies."
+  },
+  "usage": {
+    "calls": 5,
+    "inputTokens": 56730,
+    "outputTokens": 7893,
+    "costUsd": 0.3848,
+    "durationMs": 75790
+  },
+  "savedAt": "2026-10-14T17:19:32.997Z"
+}

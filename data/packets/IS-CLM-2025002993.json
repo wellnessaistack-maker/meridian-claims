@@ -1,0 +1,1147 @@
+{
+  "packet": {
+    "claimId": "IS-CLM-2025002993",
+    "provenance": {
+      "kind": "provided",
+      "label": "Meridian sample claim",
+      "parentId": null,
+      "change": null
+    },
+    "status": "assembled",
+    "notAssembledReason": null,
+    "generatedAt": "2026-10-14T17:15:56.717Z",
+    "model": {
+      "requested": "claude-opus-5-5",
+      "served": "claude-opus-5-5",
+      "promptVersion": "packet-v2",
+      "agentVersion": "agent-v1"
+    },
+    "header": {
+      "claimId": "IS-CLM-2025002993",
+      "claimType": "Bodily Injury",
+      "state": "CA",
+      "country": "US",
+      "channel": "Fax/EDI",
+      "filedDate": "2025-09-08",
+      "dateOfLoss": "2025-09-08",
+      "amountUsd": 48959.36,
+      "policyNumber": "CA-CA-88123-18",
+      "policyholderToken": "[POLICYHOLDER]",
+      "claimantToken": "[CLAIMANT]",
+      "vehicle": "2018 Freightliner M2 106",
+      "complexity": "Complex",
+      "regulatoryReviewRequired": true,
+      "policyStatus": "unknown",
+      "priorClaimsOnPolicy": 0,
+      "adjusterId": "ADJ-125"
+    },
+    "evidence": [
+      {
+        "id": "fnol_record",
+        "label": "First notice of loss record",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "loss_description",
+        "label": "Description of the loss",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": null
+      },
+      {
+        "id": "vehicle_identified",
+        "label": "Insured vehicle identified",
+        "present": true,
+        "document": "intake.md",
+        "source": "claimspro",
+        "note": "Vehicle (insured): 2018 Freightliner M2 106"
+      },
+      {
+        "id": "damage_photos",
+        "label": "Damage photographs",
+        "present": true,
+        "document": "photos/",
+        "source": "databricks",
+        "note": "3 photos"
+      },
+      {
+        "id": "repair_estimate",
+        "label": "Repair estimate",
+        "present": true,
+        "document": "ocr_output.txt",
+        "source": "databricks",
+        "note": "Faxed estimate, OCR text"
+      },
+      {
+        "id": "claimant_contact",
+        "label": "Claimant contact details",
+        "present": false,
+        "document": null,
+        "source": null,
+        "note": null
+      },
+      {
+        "id": "claimant_account",
+        "label": "Claimant's account of the injury",
+        "present": false,
+        "document": null,
+        "source": null,
+        "note": null
+      },
+      {
+        "id": "medical_documentation",
+        "label": "Medical documentation",
+        "present": true,
+        "document": "status_history.md",
+        "source": "claimspro",
+        "note": "Listed in the ClaimsPro document index: \"Medical record — intake / history\""
+      },
+      {
+        "id": "police_report",
+        "label": "Police or incident report",
+        "present": true,
+        "document": "status_history.md",
+        "source": "claimspro",
+        "note": "Listed in the ClaimsPro document index: \"Police report (CHP)\""
+      }
+    ],
+    "completeness": 0.7777777777777778,
+    "fields": [
+      {
+        "key": "claim_amount",
+        "label": "Claim amount",
+        "value": "48959.36",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "claim_type",
+        "label": "Claim type",
+        "value": "Bodily Injury",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "loss_state",
+        "label": "Loss state",
+        "value": "CA",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "intake_channel",
+        "label": "Intake channel",
+        "value": "Fax/EDI",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "filed_date",
+        "label": "Filed date",
+        "value": "2025-09-08",
+        "source": "claimspro",
+        "document": "intake.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "date_of_loss",
+        "label": "Date of loss",
+        "value": "2025-09-08",
+        "source": "databricks",
+        "document": "edi_record.txt",
+        "page": null,
+        "confidence": null,
+        "basis": "Not on the intake record; taken from the EDI accident date (DTP*439) in code",
+        "reread": null
+      },
+      {
+        "key": "policy_number",
+        "label": "Policy number",
+        "value": "CA-CA-88123-18",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "vehicle",
+        "label": "Insured vehicle",
+        "value": "2018 Freightliner M2 106",
+        "source": "snowflake",
+        "document": "intake.md (policy fields)",
+        "page": null,
+        "confidence": null,
+        "basis": "policy record",
+        "reread": null
+      },
+      {
+        "key": "regulatory_flag",
+        "label": "Requires human by regulation",
+        "value": "Yes",
+        "source": "claimspro",
+        "document": "status_history.md",
+        "page": null,
+        "confidence": null,
+        "basis": "structured database field; no confidence concept",
+        "reread": null
+      },
+      {
+        "key": "edi_claim_amount",
+        "label": "Claim amount (EDI)",
+        "value": "48959.36",
+        "source": "databricks",
+        "document": "edi_record.txt",
+        "page": null,
+        "confidence": null,
+        "basis": "Parsed from the EDI 837 CLM segment in code",
+        "reread": null
+      },
+      {
+        "key": "edi_estimate_ref",
+        "label": "Estimate reference (EDI)",
+        "value": "IAB9930",
+        "source": "databricks",
+        "document": "edi_record.txt",
+        "page": null,
+        "confidence": null,
+        "basis": "Parsed from the EDI REF*D9 segment in code",
+        "reread": null
+      },
+      {
+        "key": "ocr_claimant_contact",
+        "label": "Claimant contact",
+        "value": null,
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 1,
+        "confidence": 0,
+        "basis": "Blank in the OCR text (underscores where the value should be). Vision re-read confirms the field is not on the page.",
+        "reread": {
+          "ocrText": "____________",
+          "visionValue": null,
+          "agreed": true,
+          "codeCheck": null,
+          "pageImage": "meridian/sample_claims/IS-CLM-2025002993/pages/fax_transmission-1.png",
+          "page": 1,
+          "region": {
+            "x": 0.45,
+            "y": 0.33,
+            "w": 0.5,
+            "h": 0.05
+          }
+        }
+      },
+      {
+        "key": "ocr_date_of_loss",
+        "label": "Date of loss",
+        "value": "09/O________",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 1,
+        "confidence": 0.21,
+        "basis": "OCR engine 0.69 for the document; the value is cut off (x0.3). Vision re-read confirms the field is not on the page.",
+        "reread": {
+          "ocrText": "O9/O________",
+          "visionValue": null,
+          "agreed": true,
+          "codeCheck": null,
+          "pageImage": "meridian/sample_claims/IS-CLM-2025002993/pages/fax_transmission-1.png",
+          "page": 1,
+          "region": {
+            "x": 0.3,
+            "y": 0.33,
+            "w": 0.25,
+            "h": 0.05
+          }
+        }
+      },
+      {
+        "key": "ocr_policy_number",
+        "label": "Policy number",
+        "value": "CA-CA-88123-18",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 1,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid policy (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_estimate_number",
+        "label": "Estimate number",
+        "value": "IAB-9930",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 2,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid id (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_estimate_written",
+        "label": "Estimate written",
+        "value": "2025-09-05",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 2,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid date (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_vehicle",
+        "label": "Vehicle (per estimate)",
+        "value": "2018 Freightliner M2 106",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 2,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid text (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_odometer",
+        "label": "Odometer",
+        "value": "128,540",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 2,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid text (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_parts_total",
+        "label": "Parts",
+        "value": "2,728.50",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 7,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_paint_materials",
+        "label": "Paint and materials",
+        "value": "120.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 7,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_labor_total",
+        "label": "Labor",
+        "value": "558.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 7,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_sales_tax",
+        "label": "Sales tax",
+        "value": "249.24",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 7,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_vehicle_total",
+        "label": "Vehicle total (estimate)",
+        "value": "3,655.74",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 7,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_line_1",
+        "label": "Line 1: Bumper cover rear",
+        "value": "1,800.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.95,
+        "basis": "OCR engine 0.69 for the document; the value has a character outside the expected amount format (x0.5). Vision re-read \"1,800.00\" agrees and the arithmetic check gives the same figure; two independent reads.",
+        "reread": {
+          "ocrText": "1,B00.00",
+          "visionValue": "1,800.00",
+          "agreed": true,
+          "codeCheck": "Parts and materials subtotal 2848.50 minus the readable lines 1048.50 leaves 1,800.00 for the garbled line \"1,B00.00\", one glyph away from what the OCR read.",
+          "pageImage": "meridian/sample_claims/IS-CLM-2025002993/pages/fax_transmission-4.png",
+          "page": 4,
+          "region": {
+            "x": 0.55,
+            "y": 0.23500000000000001,
+            "w": 0.3,
+            "h": 0.035
+          }
+        }
+      },
+      {
+        "key": "ocr_line_2",
+        "label": "Line 2: Cargo door rear RH",
+        "value": "640.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_line_3",
+        "label": "Line 3: Tail lamp assembly RH",
+        "value": "288.50",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_line_x4",
+        "label": "Paint & materials",
+        "value": "120.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_line_4",
+        "label": "Line 4: R&I rear bumper reinf",
+        "value": "93.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_line_5",
+        "label": "Line 5: R&R cargo door rear RH",
+        "value": "155.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_line_6",
+        "label": "Line 6: Align fit rear body",
+        "value": "124.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "ocr_line_7",
+        "label": "Line 7: Refinish rear panel door",
+        "value": "186.00",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": 4,
+        "confidence": 0.88,
+        "basis": "OCR engine 0.69 for the document; the field parses as a valid amount (+0.19).",
+        "reread": null
+      },
+      {
+        "key": "model_est_line_1_bumper",
+        "label": "Line 1: rear bumper cover (corrected)",
+        "value": "1,800.00",
+        "source": "databricks",
+        "document": "fax_transmission.pdf",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from fax_transmission.pdf (no engine confidence; a person can check the quote). Quote: \"Line 1 (Bumper cover, rear, R&R) clearly reads 1,800.00\"",
+        "reread": null
+      },
+      {
+        "key": "model_adj_line_1_rekey",
+        "label": "Adjuster re-key of line 1",
+        "value": "1,800.00",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Rear bumper line came through garbled, confirmed 1,800.00 off the original.\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_shop_damage_note",
+        "label": "Shop note on damage",
+        "value": "Corrosion and prior paint edges on the rear quarter",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": null,
+        "confidence": 0.69,
+        "basis": "Read by the model from ocr_output.txt (engine confidence 0.69 for the document). Quote: \"rear quarter shows corrosion and prior paint edges not consistent with a fresh impact flagged for adjuster review\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_point_of_impact",
+        "label": "Point of impact",
+        "value": "Rear, 6 o'clock, offset right",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": null,
+        "confidence": 0.69,
+        "basis": "Read by the model from ocr_output.txt (engine confidence 0.69 for the document). Quote: \"Point of impact rear 6 o'clock offset right\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_scope",
+        "label": "Estimate scope",
+        "value": "Vehicle damage only",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": null,
+        "confidence": 0.69,
+        "basis": "Read by the model from ocr_output.txt (engine confidence 0.69 for the document). Quote: \"VEHICLE TOTAL 3,655.74 Vehicle damage only Bodily injury medical handled separately\"",
+        "reread": null
+      },
+      {
+        "key": "model_est_claim_ref",
+        "label": "Claim number on estimate",
+        "value": "pending assignment",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": null,
+        "confidence": 0.69,
+        "basis": "Read by the model from ocr_output.txt (engine confidence 0.69 for the document). Quote: \"Written 2025-09-05 Claim # pendlng asslgnment\"",
+        "reread": null
+      },
+      {
+        "key": "model_fax_photos_note",
+        "label": "Photos per fax cover",
+        "value": "Sent separately",
+        "source": "databricks",
+        "document": "ocr_output.txt",
+        "page": null,
+        "confidence": 0.69,
+        "basis": "Read by the model from ocr_output.txt (engine confidence 0.69 for the document). Quote: \"Damage photos to follow under separate cover\"",
+        "reread": null
+      },
+      {
+        "key": "model_edi_sv1_code",
+        "label": "EDI service line procedure code",
+        "value": "HC:99213",
+        "source": "databricks",
+        "document": "edi_record.txt",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from edi_record.txt (no engine confidence; a person can check the quote). Quote: \"SV1*HC:99213*3655.74*UN*1***1~\"",
+        "reread": null
+      },
+      {
+        "key": "model_adj_prior_estimate",
+        "label": "Adjuster finding on prior repair estimate",
+        "value": "Matches; rear damage predates reported date of loss",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Ordered prior repair est on file for the same rear quarter. Matches. Rear damage predates reported DOL.\"",
+        "reread": null
+      },
+      {
+        "key": "model_adj_med_causation",
+        "label": "Adjuster note on medical causation",
+        "value": "Not supported",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Med causation not supported against a fresh rear-end mechanism.\"",
+        "reread": null
+      },
+      {
+        "key": "model_adj_coverage_note",
+        "label": "Adjuster coverage statement",
+        "value": "Coverage does not respond",
+        "source": "databricks",
+        "document": "adjuster_notes.md",
+        "page": null,
+        "confidence": null,
+        "basis": "Read by the model from adjuster_notes.md (no engine confidence; a person can check the quote). Quote: \"Pre-existing damage. Coverage does not respond to the claimed loss.\"",
+        "reread": null
+      }
+    ],
+    "timeline": [
+      {
+        "at": "2025-09-05",
+        "event": "Repair estimate written (per the faxed estimate)",
+        "source": "databricks",
+        "document": "ocr_output.txt"
+      },
+      {
+        "at": "2025-09-05",
+        "event": "Shop writes repair estimate IAB-9930, before the reported date of loss",
+        "source": "databricks",
+        "document": "ocr_output.txt"
+      },
+      {
+        "at": "2025-09-08",
+        "event": "Date of loss",
+        "source": "databricks",
+        "document": "edi_record.txt"
+      },
+      {
+        "at": "2025-09-08",
+        "event": "Date of loss as recorded in the intake record and the EDI record (DTP*439); no source document confirms it",
+        "source": "databricks",
+        "document": "edi_record.txt"
+      },
+      {
+        "at": "2025-09-08T09:17",
+        "event": "EDI 837 record generated from the fax intake",
+        "source": "databricks",
+        "document": "edi_record.txt"
+      },
+      {
+        "at": "2025-09-08T15:00",
+        "event": "Received: Fax/EDI intake; OCR + 837 auto-load",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-08T15:00",
+        "event": "Status: Received (Fax/EDI intake, OCR and 837 auto-load)",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-08T15:02",
+        "event": "Assigned: Routed to shared fax queue",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-08T15:02",
+        "event": "Status: Assigned to the shared fax queue",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-14T08:48",
+        "event": "In Review: OCR re-key; estimate/EDI reconciliation",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-14T08:48",
+        "event": "Status: In Review by ADJ-125 after a 137.8-hour queue wait; OCR re-key and reconciliation of the estimate with the EDI record",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-14T11:20",
+        "event": "Pending Additional Info: Awaiting claimant callback",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-14T11:20",
+        "event": "Status: Pending Additional Info, awaiting claimant callback; no record of the outcome",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-15",
+        "event": "Adjuster pulls medical records and prior claim history; notes corrosion and old paint edges in the photos",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "at": "2025-09-16",
+        "event": "Adjuster orders the prior repair estimate for the same rear quarter and records that it matches",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "at": "2025-09-16T10:05",
+        "event": "Medical Review: Records + prior-damage comparison",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-16T10:05",
+        "event": "Status: Medical Review (medical records and prior-damage comparison)",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-17T15:36",
+        "event": "Closed: Denied — Pre-existing damage",
+        "source": "claimspro",
+        "document": "status_history.md"
+      },
+      {
+        "at": "2025-09-17T15:36",
+        "event": "Status: Closed, Denied for pre-existing damage",
+        "source": "claimspro",
+        "document": "status_history.md"
+      }
+    ],
+    "contradictions": [
+      {
+        "topic": "Estimate written before the date of loss",
+        "a": {
+          "source": "databricks",
+          "document": "ocr_output.txt",
+          "quote": "Estimate # 1AB-9930 Written 2025-09-05"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "edi_record.txt",
+          "quote": "DTP*439*D8*20250908~"
+        },
+        "material": true,
+        "note": "The repair estimate is dated three days before the reported loss. The fax cover has no date-of-loss field; the '09/0' fragment the OCR picked up is the fax send date, so no source document supports 2025-09-08."
+      },
+      {
+        "topic": "Claim amount compared with the documented estimate",
+        "a": {
+          "source": "databricks",
+          "document": "edi_record.txt",
+          "quote": "CLM*IS-CLM-2025002993*48959.36"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "ocr_output.txt",
+          "quote": "VEHICLE TOTAL 3,655.74 Vehicle damage only Bodily injury medical handled separately"
+        },
+        "material": true,
+        "note": "About $45,303.62 of the claimed amount is the injury portion. No provider bill or medical itemisation is in the documents available to support it."
+      },
+      {
+        "topic": "Vehicle repair total filed under a medical procedure code",
+        "a": {
+          "source": "databricks",
+          "document": "edi_record.txt",
+          "quote": "SV1*HC:99213*3655.74*UN*1***1~"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "ocr_output.txt",
+          "quote": "VEHICLE TOTAL 3,655.74 Vehicle damage only"
+        },
+        "material": false,
+        "note": "HC:99213 is an office-visit code, but the amount on the line is the vehicle repair total. This looks like an EDI mapping error."
+      },
+      {
+        "topic": "Damage shown in photo compared with the estimate",
+        "a": {
+          "source": "databricks",
+          "document": "ocr_output.txt",
+          "quote": "RH cargo door skin creased hinge alignment off door to be replaced"
+        },
+        "b": {
+          "source": "databricks",
+          "document": "P9080015.jpg",
+          "quote": "Photo shows creased doors along the side of a vehicle with trim strips"
+        },
+        "material": false,
+        "note": "Nothing in the photos confirms that it shows the insured truck's rear cargo door."
+      }
+    ],
+    "missing": [
+      {
+        "id": "claimant_contact",
+        "label": "Claimant contact details",
+        "why": "Nothing can be requested or paid without a way to reach the claimant.",
+        "from": "claimant"
+      },
+      {
+        "id": "claimant_account",
+        "label": "Claimant's account of the injury",
+        "why": "The injury timeline starts from the claimant's own account: a statement or the FNOL call.",
+        "from": "claimant"
+      }
+    ],
+    "denialIndicators": [
+      {
+        "kind": "pre_existing_damage",
+        "evidence": "The shop's own estimate notes that the rear quarter 'shows corrosion and prior paint edges not consistent with a fresh impact'.",
+        "source": "databricks",
+        "document": "ocr_output.txt"
+      },
+      {
+        "kind": "pre_existing_damage",
+        "evidence": "The adjuster records that a prior repair estimate for the same rear quarter 'Matches. Rear damage predates reported DOL.' That prior estimate is not in the documents available.",
+        "source": "databricks",
+        "document": "adjuster_notes.md"
+      },
+      {
+        "kind": "pre_existing_damage",
+        "evidence": "The photo shows heavy rust, blistered paint and a rusted-through panel edge, which suggest long-standing deterioration rather than fresh impact damage.",
+        "source": "databricks",
+        "document": "P9080014.jpg"
+      },
+      {
+        "kind": "fraud_signal",
+        "evidence": "The repair estimate is dated 2025-09-05, three days before the reported date of loss of 2025-09-08, and shows 'Claim # pending assignment'.",
+        "source": "databricks",
+        "document": "ocr_output.txt"
+      }
+    ],
+    "agentRoute": "full_review",
+    "rationale": "This packet contains the intake record, the EDI record (edi_record.txt), the faxed repair estimate (ocr_output.txt and fax_transmission.pdf), three photos and the adjuster's notes (adjuster_notes.md). The claim is already recorded in ClaimsPro as closed and denied for pre-existing damage. The estimate is dated 2025-09-05, before the 2025-09-08 date of loss given in the intake and EDI records, and no source document independently confirms the date of loss. The shop's note, photo P9080014 and the adjuster notes describe rear damage that existed before the loss. However, about $45,303 of the $48,959.36 claimed is the injury portion and has no itemised support here. The medical records, police report, prior repair estimate, denial letter and correspondence log are listed in ClaimsPro but are not on file for review. The claimant's contact details and account are missing, and the policy status and period are not confirmed. Because these conflicts and gaps touch dates, amounts, coverage and injury causation on a Bodily Injury claim that regulation requires a person to review, a full human review of the closed decision against the complete record is warranted.",
+    "trace": [
+      {
+        "step": 1,
+        "tool": "get_structured",
+        "args": "{\"claim_id\":\"IS-CLM-2025002993\"}",
+        "result": "Bodily Injury CA Fax/EDI $48959.36; 46 fields",
+        "durationMs": 2,
+        "startedAt": "2026-10-14T17:14:28.787Z"
+      },
+      {
+        "step": 2,
+        "tool": "get_documents",
+        "args": "{\"claim_id\":\"IS-CLM-2025002993\"}",
+        "result": "4 documents, 20 OCR fields (3 weak: ocr_claimant_contact, ocr_date_of_loss, ocr_line_1), 3 photos",
+        "durationMs": 67,
+        "startedAt": "2026-10-14T17:14:31.196Z"
+      },
+      {
+        "step": 3,
+        "tool": "reread_field",
+        "args": "{\"document\":\"ocr_output.txt\",\"field_key\":\"ocr_date_of_loss\",\"page\":1}",
+        "result": "ocr_date_of_loss: OCR \"O9/O________\" vision \"null\" agreed=true",
+        "durationMs": 4842,
+        "startedAt": "2026-10-14T17:14:38.608Z"
+      },
+      {
+        "step": 4,
+        "tool": "reread_field",
+        "args": "{\"document\":\"ocr_output.txt\",\"field_key\":\"ocr_claimant_contact\",\"page\":1}",
+        "result": "ocr_claimant_contact: OCR \"____________\" vision \"null\" agreed=true",
+        "durationMs": 4965,
+        "startedAt": "2026-10-14T17:14:43.450Z"
+      },
+      {
+        "step": 5,
+        "tool": "reread_field",
+        "args": "{\"document\":\"ocr_output.txt\",\"field_key\":\"ocr_line_1\",\"page\":4}",
+        "result": "ocr_line_1: OCR \"1,B00.00\" vision \"1,800.00\" agreed=true",
+        "durationMs": 3460,
+        "startedAt": "2026-10-14T17:14:48.416Z"
+      },
+      {
+        "step": 6,
+        "tool": "check_completeness",
+        "args": "{\"claim_id\":\"IS-CLM-2025002993\"}",
+        "result": "7 of 9 on file; missing: claimant_contact, claimant_account",
+        "durationMs": 1,
+        "startedAt": "2026-10-14T17:14:54.203Z"
+      }
+    ],
+    "inputHash": "40527dd8140e40b455a51b8ab18b653eb5f530dbc90ae8bfba42639f211d2af7",
+    "settingsUsed": {
+      "ocrRereadThreshold": 0.8
+    }
+  },
+  "decision": {
+    "protocolVersion": "0.1",
+    "settings": {
+      "simpleClaimCeilingUsd": 5000,
+      "minCompletenessPct": 100,
+      "ocrRereadThreshold": 0.8
+    },
+    "agentRoute": "full_review",
+    "route": "full_review",
+    "routeLabel": "Full review",
+    "escalatedByRules": false,
+    "segment": "regulatory",
+    "segmentLabel": "Regulatory review",
+    "regulatory": true,
+    "reasons": [
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$48,959 in CA: a human must review any decision over $10,000 in this state.",
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "4 denial indicators in the packet: pre existing damage, pre existing damage, pre existing damage, fraud signal. A person adjudicates in full; the AI never recommends a denial.",
+        "evidence": "The shop's own estimate notes that the rear quarter 'shows corrosion and prior paint edges not consistent with a fresh impact'. | The adjuster records that a prior repair estimate for the same rear quarter 'Matches. Rear damage predates reported DOL.' That prior estimate is not in the documents available. | The photo shows heavy rust, blistered paint and a rusted-through panel edge, which suggest long-standing deterioration rather than fresh impact damage. | The repair estimate is dated 2025-09-05, three days before the reported date of loss of 2025-09-08, and shows 'Claim # pending assignment'.",
+        "uses": [
+          "packet.denial_indicators",
+          "policy.status"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$48,959 is above the $5,000 simple-claim ceiling.",
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 material contradictions between sources: Estimate written before the date of loss; Claim amount compared with the documented estimate.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "5 fields below the 0.8 OCR threshold without a confirming re-read: Shop note on damage, Point of impact, Estimate scope, Claim number on estimate, Photos per fax cover.",
+        "uses": [
+          "packet.fields"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": true,
+        "skipped": false,
+        "reason": "78% of the checklist is on file, below the 100% minimum. Missing: Claimant contact details, Claimant's account of the injury.",
+        "uses": [
+          "packet.completeness"
+        ]
+      }
+    ],
+    "ruleResults": [
+      {
+        "id": "G1",
+        "title": "The AI never recommends a denial",
+        "group": "guardrail",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.rationale",
+          "packet.route"
+        ]
+      },
+      {
+        "id": "R1",
+        "title": "Over $10,000 in a human-review state",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$48,959 in CA: a human must review any decision over $10,000 in this state.",
+        "uses": [
+          "claim.state",
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Consent state without consent on file",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.state",
+          "claim.regulatory_flag"
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Canadian policyholder data",
+        "group": "scope",
+        "tier": "locked",
+        "scope": "structured",
+        "floor": "out_of_scope",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "claim.country"
+        ]
+      },
+      {
+        "id": "D1",
+        "title": "Denial indicator in the packet",
+        "group": "regulatory",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "full_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "4 denial indicators in the packet: pre existing damage, pre existing damage, pre existing damage, fraud signal. A person adjudicates in full; the AI never recommends a denial.",
+        "evidence": "The shop's own estimate notes that the rear quarter 'shows corrosion and prior paint edges not consistent with a fresh impact'. | The adjuster records that a prior repair estimate for the same rear quarter 'Matches. Rear damage predates reported DOL.' That prior estimate is not in the documents available. | The photo shows heavy rust, blistered paint and a rusted-through panel edge, which suggest long-standing deterioration rather than fresh impact damage. | The repair estimate is dated 2025-09-05, three days before the reported date of loss of 2025-09-08, and shows 'Claim # pending assignment'.",
+        "uses": [
+          "packet.denial_indicators",
+          "policy.status"
+        ]
+      },
+      {
+        "id": "E1",
+        "title": "Packet not assembled",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": false,
+        "skipped": false,
+        "uses": [
+          "packet.route"
+        ]
+      },
+      {
+        "id": "E2",
+        "title": "Material contradiction between sources",
+        "group": "evidence",
+        "tier": "locked",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "2 material contradictions between sources: Estimate written before the date of loss; Claim amount compared with the documented estimate.",
+        "uses": [
+          "packet.contradictions"
+        ]
+      },
+      {
+        "id": "C1",
+        "title": "Over the simple-claim ceiling",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "structured",
+        "floor": "specialist_review",
+        "fired": true,
+        "skipped": false,
+        "reason": "$48,959 is above the $5,000 simple-claim ceiling.",
+        "uses": [
+          "claim.amount"
+        ]
+      },
+      {
+        "id": "C2",
+        "title": "Evidence below the completeness minimum",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "request_information",
+        "fired": true,
+        "skipped": false,
+        "reason": "78% of the checklist is on file, below the 100% minimum. Missing: Claimant contact details, Claimant's account of the injury.",
+        "uses": [
+          "packet.completeness"
+        ]
+      },
+      {
+        "id": "C3",
+        "title": "A weak field that was not confirmed",
+        "group": "operating",
+        "tier": "configurable",
+        "scope": "packet",
+        "floor": "verify_documents",
+        "fired": true,
+        "skipped": false,
+        "reason": "5 fields below the 0.8 OCR threshold without a confirming re-read: Shop note on damage, Point of impact, Estimate scope, Claim number on estimate, Photos per fax cover.",
+        "uses": [
+          "packet.fields"
+        ]
+      }
+    ],
+    "humanDecision": "Every route ends with a person deciding in ClaimsPro. The AI recommends; it never approves and never denies."
+  },
+  "usage": {
+    "calls": 9,
+    "inputTokens": 83625,
+    "outputTokens": 8402,
+    "costUsd": 0.5025,
+    "durationMs": 89761
+  },
+  "savedAt": "2026-10-14T17:19:33.110Z"
+}
