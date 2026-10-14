@@ -242,3 +242,25 @@ pre.json { font-family: var(--mono); font-size: 11.5px; background: #0f172a; col
 .hint { font-size: 12px; color: var(--text-3); }
 .spinner { width: 12px; height: 12px; border: 2px solid var(--line-strong); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* A calmer packet column: larger type, more air, folded detail */
+.assess-scroll.reading { font-size: 14px; gap: 14px; padding: 18px 24px 24px; }
+.assess-scroll.reading .card-body { padding: 14px 16px; line-height: 1.55; }
+.assess-scroll.reading .banner { padding: 14px 16px; }
+.assess-scroll.reading .banner h2 { font-size: 20px; }
+.assess-scroll.reading .banner-why { font-size: 13.5px; }
+.attention { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.attention li { display: flex; gap: 10px; align-items: flex-start; }
+.attention li .dot { margin-top: 7px; }
+.attention .tone-bad { --r: var(--bad); }
+.attention .tone-warn { --r: var(--warn); }
+.attention .tone-info { --r: var(--accent); }
+.rationale p { margin: 0; }
+.rationale .btn { margin-top: 6px; padding-left: 0; }
+.fold-card > summary { list-style: none; cursor: pointer; }
+.fold-card > summary::-webkit-details-marker { display: none; }
+.fold-card > summary h3::before { content: "▸"; display: inline-block; width: 14px; color: var(--text-3); font-size: 11px; }
+.fold-card[open] > summary h3::before { content: "▾"; }
+.fold-card:not([open]) > summary { border-bottom: 0; }
+.fold-card > summary h3 .n { margin-left: 6px; font-weight: 500; color: var(--text-3); font-size: 12px; }
+.fold-card > summary .sub { max-width: 60%; white-space: normal; }
